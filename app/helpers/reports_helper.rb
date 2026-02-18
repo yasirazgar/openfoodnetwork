@@ -5,7 +5,9 @@ module ReportsHelper
     order_cycles.map do |oc|
       orders_open_at = oc.orders_open_at&.to_fs(:short) || 'NA'
       orders_close_at = oc.orders_close_at&.to_fs(:short) || 'NA'
+      # rubocop:disable Rails/OutputSafety
       ["#{oc.name} &nbsp; (#{orders_open_at} - #{orders_close_at})".html_safe, oc.id]
+      # rubocop:enable Rails/OutputSafety
     end
   end
 
@@ -42,9 +44,7 @@ module ReportsHelper
       .pluck(:name, :id)
   end
 
-  def currency_symbol
-    Spree::Money.currency_symbol
-  end
+  delegate :currency_symbol, to: :'Spree::Money'
 
   def enterprise_fee_owner_ids(orders)
     EnterpriseFee.where(id: enterprise_fee_ids(orders))
@@ -55,5 +55,10 @@ module ReportsHelper
     Spree::Adjustment.enterprise_fee
       .where(order_id: orders.map(&:id))
       .pluck(:originator_id)
+  end
+
+  def datepicker_time(datetime)
+    datetime = Time.zone.parse(datetime) if datetime.is_a? String
+    datetime.strftime('%Y-%m-%d %H:%M')
   end
 end

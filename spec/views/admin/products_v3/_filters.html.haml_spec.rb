@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+RSpec.describe "admin/products_v3/_filters.html.haml" do
+  helper Admin::ProductsHelper
 
-describe "admin/products_v3/_filters.html.haml" do
   subject { render }
 
   let(:locals) do
     {
+      spree_current_user:,
       search_term: "",
       producer_options: [],
       producer_id: nil,
@@ -14,6 +15,7 @@ describe "admin/products_v3/_filters.html.haml" do
       category_id: nil,
     }
   end
+  let(:spree_current_user) { build(:enterprise_user) }
 
   it "shows the producer filter when there are options" do
     allow(view).to receive_messages locals.merge(
@@ -38,7 +40,7 @@ describe "admin/products_v3/_filters.html.haml" do
       ],
     )
 
-    is_expected.to have_no_content "Producers"
-    is_expected.to have_no_select "producer_id"
+    is_expected.not_to have_content "Producers"
+    is_expected.not_to have_select "producer_id"
   end
 end

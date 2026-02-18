@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe CheckoutHelper, type: :helper do
+RSpec.describe CheckoutHelper do
   it "generates html for validated inputs" do
     expect(helper).to receive(:render).with(
       "shared/validated_input",
@@ -131,16 +129,6 @@ describe CheckoutHelper, type: :helper do
     end
   end
 
-  it "knows if guests can checkout" do
-    distributor = create(:distributor_enterprise)
-    order = create(:order, distributor:)
-    allow(helper).to receive(:current_order) { order }
-    expect(helper.guest_checkout_allowed?).to be true
-
-    order.distributor.allow_guest_orders = false
-    expect(helper.guest_checkout_allowed?).to be false
-  end
-
   describe "#checkout_adjustments_for" do
     let(:order) { create(:order_with_totals_and_distribution) }
     let(:enterprise_fee) { create(:enterprise_fee, amount: 123) }
@@ -165,7 +153,7 @@ describe CheckoutHelper, type: :helper do
     end
 
     context "tax rate adjustments" do
-      let!(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: ::Calculator::DefaultTax.new) }
+      let!(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: Calculator::DefaultTax.new) }
       let!(:line_item_fee_adjustment) {
         create(:adjustment, originator: enterprise_fee, adjustable: order.line_items.first,
                             order:)

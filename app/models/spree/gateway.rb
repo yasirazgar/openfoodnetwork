@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'concerns/payment_method_distributors'
-
 module Spree
   class Gateway < PaymentMethod
     acts_as_taggable
@@ -19,11 +17,6 @@ module Spree
       CreditCard
     end
 
-    # instantiates the selected gateway and configures with the options stored in the database
-    def self.current
-      super
-    end
-
     def provider
       gateway_options = options
       gateway_options.delete :login if gateway_options.key?(:login) && gateway_options[:login].nil?
@@ -37,11 +30,15 @@ module Spree
       preferences.transform_keys(&:to_sym)
     end
 
-    def method_missing(method, *args)
+    def respond_to_missing?(method_name, include_private = false)
+      @provider.respond_to?(method_name, include_private) || super
+    end
+
+    def method_missing(method, *)
       if @provider.nil? || !@provider.respond_to?(method)
         super
       else
-        provider.__send__(method, *args)
+        provider.__send__(method, *)
       end
     end
 

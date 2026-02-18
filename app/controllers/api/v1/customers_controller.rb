@@ -8,6 +8,10 @@ module Api
       include AddressTransformation
       include ExtraFields
 
+      wrap_parameters :customer, include:
+        Customer.attribute_names +
+        [:billing_address, :shipping_address]
+
       skip_authorization_check only: :index
 
       before_action :authorize_action, only: [:show, :update, :destroy]
@@ -18,7 +22,7 @@ module Api
       end
 
       def index
-        @pagy, customers = pagy(search_customers, pagy_options)
+        @pagy, customers = pagy(search_customers, **pagy_options)
 
         render json: Api::V1::CustomerSerializer.new(customers, pagination_options)
       end
@@ -59,7 +63,7 @@ module Api
 
       def customer
         @customer ||= if action_name == "show"
-                        CustomersWithBalance.new(Customer.where(id: params[:id])).query.first!
+                        CustomersWithBalanceQuery.new(Customer.where(id: params[:id])).call.first!
                       else
                         Customer.find(params[:id])
                       end
@@ -74,7 +78,7 @@ module Api
         customers = customers.where(enterprise_id: params[:enterprise_id]) if params[:enterprise_id]
 
         if @extra_customer_fields.include?(:balance)
-          customers = CustomersWithBalance.new(customers).query
+          customers = CustomersWithBalanceQuery.new(customers).call
         end
 
         customers.ransack(params[:q]).result.order(:id)
@@ -88,7 +92,8 @@ module Api
         attributes = params.require(:customer).permit(
           :email, :enterprise_id,
           :code, :first_name, :last_name,
-          :billing_address, shipping_address: [
+          :billing_address,
+          shipping_address: [
             :phone, :latitude, :longitude,
             :first_name, :last_name,
             :street_address_1, :street_address_2,

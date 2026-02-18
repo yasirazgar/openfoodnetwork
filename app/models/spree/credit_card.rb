@@ -30,7 +30,7 @@ module Spree
 
     def expiry=(expiry)
       self[:month], self[:year] = expiry.split(" / ")
-      self[:year] = "20" + self[:year]
+      self[:year] = "20#{self[:year]}"
     end
 
     def number=(num)
@@ -67,7 +67,7 @@ module Spree
     end
 
     def actions
-      %w{capture void credit resend_authorization_email}
+      %w{capture_and_complete_order void credit resend_authorization_email}
     end
 
     def can_resend_authorization_email?(payment)
@@ -75,7 +75,7 @@ module Spree
     end
 
     # Indicates whether its possible to capture the payment
-    def can_capture?(payment)
+    def can_capture_and_complete_order?(payment)
       return false if payment.requires_authorization?
 
       payment.pending? || payment.checkout?
@@ -152,7 +152,7 @@ module Spree
     end
 
     def default_missing?
-      !user.credit_cards.exists?(is_default: true)
+      !user.credit_cards.where(is_default: true).exists?
     end
 
     def default_card_needs_updating?

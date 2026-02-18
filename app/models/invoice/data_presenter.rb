@@ -3,10 +3,11 @@
 class Invoice
   class DataPresenter
     include ::ActionView::Helpers::NumberHelper
+
     attr_reader :invoice
 
-    delegate :data, to: :invoice
-    delegate :number, :date, to: :invoice, prefix: true
+    delegate :display_number, :data, :previous_invoice, to: :invoice
+    delegate :date, to: :invoice, prefix: true
 
     FINALIZED_NON_SUCCESSFUL_STATES = %w(canceled returned).freeze
 
@@ -50,22 +51,60 @@ class Invoice
       Time.zone.parse(data[:completed_at])
     end
 
-    def checkout_adjustments(exclude: [], reject_zero_amount: true)
-      adjustments = all_eligible_adjustments.map(&:clone)
+    def checkout_adjustments(exclude: [])
+      adjustments = all_eligible_adjustments
+        .reject { |a| a.originator.type == 'Spree::TaxRate' }
+        .map(&:clone)
 
-      adjustments.reject! { |a| a.originator.type == 'Spree::TaxRate' }
+      adjustments.reject! { |a| a.amount == 0 }
+      [:line_item, :shipment].each do |type|
+        next unless exclude.include? type
 
-      if exclude.include? :line_item
         adjustments.reject! { |a|
-          a.adjustable_type == 'Spree::LineItem'
+          a.adjustable_type == "Spree::#{type.to_s.classify}"
         }
       end
-
-      if reject_zero_amount
-        adjustments.reject! { |a| a.amount == 0 }
-      end
-
       adjustments
+    end
+
+    def shipment_adjustment
+      all_eligible_adjustments.find { |a| a.originator.type == 'Spree::ShippingMethod' }
+    end
+
+    # contains limited information about the shipment
+    def shipment
+      shipment_adjustment&.adjustable || null_shipment
+    end
+
+    def null_shipment
+      Struct.new(
+        :amount,
+        :included_tax_total,
+        :additional_tax_total,
+      ).new(0, 0, 0)
+    end
+
+    def display_shipment_amount_without_taxes
+      Spree::Money.new(shipment.amount - shipment.included_tax_total, currency:)
+    end
+
+    def display_shipment_amount_with_taxes
+      Spree::Money.new(shipment.amount + shipment.additional_tax_total, currency:)
+    end
+
+    def display_line_item_tax_rate(item)
+      all_tax_adjustments.select { |a|
+        a.adjustable.type == 'Spree::LineItem' && a.adjustable.id == item.id
+      }.map(&:originator).map(&:amount).sort.map { |amount|
+        number_to_percentage(amount * 100, precision: 1)
+      }.join(", ")
+    end
+
+    def display_shipment_tax_rates
+      all_eligible_adjustments.select { |a|
+        a.originator.type == 'Spree::TaxRate' && a.adjustable_type == 'Spree::Shipment'
+      }.map(&:originator)
+        .map { |tr| number_to_percentage(tr.amount * 100, precision: 1) }.join(", ")
     end
 
     def display_checkout_taxes_hash
@@ -81,6 +120,10 @@ class Invoice
 
     def display_date
       I18n.l(invoice_date.to_date, format: :long)
+    end
+
+    def display_tax_adjustment_total
+      Spree::Money.new(all_tax_adjustments.map(&:amount).sum, currency:)
     end
 
     def tax_adjustment_totals
@@ -100,7 +143,7 @@ class Invoice
     end
 
     def paid?
-      data[:payment_state] == 'paid' || data[:payment_state] == 'credit_owed'
+      ['paid', 'credit_owed'].include?(data[:payment_state])
     end
 
     def outstanding_balance?

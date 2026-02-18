@@ -45,7 +45,9 @@
       %td{ :align => "left" }
         %br
         = "#{t :invoice_number}:"
-        = @order.invoice_number
+        = @order.display_number
+        - if @order.previous_invoice.present?
+          = "#{t :invoice_cancel_and_replace_invoice} #{ @order.previous_invoice.display_number}"
         %br
         = t :invoice_issued_on
         = l @order.invoice_date
@@ -55,6 +57,9 @@
         %br
         = t :order_number
         = @order.number
+        %br
+        = "#{t :order_cycle} :"
+        = @order.order_cycle.name
       %td{ :align => "right" }
         = t :invoice_billing_address
         %br
@@ -95,3 +100,6 @@
 
 - if @order.note.present?
   = render partial: 'spree/admin/orders/_invoice/order_note'
+
+.text-center
+  = link_to_platform_terms

@@ -8,7 +8,6 @@ module Spree
           class_attribute :next_event_transitions
           class_attribute :previous_states
           class_attribute :checkout_flow
-          class_attribute :checkout_steps
 
           def self.checkout_flow(&block)
             if block_given?
@@ -20,7 +19,6 @@ module Spree
           end
 
           def self.define_state_machine!
-            self.checkout_steps = {}
             self.next_event_transitions = []
             self.previous_states = [:cart]
 
@@ -42,10 +40,7 @@ module Spree
               klass.next_event_transitions.each { |t| transition(t.merge(on: :next)) }
 
               # Persist the state on the order
-              after_transition do |order|
-                order.state = order.state
-                order.save
-              end
+              after_transition ->(order) { order.save }
 
               event :cancel do
                 transition to: :canceled, if: :allow_cancel?
@@ -71,6 +66,14 @@ module Spree
                 transition to: :complete, from: :confirmation
               end
 
+              event :back_to_payment do
+                transition to: :payment, from: :confirmation
+              end
+
+              event :back_to_address do
+                transition to: :address, from: [:payment, :confirmation]
+              end
+
               before_transition from: :cart, do: :ensure_line_items_present
 
               before_transition to: :delivery, do: :create_proposed_shipments
@@ -82,11 +85,6 @@ module Spree
                 order.update_totals_and_states
               end
 
-              after_transition to: :confirmation do |order|
-                VoucherAdjustmentsService.new(order).update
-                order.update_totals_and_states
-              end
-
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
@@ -94,7 +92,6 @@ module Spree
           end
 
           def self.go_to_state(name, options = {})
-            checkout_steps[name] = options
             previous_states.each do |state|
               add_transition({ from: state, to: name }.merge(options))
             end
@@ -109,30 +106,14 @@ module Spree
             @next_event_transitions ||= []
           end
 
-          def self.checkout_steps
-            @checkout_steps ||= {}
-          end
-
           def self.add_transition(options)
             next_event_transitions << { options.delete(:from) => options.delete(:to) }.
               merge(options)
           end
 
-          def checkout_steps
-            steps = self.class.checkout_steps.
-              each_with_object([]) { |(step, options), checkout_steps|
-              next if options.include?(:if) && !options[:if].call(self)
-
-              checkout_steps << step
-            }.map(&:to_s)
-            # Ensure there is always a complete step
-            steps << "complete" unless steps.include?("complete")
-            steps
-          end
-
           def restart_checkout_flow
             update_columns(
-              state: checkout_steps.first,
+              state: "address",
               updated_at: Time.zone.now,
             )
           end
@@ -171,7 +152,7 @@ module Spree
             return unless checkout_processing
             return if payments.any?
 
-            errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
+            errors.add :payment_method, I18n.t('checkout.errors.select_a_payment_method')
             throw :halt
           end
         end

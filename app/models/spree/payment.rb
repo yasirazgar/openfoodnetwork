@@ -21,7 +21,9 @@ module Spree
     belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
 
     has_many :offsets, -> { where("source_type = 'Spree::Payment' AND amount < 0").completed },
-             class_name: "Spree::Payment", foreign_key: :source_id, dependent: :restrict_with_exception
+             class_name: "Spree::Payment", foreign_key: :source_id,
+             inverse_of: :source,
+             dependent: :restrict_with_exception
     has_many :log_entries, as: :source, dependent: :destroy
 
     has_one :adjustment, as: :adjustable, dependent: :destroy
@@ -55,7 +57,7 @@ module Spree
     scope :failed, -> { with_state('failed') }
     scope :valid, -> { where.not(state: %w(failed invalid)) }
     scope :void, -> { with_state('void') }
-    scope :authorization_action_required, -> { where.not(cvv_response_message: nil) }
+    scope :authorization_action_required, -> { where.not(redirect_auth_url: nil) }
     scope :requires_authorization, -> { with_state("requires_authorization") }
     scope :with_payment_intent, ->(code) { where(response_code: code) }
 
@@ -99,6 +101,24 @@ module Spree
       end
 
       after_transition to: :completed, do: :set_captured_at
+      after_transition do |payment, transition|
+        # Catch any exceptions to prevent any rollback potentially
+        # preventing payment from going through
+        ActiveSupport::Notifications.instrument(
+          "ofn.payment_transition", payment: payment, event: transition.to
+        )
+      rescue StandardError => e
+        Rails.logger.fatal "ActiveSupport::Notification.instrument failed params: " \
+                           "<event_type:ofn.payment_transition> " \
+                           "<payment_id:#{payment.id}> " \
+                           "<event:#{transition.to}>"
+        Alert.raise(
+          e,
+          metadata: {
+            event_tye: "ofn.payment_transition", payment_id: payment.id, event: transition.to
+          }
+        )
+      end
     end
 
     def money
@@ -114,10 +134,6 @@ module Spree
       amount - offsets_total
     end
 
-    def can_credit?
-      credit_allowed.positive?
-    end
-
     def build_source
       return if source_attributes.nil?
       return unless payment_method&.payment_source_class
@@ -128,7 +144,7 @@ module Spree
     end
 
     def actions
-      return [] unless payment_source&.respond_to?(:actions)
+      return [] unless payment_source.respond_to?(:actions)
 
       payment_source.actions.select do |action|
         !payment_source.respond_to?("can_#{action}?") ||
@@ -166,7 +182,7 @@ module Spree
     end
 
     def clear_authorization_url
-      update_attribute(:cvv_response_message, nil)
+      update_attribute(:redirect_auth_url, nil)
     end
 
     private
@@ -245,7 +261,7 @@ module Spree
     # and this is it. Related to #1998.
     # See https://github.com/spree/spree/issues/1998#issuecomment-12869105
     def set_unique_identifier
-      self.identifier = generate_identifier while self.class.exists?(identifier:)
+      self.identifier = generate_identifier while self.class.where(identifier:).exists?
     end
 
     def generate_identifier

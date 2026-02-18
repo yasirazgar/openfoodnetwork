@@ -2,12 +2,11 @@
 
 module Spree
   class UsersController < ::BaseController
-    include Spree::Core::ControllerHelpers
     include I18nHelper
-    include CablecarResponses
 
     layout 'darkswarm'
 
+    invisible_captcha only: [:create], on_timestamp_spam: :render_alert_timestamp_error_message
     skip_before_action :set_current_order, only: :show
     prepend_before_action :load_object, only: [:show, :edit, :update]
     prepend_before_action :authorize_actions, only: :new
@@ -15,7 +14,7 @@ module Spree
     before_action :set_locale
 
     def show
-      @payments_requiring_action = PaymentsRequiringAction.new(spree_current_user).query
+      @payments_requiring_action = PaymentsRequiringActionQuery.new(spree_current_user).call
       @orders = orders_collection.includes(:line_items)
 
       customers = spree_current_user.customers
@@ -25,40 +24,17 @@ module Spree
       @unconfirmed_email = spree_current_user.unconfirmed_email
     end
 
-    # Endpoint for queries to check if a user is already registered
-    def registered_email
-      registered = Spree::User.find_by(email: params[:email]).present?
-
-      if registered
-        render status: :ok, cable_ready: cable_car.
-          inner_html(
-            "#login-feedback",
-            partial("layouts/alert",
-                    locals: { type: "alert", message: t('devise.failure.already_registered') })
-          ).
-          dispatch_event(name: "login:modal:open")
-      else
-        head :not_found
-      end
-    end
-
     def create
       @user = Spree::User.new(user_params)
 
       if @user.save
-        render cable_ready: cable_car.inner_html(
-          "#signup-feedback",
-          partial("layouts/alert",
-                  locals: {
-                    type: "success",
-                    message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-                  })
-        )
+        flash[:success] = t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
+        redirect_to main_app.root_path
       else
-        render status: :unprocessable_entity, cable_ready: cable_car.morph(
-          "#signup-tab",
-          partial("layouts/signup_tab", locals: { signup_form_user: @user })
-        )
+        render turbo_stream: turbo_stream.update(
+          'signup-tab',
+          partial: 'layouts/signup_tab', locals: { signup_form_user: @user }
+        ), status: :unprocessable_entity
       end
     end
 
@@ -78,7 +54,7 @@ module Spree
     private
 
     def orders_collection
-      CompleteOrdersWithBalance.new(@user).query
+      CompleteOrdersWithBalanceQuery.new(@user).call
     end
 
     def load_object
@@ -100,6 +76,14 @@ module Spree
 
     def user_params
       ::PermittedAttributes::User.new(params).call
+    end
+
+    def render_alert_timestamp_error_message
+      render turbo_stream: turbo_stream.update(
+        'signup-feedback',
+        partial: 'layouts/alert',
+        locals: { type: "alert", message: InvisibleCaptcha.timestamp_error_message }
+      )
     end
   end
 end

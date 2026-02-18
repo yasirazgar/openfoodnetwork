@@ -1,5 +1,8 @@
 // Customisations for the new Bulk Edit Products page only
-.products_v3_page {
+// Scoped to containing div, because Turbo messes with body classes
+@import "../admin_v3/pages/unit_popout";
+
+#products_v3_page {
   #content > .row:first-child > .container:first-child {
     // Allow table to extend to full width of available screen space
     // TODO: move this to a generic rule, eg body.full-width{}. Then it can be included on any page.
@@ -19,13 +22,18 @@
     position: relative;
   }
 
-  // Form actions floats over other controls when active
-  .form-actions {
-    position: absolute;
-    top: -1em;
-    left: 0;
-    right: 0;
-    z-index: 1; // Ensure tom-select and .disabled-section are covered
+  #products-form {
+    .form-actions {
+      .container {
+        .status {
+          flex-grow: 1; // Fill space
+        }
+
+        .form-buttons {
+          flex-shrink: 0; // Don't shrink
+        }
+      }
+    }
   }
 
   // Hopefully these rules will be moved to component(s).
@@ -34,16 +42,45 @@
 
     background-color: $color-tbl-bg;
     padding: 4px;
+    padding-top: 0; // Hide border because .form-actions is there. It is added with th padding instead.
     border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
 
     // Additional horizontal padding to align with input contents
-    thead th.with-input {
-      padding-left: $padding-tbl-cell + $hpadding-txt;
-      padding-right: $padding-tbl-cell + $hpadding-txt;
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1; // TODO: Cover .popout and .vertical-ellipsis-menu, but only when sticky
+      box-shadow: $box-shadow;
+
+      // Form actions replaces other controls when active
+      // It is part of the table header, to allow for sticky stacking when scrolling.
+      .form-actions-wrapper {
+        padding: 0;
+        overflow: visible;
+        background-color: white;
+      }
+      .form-actions-wrapper2 {
+        position: relative;
+        // Stretch to cover table side borders
+        left: -4px;
+        width: calc(100% + 8px);
+        background-color: white;
+
+        padding: 4px 0;
+      }
+
+      th.with-input {
+        // Additional padding to line up with content of input
+        padding-left: $padding-tbl-cell + $hpadding-txt;
+
+        &.align-right {
+          padding-right: $padding-tbl-cell + $hpadding-txt;
+        }
+      }
     }
 
     // Row hover
-    tr:hover {
+    tbody tr:hover {
       td {
         background-color: $light-grey;
         position: relative;
@@ -58,6 +95,19 @@
           height: 100%;
         }
       }
+
+      // "Naked" inputs. Row hover helps reveal them.
+      .naked_inputs {
+        input:not([type="checkbox"]),
+        .ts-control {
+          background-color: $color-tbl-cell-bg;
+        }
+      }
+
+      // Reveal naked button text when any part of row is hovered
+      button.naked {
+        color: $color-link;
+      }
     }
 
     th,
@@ -68,19 +118,21 @@
 
       .content {
         // Plain content fields need help to align with text in inputs (due to vertical-align)
-        margin: $vpadding-txt+1px 0;
+        margin: $vpadding-txt + 1px 0;
 
         @extend .line-clamp-1;
       }
     }
 
     th {
+      padding-top: $padding-tbl-cell + 4px; // Increase padding to create a top border
       // Clip long content in headers, but allow wrapping
       overflow: hidden;
       text-overflow: clip; // If colums are so small that headers are clipping, ellipsis are more of a hindrance
     }
 
     td {
+      position: relative; // Ensure that overflowing content is covered by the following cell. We don't use overflow: hidden because that messes with the popover.
       background-color: $color-tbl-cell-bg;
     }
 
@@ -96,6 +148,10 @@
 
       td {
         border-bottom: 2px solid $color-tbl-bg;
+
+        &.with-image {
+          padding: 4px 2px;
+        }
       }
 
       tr:first-child td {
@@ -114,26 +170,28 @@
       }
     }
 
-    // "Naked" inputs. Row hover helps reveal them.
-    input {
-      border-color: transparent;
-      background-color: $color-tbl-cell-bg;
-      height: auto;
-      font-size: inherit;
-      font-weight: inherit;
-
-      &:focus {
-        border-color: $color-txt-hover-brd;
-      }
-
-      &.modified {
-        border-color: $color-txt-modified-brd;
-      }
+    .field {
+      padding: 0;
     }
 
-    .field_with_errors {
-      input {
-        border-color: $color-error;
+    .fullwidth + .field {
+      // Assume wrap, so add small gap
+      margin-top: 3px;
+    }
+
+    .ts-control {
+      z-index: 0; // Avoid hovering over thead
+    }
+
+    // Hide columns
+    $columns:
+      "image", "name", "sku", "unit_scale", "unit", "price", "on_hand", "producer", "category",
+      "tax_category", "tags", "inherits_properties";
+    @each $col in $columns {
+      &.hide-#{$col} {
+        .col-#{$col} {
+          display: none;
+        }
       }
     }
   }
@@ -158,15 +216,20 @@
   }
 
   #sort {
-    margin-bottom: 1em;
+    margin-top: 3px; // Helps even up with .form-actions when visible
+    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
 
-  #sort {
-    line-height: $btn-relaxed-height;
-    height: $btn-relaxed-height;
+    &.disabled-section {
+      display: none;
+    }
+
+    .pagination-description {
+      flex-grow: 1; // Grow to fill space
+      margin-right: 1em; // TODO: cleanup and use flex gap
+    }
 
     .with-dropdown {
       display: flex;
@@ -174,55 +237,40 @@
       align-items: center;
       gap: 10px;
     }
+    .per-page {
+      width: 9em;
+    }
+
+    .column-preferences .ofn-drop-down-label {
+      width: 13em;
+    }
   }
 
   #filters {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 20px;
+    display: flex;
+    column-gap: 20px;
     align-items: end;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 
     .query {
-      grid-column: 1 / span 3;
-    }
+      flex-grow: 1;
+      min-width: 15em;
 
-    .producers,
-    .categories {
-    }
-
-    .submit {
-      grid-column: 6 / span 1;
-    }
-
-    .query {
       .search-input {
-        width: 100%;
         position: relative;
-        background-color: $lighter-grey;
-        border: 1px solid $lighter-grey;
-        border-radius: 4px;
-        height: $btn-relaxed-height;
-        line-height: $btn-relaxed-height;
-
-        &:has(input:focus),
-        &:has(input:active) {
-          border: 1px solid $dark-blue;
-        }
 
         > input {
-          // Totally hide the input from its container
-          background-color: transparent;
-          border: none;
-          width: calc(100% - 30px); // 30px is the width of the search icon + padding
+          padding-left: 33px;
+          width: 100%;
         }
 
         &:before {
+          position: absolute;
           font-family: FontAwesome;
           content: "\f002";
           color: $near-black;
           font-size: 16px;
+          margin-top: 0.7rem;
           margin-left: 10px;
         }
       }
@@ -230,10 +278,7 @@
 
     .producers,
     .categories {
-      select {
-        width: 150px;
-        height: $btn-relaxed-height;
-      }
+      width: 15em;
     }
 
     .submit {
@@ -264,5 +309,64 @@
       right: -$disabled-blur;
       z-index: 1; // Ensure tom-select is covered
     }
+  }
+
+  // Popout widget (todo: move to separate fiel)
+  .popout {
+    @include unit_popout;
+  }
+
+  a.image-field {
+    position: relative;
+
+    img {
+      display: block;
+      border-radius: $border-radius;
+    }
+
+    .button {
+      display: none; // to be shown on hover
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    &:hover,
+    &:focus {
+      .button.secondary {
+        display: block;
+        background-color: $color-btn-secondary-hover-bg;
+        color: $color-btn-hover-bg;
+        border-color: $color-btn-hover-border;
+      }
+    }
+  }
+
+  @keyframes slideOutTop {
+    from {
+      transform: scaleY(1);
+    }
+    to {
+      transform: scaleY(0);
+    }
+  }
+
+  .slide-out {
+    transform-origin: top;
+    animation: slideOutTop 0.5s forwards;
+  }
+
+  @keyframes slideInTop {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  .slide-in {
+    transform-origin: top;
+    animation: slideInTop 0.5s forwards;
   }
 }

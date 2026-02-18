@@ -5,10 +5,6 @@ module CheckoutHelper
     order.ship_address == order.bill_address
   end
 
-  def guest_checkout_allowed?
-    current_order.distributor.allow_guest_orders?
-  end
-
   def checkout_adjustments_for(order, opts = {})
     exclude = opts[:exclude] || {}
     reject_zero_amount = opts.fetch(:reject_zero_amount, true)
@@ -59,7 +55,7 @@ module CheckoutHelper
   end
 
   def display_checkout_taxes_hash(order)
-    totals = OrderTaxAdjustmentsFetcher.new(order).totals
+    totals = Orders::FetchTaxAdjustmentsService.new(order).totals
 
     totals.map do |tax_rate, tax_amount|
       {
@@ -147,5 +143,11 @@ module CheckoutHelper
         "#{cc.month.to_s.rjust(2, '0')}/#{cc.year}", cc.id
       ]
     end
+  end
+
+  # Set the Page title of checkout process as step based like
+  # Checkout Details, Checkout Payment and Checkout Summary
+  def checkout_page_title
+    t("checkout_#{checkout_step}_title")
   end
 end

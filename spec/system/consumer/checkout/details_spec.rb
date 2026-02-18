@@ -2,9 +2,9 @@
 
 require "system_helper"
 
-describe "As a consumer, I want to checkout my order" do
+RSpec.describe "As a consumer, I want to checkout my order" do
   include ShopWorkflow
-  include SplitCheckoutHelper
+  include CheckoutHelper
   include FileHelper
   include StripeHelper
   include StripeStubs
@@ -15,7 +15,7 @@ describe "As a consumer, I want to checkout my order" do
   let(:supplier) { create(:supplier_enterprise) }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:product) {
-    create(:taxed_product, supplier:, price: 10, zone:, tax_rate_amount: 0.1)
+    create(:taxed_product, supplier_id: supplier.id, price: 10, zone:, tax_rate_amount: 0.1)
   }
   let(:variant) { product.variants.first }
   let!(:order_cycle) {
@@ -69,7 +69,7 @@ describe "As a consumer, I want to checkout my order" do
 
   before do
     add_enterprise_fee enterprise_fee
-    set_order order
+    pick_order order
 
     distributor.shipping_methods.push(shipping_methods)
   end
@@ -152,7 +152,7 @@ describe "As a consumer, I want to checkout my order" do
               before do
                 expect {
                   proceed_to_payment
-                }.to_not change {
+                }.not_to change {
                   user.reload.bill_address
                 }
               end
@@ -206,7 +206,7 @@ describe "As a consumer, I want to checkout my order" do
               before do
                 expect {
                   proceed_to_payment
-                }.to_not change {
+                }.not_to change {
                            user.reload.ship_address
                          }
               end
@@ -389,6 +389,10 @@ describe "As a consumer, I want to checkout my order" do
         end
 
         it "pre-fills address details" do
+          # Check for the right title first. This is a random place here but
+          # we don't have a standard success checkout flow case to add this to.
+          expect(page).to have_title "Checkout Details - Open Food Network"
+
           visit checkout_path
           expect(page).to have_select(
             "order_bill_address_attributes_state_id", selected: "Testville"

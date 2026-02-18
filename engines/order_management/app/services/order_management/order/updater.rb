@@ -38,13 +38,6 @@ module OrderManagement
         update_pending_payment
       end
 
-      def update_pending_payment
-        return unless order.state.in? ["payment", "confirmation"]
-        return unless order.pending_payments.any?
-
-        order.pending_payments.first.update_attribute :amount, order.total
-      end
-
       # Updates the following Order total values:
       #
       # - payment_total - total value of all finalized Payments (excludes non-finalized Payments)
@@ -168,6 +161,11 @@ module OrderManagement
         persist_totals
       end
 
+      def update_voucher
+        VoucherAdjustmentsService.new(order).update
+        update_totals_and_states
+      end
+
       private
 
       def cancel_payments_requiring_auth
@@ -238,6 +236,39 @@ module OrderManagement
 
       def requires_authorization?
         payments.requires_authorization.any? && payments.completed.empty?
+      end
+
+      def update_pending_payment
+        # We only want to update complete order pending payment when it's a cash payment. We assume
+        # that if the payment was a credit card it would alread have been processed, so we don't
+        # bother checking the payment type
+        return unless order.state.in? ["payment", "confirmation", "complete"]
+        return unless order.pending_payments.any?
+
+        @payment = order.pending_payments.first
+        return update_payment if @payment.adjustment.nil?
+
+        # Update payment tax fees if needed
+        new_amount = @payment.payment_method.compute_amount(@payment)
+        if new_amount != @payment.adjustment.amount
+          update_payment_adjustment(new_amount)
+        end
+
+        update_payment
+      end
+
+      def update_payment
+        # Update payment with correct amount
+        @payment.update_attribute :amount, order.total
+      end
+
+      def update_payment_adjustment(amount)
+        @payment.adjustment.update_attribute(:amount, amount)
+
+        # Update order total to take into account updated payment fees
+        update_adjustment_total
+        update_order_total
+        persist_totals
       end
     end
   end

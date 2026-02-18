@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Web
-  describe CookiesPolicyHelper, type: :helper do
+  RSpec.describe CookiesPolicyHelper do
     # keeps global state unchanged
     around do |example|
       original_locale = I18n.locale
@@ -24,13 +22,13 @@ module Web
         end
 
         scenario "is not equal to the matomo URL" do
-          expect(helper.matomo_iframe_src).to_not eq Spree::Config.matomo_url
+          expect(helper.matomo_iframe_src).not_to eq Spree::Config.matomo_url
         end
       end
 
       scenario "is not nil, when matomo url is nil" do
         Spree::Config.matomo_url = nil
-        expect(helper.matomo_iframe_src).to_not eq nil
+        expect(helper.matomo_iframe_src).not_to eq nil
       end
     end
 

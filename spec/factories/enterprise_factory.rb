@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :enterprise, class: Enterprise do
     transient do
       users { [] }
-      logo {}
-      promo_image {}
+      logo { nil }
+      promo_image { nil }
     end
 
     owner factory: :user
@@ -29,7 +29,7 @@ FactoryBot.define do
   end
 
   trait :with_promo_image do
-    logo { Rack::Test::UploadedFile.new('spec/fixtures/files/promo.png', 'image/png') }
+    promo_image { Rack::Test::UploadedFile.new('spec/fixtures/files/promo.png', 'image/png') }
   end
 
   factory :supplier_enterprise, parent: :enterprise do

@@ -21,7 +21,7 @@ module Sets
     end
 
     def collection_attributes=(collection_attributes)
-      collection_attributes.each do |_k, attributes|
+      collection_attributes.each_value do |attributes|
         # attributes == {:id => 123, :next_collection_at => '...'}
         found_element = @collection.detect do |element|
           element.id.to_s == attributes[:id].to_s && !element.id.nil?
@@ -78,6 +78,12 @@ module Sets
 
     def persisted?
       false
+    end
+
+    def find_model(collection, model_id)
+      collection.find do |model|
+        model.id.to_s == model_id.to_s && model.persisted?
+      end
     end
   end
 end

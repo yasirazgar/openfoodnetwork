@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+RSpec.describe Exchange do
+  it { is_expected.to have_many :semantic_links }
 
-describe Exchange do
   it "should be valid when built from factory" do
     expect(build(:exchange)).to be_valid
   end
@@ -10,7 +10,7 @@ describe Exchange do
   [:order_cycle, :sender, :receiver].each do |attr|
     it "should not be valid without #{attr}" do
       e = build(:exchange)
-      e.send("#{attr}=", nil)
+      e.__send__("#{attr}=", nil)
       expect(e).not_to be_valid
     end
   end
@@ -105,11 +105,7 @@ describe Exchange do
     let(:oc) { create(:simple_order_cycle, coordinator:) }
 
     describe "finding exchanges managed by a particular user" do
-      let(:user) do
-        user = create(:user)
-        user.spree_roles = []
-        user
-      end
+      let(:user) { create(:user) }
 
       before { Exchange.destroy_all }
 
@@ -275,7 +271,7 @@ describe Exchange do
 
     ex1 = oc.exchanges.last
     ex1.update_attribute(:tag_list, "wholesale")
-    ex2 = ex1.clone! new_oc
+    ex2 = ex1.reload.clone! new_oc
 
     expect(ex1.sender_id).to eq ex2.sender_id
     expect(ex1.receiver_id).to eq ex2.receiver_id

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
-describe "spree/admin/orders/invoice.html.haml" do
+RSpec.describe "spree/admin/orders/invoice.html.haml" do
   let(:shop) { create(:distributor_enterprise) }
   let(:order) { create(:completed_order_with_totals, distributor: shop) }
   let(:adas_address) do
@@ -27,7 +25,11 @@ describe "spree/admin/orders/invoice.html.haml" do
                                     display_checkout_total_less_tax: '8',
                                     outstanding_balance_label: 'Outstanding Balance'
 
-    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" })
+    # return a duplicate empaty string for CSS pack request like:
+    # 'http://test.host/packs-test/css/mail-1ab2dc7f.css'
+    # This is because Wicked PDF will try to force an encoding on the returned string, which will
+    # break with a frozen string
+    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" }).to_return(body: "".dup)
   end
 
   it "displays the customer code" do
@@ -78,7 +80,7 @@ describe "spree/admin/orders/invoice.html.haml" do
 
     render
     expect(rendered).to have_content "Shipping: Pickup"
-    expect(rendered).to_not have_content adas_address_display
+    expect(rendered).not_to have_content adas_address_display
   end
 
   it "displays order note on invoice when note is given" do

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+RSpec.describe TermsOfServiceFile do
+  include FileHelper
 
-describe TermsOfServiceFile do
-  let(:pdf) { File.open(Rails.public_path.join('Terms-of-service.pdf')) }
-  let(:upload) { Rack::Test::UploadedFile.new(pdf, "application/pdf") }
+  let(:upload) { terms_pdf_file }
 
   describe ".current" do
     it "returns nil" do
@@ -39,7 +38,7 @@ describe TermsOfServiceFile do
     let(:subject) { TermsOfServiceFile.updated_at }
 
     it "gives the most conservative time if not known" do
-      Timecop.freeze do
+      freeze_time do
         expect(subject).to eq Time.zone.now
       end
     end

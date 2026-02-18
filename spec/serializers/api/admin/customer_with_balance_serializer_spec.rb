@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe Api::Admin::CustomerWithBalanceSerializer do
+RSpec.describe Api::Admin::CustomerWithBalanceSerializer do
   let(:serialized_customer) { described_class.new(customer) }
 
   describe '#balance' do

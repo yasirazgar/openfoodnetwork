@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 module Api
-  describe V0::ExchangeProductsController, type: :controller do
+  RSpec.describe V0::ExchangeProductsController do
     include AuthenticationHelper
 
     let(:order_cycle) { create(:order_cycle) }
@@ -39,7 +37,7 @@ module Api
             api_get :index, exchange_id: exchange.id, order_cycle_id: 666, enterprise_id: 666,
                             incoming: false
             expect(json_response["products"].first["supplier_name"])
-              .to eq exchange.variants.first.product.supplier.name
+              .to eq exchange.variants.first.supplier.name
           end
         end
 
@@ -48,7 +46,7 @@ module Api
             api_get :index, order_cycle_id: order_cycle.id, enterprise_id: exchange.sender_id,
                             incoming: true
             expect(json_response["products"].first["supplier_name"])
-              .to eq exchange.variants.first.product.supplier.name
+              .to eq exchange.variants.first.supplier.name
           end
         end
       end
@@ -56,7 +54,7 @@ module Api
       describe "pagination" do
         let(:exchange) { order_cycle.exchanges.outgoing.first }
         let(:products_relation) {
-          Spree::Product.includes(:variants).where("spree_variants.id": exchange.variants.map(&:id))
+          Spree::Product.includes(:variants).where('spree_variants.id': exchange.variants.map(&:id))
         }
 
         before do

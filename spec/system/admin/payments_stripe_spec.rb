@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
     As an hub manager
     I want to make Stripe payments
 ' do
@@ -18,11 +18,11 @@ describe '
     create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123")
   end
 
-  around do |example|
-    with_stripe_setup { example.run }
-  end
-
   context "making a new Stripe payment" do
+    around do |example|
+      with_stripe_setup { example.run }
+    end
+
     before do
       stub_payment_methods_post_request
       stub_payment_intent_get_request
@@ -47,7 +47,8 @@ describe '
             click_button "Update"
 
             expect(page).to have_link "StripeSCA"
-            expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "completed"
+            last_payment_state = Orders::FindPaymentService.new(order.reload).last_payment.state
+            expect(last_payment_state).to eq 'completed'
           end
         end
 
@@ -66,7 +67,7 @@ describe '
 
             expect(page).to have_link "StripeSCA"
             expect(page).to have_content "FAILED"
-            expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "failed"
+            expect(Orders::FindPaymentService.new(order.reload).last_payment.state).to eq "failed"
           end
         end
       end
@@ -87,7 +88,7 @@ describe '
 
           expect(page).to have_link "StripeSCA"
           expect(page).to have_content "AUTHORIZATION REQUIRED"
-          expect(OrderPaymentFinder.new(order.reload).last_payment.state)
+          expect(Orders::FindPaymentService.new(order.reload).last_payment.state)
             .to eq "requires_authorization"
         end
       end
@@ -100,7 +101,7 @@ describe '
         stub_payment_intents_post_request order:, stripe_account_header: true
         stub_successful_capture_request(order:)
 
-        break unless order.next! while !order.payment?
+        Orders::WorkflowService.new(order).advance_to_payment
       end
 
       it "adds a payment with state complete" do
@@ -112,7 +113,7 @@ describe '
         click_button "Update"
 
         expect(page).to have_link "StripeSCA"
-        expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "completed"
+        expect(Orders::FindPaymentService.new(order.reload).last_payment.state).to eq "completed"
       end
     end
   end
@@ -145,14 +146,54 @@ describe '
       end
     end
 
-    context "that is completed" do
-      let(:payment) { OrderPaymentFinder.new(order.reload).last_payment }
+    context "that is completed", :vcr, :stripe_version do
+      let(:payment) do
+        create(
+          :payment,
+          order:,
+          amount: order.total,
+          payment_method: stripe_payment_method,
+          source: credit_card,
+          response_code: payment_intent.id,
+          state: "completed"
+        )
+      end
+
+      let(:connected_account) do
+        Stripe::Account.create({
+                                 type: 'standard',
+                                 country: 'AU',
+                                 email: 'lettuce.producer@example.com'
+                               })
+      end
+      let(:stripe_test_account) { connected_account.id }
+      # Stripe testing card:
+      #     https://stripe.com/docs/testing?testing-method=payment-methods
+      let(:pm_card) { Stripe::PaymentMethod.retrieve('pm_card_mastercard') }
+      let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id) }
+      let(:payment_intent) do
+        Stripe::PaymentIntent.create(
+          {
+            amount: (order.total * 100).to_i, # given in AUD cents
+            currency: 'aud', # AUD to match order currency
+            payment_method: 'pm_card_mastercard',
+            payment_method_types: ['card'],
+            capture_method: 'automatic',
+            confirm: true
+          },
+          stripe_account: stripe_test_account
+        )
+      end
 
       before do
-        payment.update response_code: "pi_123", amount: order.total, state: "completed"
-        stub_payment_intent_get_request response: { intent_status: "succeeded" },
-                                        stripe_account_header: false
-        stub_refund_request
+        stripe_account.update!(stripe_user_id: stripe_test_account)
+
+        order.update payments: []
+        order.payments << payment
+      end
+
+      after do
+        Stripe::Account.delete(connected_account.id)
       end
 
       it "allows to refund the payment" do
@@ -164,7 +205,7 @@ describe '
 
         page.find('a.icon-void').click
 
-        expect(page).to have_content "VOID"
+        expect(page).to have_content "VOID", wait: 4
         expect(payment.reload.state).to eq "void"
       end
     end

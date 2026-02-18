@@ -14,17 +14,14 @@ end
 
 module Spree
   class TaxRate < ApplicationRecord
-    self.belongs_to_required_by_default = false
-
     acts_as_paranoid
     include CalculatedAdjustments
 
-    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
+    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
     belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
-    has_many :adjustments, as: :originator
+    has_many :adjustments, as: :originator, dependent: nil
 
     validates :amount, presence: true, numericality: true
-    validates :tax_category, presence: true
     validates_with DefaultTaxZoneValidator
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }
@@ -34,7 +31,7 @@ module Spree
       return [] if order.distributor && !order.distributor.charges_sales_tax
       return [] unless order.tax_zone
 
-      all.includes(zone: { zone_members: :zoneable }).load.select do |rate|
+      includes(zone: { zone_members: :zoneable }).load.select do |rate|
         rate.potentially_applicable?(order.tax_zone)
       end
     end
@@ -108,7 +105,7 @@ module Spree
         if default_zone_or_zone_match?(item.order)
           calculator.compute(item)
         else
-          # In this case, it's a refund.
+          # In this case, it's a refund (for instance offering a manual discount via an adjustment)
           calculator.compute(item) * - 1
         end
       else

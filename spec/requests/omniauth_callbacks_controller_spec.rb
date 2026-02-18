@@ -1,57 +1,64 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe OmniauthCallbacksController, type: :request do
+# Devise calls OmniauthCallbacksController for OpenID Connect callbacks.
+RSpec.describe '/user/spree_user/auth/openid_connect/callback' do
   include AuthenticationHelper
 
-  OmniAuth.config.test_mode = true
+  let(:user) { create(:user) }
+  let(:params) { { code: 'code123' } }
 
-  subject do
+  before do
+    OmniAuth.config.test_mode = true
     login_as user
-    post '/user/spree_user/auth/openid_connect/callback', params: { code: 'code123' }
-
-    request.env['devise.mapping'] = Devise.mappings[:spree_user]
-    request.env['omniauth.auth'] = omniauth_response
   end
 
-  let(:user) { create(:user) }
+  def request!
+    post(self.class.top_level_description, params:)
+  end
 
   context 'when the omniauth setup is returning with an authorization' do
-    let!(:omniauth_response) do
+    # The auth hash data has been observed by connecting to the Keycloak server
+    # https://login.lescommuns.org/.
+    before do
       OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
-        'provider' => 'openid_connect',
-        'uid' => 'john@doe.com',
-        'info' => {
-          'email' => 'john@doe.com',
-          'first_name' => 'John',
-          'last_name' => 'Doe'
-        }
+        JSON.parse(file_fixture("omniauth.auth.json").read)
       )
     end
 
     it 'is successful' do
-      subject
+      expect { request! }.to change { OidcAccount.count }.by(1)
 
-      expect(user.provider).to eq "openid_connect"
-      expect(user.uid).to eq "john@doe.com"
-      expect(request.cookies[:omniauth_connect]).to be_nil
-      expect(response.status).to eq(302)
+      account = OidcAccount.last
+      expect(account.provider).to eq "openid_connect"
+      expect(account.uid).to eq "ofn@example.com"
+      expect(response).to have_http_status(:found)
+    end
+
+    context 'when OIDC account already linked with a different user' do
+      before do
+        create(:user, email: "ofn@elsewhere.com")
+          .create_oidc_account!(uid: "ofn@example.com")
+      end
+
+      it 'fails with error message' do
+        expect { request! }.not_to change { OidcAccount.count }
+
+        expect(response).to have_http_status(:found)
+        expect(flash[:error]).to match "ofn@example.com is already associated with another account"
+      end
     end
   end
 
   context 'when the omniauth openid_connect is mocked with an error' do
-    let!(:omniauth_response) do
+    before do
       OmniAuth.config.mock_auth[:openid_connect] = :invalid_credentials
     end
 
     it 'fails with bad auth data' do
-      subject
+      expect { request! }.not_to change { OidcAccount.count }
 
-      expect(user.provider).to be_nil
-      expect(user.uid).to be_nil
-      expect(request.cookies[:omniauth_connect]).to be_nil
-      expect(response.status).to eq(302)
+      expect(response).to have_http_status(:found)
+      expect(flash[:error]).to match "Could not sign in"
     end
   end
 end

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe SubscriptionMailer, type: :mailer do
+RSpec.describe SubscriptionMailer do
   include ActionView::Helpers::SanitizeHelper
 
   describe '#placement_email' do
@@ -35,17 +33,15 @@ describe SubscriptionMailer, type: :mailer do
         body = SubscriptionMailer.deliveries.last.body.encoded
 
         expect(body).to include "This order was automatically created for you."
-        expect(body).to_not include "Unfortunately, not all products " \
+        expect(body).not_to include "Unfortunately, not all products " \
                                     "that you requested were available."
       end
     end
 
     describe "linking to order page" do
-      let(:order_link_href) { "href=\"#{order_url(order)}\"" }
-      let(:order_link_style) { "style='[^']+'" }
-
       let(:shop) { create(:enterprise, allow_order_changes: true) }
 
+      let(:content) { Capybara::Node::Simple.new(body) }
       let(:body) { SubscriptionMailer.deliveries.last.body.encoded }
 
       before { email.deliver_now }
@@ -54,19 +50,16 @@ describe SubscriptionMailer, type: :mailer do
         let(:customer) { create(:customer, enterprise: shop) }
 
         it "provides link to make changes" do
-          expect(body).to match %r{<a #{order_link_href} #{order_link_style}>make changes</a>}
-          expect(body).to_not match %r{
-            <a #{order_link_href} #{order_link_style}>view details of this order</a>
-          }
+          expect(content).to have_link "make changes", href: order_url(order)
+          expect(content).not_to have_link "view details of this order", href: order_url(order)
         end
 
         context "when the distributor does not allow changes to the order" do
           let(:shop) { create(:enterprise, allow_order_changes: false) }
 
           it "provides link to view details" do
-            expect(body).to_not match %r{<a #{order_link_href} #{order_link_style}>make changes</a>}
-            expect(body)
-              .to match %r{<a #{order_link_href} #{order_link_style}>view details of this order</a>}
+            expect(content).not_to have_link "make changes", href: order_url(order)
+            expect(content).to have_link "view details of this order", href: order_url(order)
           end
         end
       end
@@ -75,14 +68,14 @@ describe SubscriptionMailer, type: :mailer do
         let(:customer) { create(:customer, enterprise: shop, user: nil) }
 
         it "does not provide link" do
-          expect(body).to_not match /#{order_link_href}/
+          expect(body).not_to match order_url(order)
         end
 
         context "when the distributor does not allow changes to the order" do
           let(:shop) { create(:enterprise, allow_order_changes: false) }
 
           it "does not provide link" do
-            expect(body).to_not match /#{order_link_href}/
+            expect(body).not_to match order_url(order)
           end
         end
       end
@@ -122,7 +115,7 @@ describe SubscriptionMailer, type: :mailer do
     end
 
     it "display the OFN header by default" do
-      expect(email.body).to include(ContentConfig.url_for(:footer_logo))
+      expect(email.body).to include(ContentConfig.url_for(:logo))
     end
 
     describe "linking to order page" do
@@ -140,7 +133,7 @@ describe SubscriptionMailer, type: :mailer do
         let(:customer) { create(:customer, user: nil) }
 
         it "does not provide link" do
-          expect(email.body).to_not match /#{order_link_href}/
+          expect(email.body).not_to match /#{order_link_href}/
         end
       end
     end
@@ -167,7 +160,7 @@ describe SubscriptionMailer, type: :mailer do
       end
 
       it 'does not display the OFN navigation' do
-        expect(email.body).to_not include(ContentConfig.url_for(:footer_logo))
+        expect(email.body).not_to include(ContentConfig.url_for(:logo))
       end
     end
   end
@@ -236,7 +229,7 @@ describe SubscriptionMailer, type: :mailer do
         let(:customer) { create(:customer, user: nil) }
 
         it "does not provide link" do
-          expect(body).to_not match /#{order_link_href}/
+          expect(body).not_to match /#{order_link_href}/
         end
       end
     end
@@ -269,7 +262,7 @@ describe SubscriptionMailer, type: :mailer do
         expect(body).to include("A total of %d subscriptions were marked " \
                                 "for automatic processing." % 37)
         expect(body).to include 'All were processed successfully.'
-        expect(body).to_not include 'Details of the issues encountered are provided below.'
+        expect(body).not_to include 'Details of the issues encountered are provided below.'
       end
 
       it "renders the shop's logo" do
@@ -370,7 +363,7 @@ describe SubscriptionMailer, type: :mailer do
         expect(body).to include order2.number
 
         # No error messages reported when non provided
-        expect(body).to_not include 'No error message provided'
+        expect(body).not_to include 'No error message provided'
       end
     end
   end
@@ -401,7 +394,7 @@ describe SubscriptionMailer, type: :mailer do
         expect(body).to include("A total of %d subscriptions were marked " \
                                 "for automatic processing." % 37)
         expect(body).to include 'All were processed successfully.'
-        expect(body).to_not include 'Details of the issues encountered are provided below.'
+        expect(body).not_to include 'Details of the issues encountered are provided below.'
       end
     end
 
@@ -497,7 +490,7 @@ describe SubscriptionMailer, type: :mailer do
         expect(body).to include order2.number
 
         # No error messages reported when non provided
-        expect(body).to_not include 'No error message provided'
+        expect(body).not_to include 'No error message provided'
       end
     end
   end

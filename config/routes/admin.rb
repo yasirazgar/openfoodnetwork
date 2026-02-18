@@ -33,13 +33,16 @@ Openfoodnetwork::Application.routes.draw do
       member do
         get :welcome
         patch :register
+        get :new_tag_rule_group
       end
+
+      resources :connected_apps, only: [:create, :destroy]
 
       resources :producer_properties do
         post :update_positions, on: :collection
       end
 
-      resources :tag_rules, only: [:destroy]
+      resources :tag_rules, only: [:destroy, :new]
 
       resources :vouchers, only: [:new, :create]
     end
@@ -67,11 +70,17 @@ Openfoodnetwork::Application.routes.draw do
     post '/product_import/save_data', to: 'product_import#save_data', as: 'product_import_save_async'
     post '/product_import/reset_absent', to: 'product_import#reset_absent_products', as: 'product_import_reset_async'
 
-    constraints FeatureToggleConstraint.new(:admin_style_v3) do
-      resources :products, to: 'products_v3#index', only: :index do
-        patch :bulk_update, on: :collection
-      end
+    resources :dfc_product_imports, only: [:index] do
+      post :import, on: :collection
     end
+
+    # This might be easier to arrange once we rename the controller to plain old "products"
+    post '/products/bulk_update', to: 'products_v3#bulk_update', as: 'products_bulk_update'
+    get '/products', to: 'products_v3#index', as: 'products'
+    delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
+    delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
+    post 'clone/:id', to: 'products_v3#clone', as: 'clone_product'
+    resources :product_preview, only: [:show]
 
     resources :variant_overrides do
       post :bulk_update, on: :collection
@@ -82,13 +91,14 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :customers, only: [:index, :create, :update, :destroy, :show]
 
-    resources :tag_rules, only: [], format: :json do
-      get :map_by_tag, on: :collection
+    resources :tag_rules, only: [] do
+      get :map_by_tag, on: :collection, format: :json
+      get :variant_tag_rules, on: :collection
     end
 
     resource :contents
 
-    resources :column_preferences, only: [], format: :json do
+    resources :column_preferences, only: [] do
       put :bulk_update, on: :collection
     end
 
@@ -99,6 +109,8 @@ Openfoodnetwork::Application.routes.draw do
     resource :terms_of_service_files
 
     resource :matomo_settings, only: [:edit, :update]
+
+    resource :connected_app_settings, only: [:edit, :update]
 
     resources :stripe_accounts, only: [:destroy] do
       get :connect, on: :collection
@@ -113,7 +125,7 @@ Openfoodnetwork::Application.routes.draw do
       put :unpause, on: :member
     end
 
-    resources :oidc_settings, only: :index
+    resources :oidc_settings, only: [:index, :destroy]
 
     resources :subscription_line_items, only: [], format: :json do
       post :build, on: :collection
@@ -125,6 +137,7 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     get '/reports', to: 'reports#index', as: :reports
-    match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: [:get, :post], as: :report
+    match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: :get, as: :report
+    match '/reports/:report_type(/:report_subtype)', to: 'reports#create', via: :post
   end
 end

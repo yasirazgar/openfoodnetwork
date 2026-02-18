@@ -1,9 +1,8 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 
-describe Admin::EnterprisesController, type: :controller do
+RSpec.describe Admin::EnterprisesController do
   let(:user) { create(:user) }
   let(:admin_user) { create(:admin_user) }
   let(:distributor_manager) { create(:user, enterprise_limit: 10, enterprises: [distributor]) }
@@ -168,7 +167,7 @@ describe Admin::EnterprisesController, type: :controller do
         spree_post :update, update_params
 
         distributor.reload
-        expect(distributor.users).to_not include user
+        expect(distributor.users).not_to include user
       end
 
       it "updates the contact for notifications" do
@@ -190,7 +189,7 @@ describe Admin::EnterprisesController, type: :controller do
         }
 
         expect { spree_post :update, params }.
-          to_not change { distributor.contact }
+          not_to change { distributor.contact }
       end
 
       it "updates enterprise preferences" do
@@ -223,7 +222,7 @@ describe Admin::EnterprisesController, type: :controller do
             expect(Spree::Property.count).to be 1
             expect(ProducerProperty.count).to be 0
             property_names = producer.reload.properties.map(&:name)
-            expect(property_names).to_not include 'a different name'
+            expect(property_names).not_to include 'a different name'
           end
         end
 
@@ -408,6 +407,16 @@ describe Admin::EnterprisesController, type: :controller do
 
         distributor.reload
         expect(distributor.users).to include user
+      end
+
+      it "allows 'external_billing_id' to be changed" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        enterprise_params =
+          { id: profile_enterprise, enterprise: { external_billing_id: 'INV123456' } }
+
+        spree_put :update, enterprise_params
+        profile_enterprise.reload
+        expect(profile_enterprise.external_billing_id).to eq 'INV123456'
       end
     end
 
@@ -721,7 +730,7 @@ describe Admin::EnterprisesController, type: :controller do
         it "scopes @collection to enterprises editable by the user" do
           get :index, format: :json
           expect(assigns(:collection)).to include enterprise1, enterprise2
-          expect(assigns(:collection)).to_not include enterprise3
+          expect(assigns(:collection)).not_to include enterprise3
         end
       end
     end

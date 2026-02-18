@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module WebHelper
+  include TomselectHelper
+
   def have_input(name, opts = {})
     selector  = "[name='#{name}']"
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
@@ -19,7 +21,7 @@ module WebHelper
   end
 
   def flash_message
-    find('.flash', visible: false).text(:all).strip
+    find('.flash .msg', visible: false).text(:all).strip
   end
 
   def handle_js_confirm(accept = true)
@@ -31,7 +33,7 @@ module WebHelper
     page.execute_script("I18n.locale = '#{locale}'")
   end
 
-  def get_i18n_locale
+  def pick_i18n_locale
     page.evaluate_script("I18n.locale;")
   end
 
@@ -86,30 +88,21 @@ module WebHelper
     find(:css, ".select2-result-label", text: options[:select_text] || value).click
   end
 
-  def tomselect_open(field_name)
-    page.find("##{field_name}-ts-control").click
-  end
-
-  def tomselect_multiselect(value, options)
-    tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
-    tomselect_wrapper.find(".ts-control").click
-    tomselect_wrapper.find(:css, '.ts-dropdown.multi .ts-dropdown-content .option',
-                           text: value).click
-  end
-
-  def tomselect_search_and_select(value, options)
-    tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
-    tomselect_wrapper.find(".ts-control").click
-    tomselect_wrapper.find(:css, '.ts-dropdown input.dropdown-input').set(value)
-    tomselect_wrapper.find(".ts-control").click
-    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
+  def clear_select2(selector)
+    page.find(selector).scroll_to(page.find(selector))
+      .find(:css, '.select2-choice, .select2-search-field').click
+    page.find(selector).scroll_to(page.find(selector))
+      .find(:css, '.select2-choice, .select2-search-field').send_keys :backspace
+    page.find(selector).scroll_to(page.find(selector))
+      .find(:css, '.select2-choice, .select2-search-field').send_keys :backspace
+    find("body").send_keys(:escape)
   end
 
   def request_monitor_finished(controller = nil)
     page.evaluate_script("#{angular_scope(controller)}.scope().RequestMonitor.loading == false")
   end
 
-  def fill_in_tag(tag_name, selector = "tags-input .tags input")
+  def fill_in_tag(tag_name, selector = ".tags-input .tags input")
     expect(page).to have_selector selector
     find(:css, selector).click
     find(:css, selector).set "#{tag_name}\n"

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Enterprise Summary Fee with Tax Report By Producer" do
+RSpec.describe "Enterprise Summary Fee with Tax Report By Producer" do
   #   1 order cycle has:
   #     - coordinator fees price 20
   #     - incoming exchange fees 15
@@ -16,7 +16,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:table_header){
     ["Distributor", "Producer", "Producer Tax Status", "Order Cycle", "Name", "Type", "Owner",
      "Tax Category", "Tax Rate Name", "Tax Rate", "Total excl. tax ($)", "Tax",
-     "Total incl. tax ($)"].join(" ").upcase
+     "Total incl. tax ($)"].join(" ")
   }
 
   let!(:state_zone){ create(:zone_with_state_member) }
@@ -43,10 +43,10 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     create(:supplier_enterprise, name: 'Supplier2', charges_sales_tax: true,
                                  owner_id: supplier2_owner.id)
   }
-  let!(:product){ create(:simple_product, supplier: ) }
-  let!(:product2){ create(:simple_product, supplier: supplier2 ) }
-  let!(:variant){ create(:variant, product_id: product.id, tax_category:) }
-  let!(:variant2){ create(:variant, product_id: product2.id, tax_category:) }
+  let!(:product){ create(:simple_product) }
+  let!(:product2){ create(:simple_product) }
+  let!(:variant){ create(:variant, product_id: product.id, tax_category:, supplier:) }
+  let!(:variant2){ create(:variant, product_id: product2.id, tax_category:, supplier: supplier2) }
   let!(:distributor_owner) { create(:user, enterprise_limit: 1) }
   let!(:distributor){
     distributor = create(:distributor_enterprise_with_tax, name: 'Distributor',
@@ -169,17 +169,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     order2
   }
 
-  before do
-    product.update!({
-                      tax_category_id: tax_category.id,
-                      supplier_id: supplier.id
-                    })
-    product2.update!({
-                       tax_category_id: tax_category.id,
-                       supplier_id: supplier2.id
-                     })
-  end
-
   context 'added tax' do
     #   1 order cycle has:
     #     - coordinator fees  (20) 1.5% = 0.30, 2.5% = 0.50
@@ -277,7 +266,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       context "with line items from a single supplier" do
         it 'generates the report and displays fees for the respective suppliers' do
           visit_report
-          click_on "Go"
+          run_report
 
           expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -313,8 +302,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find("#s2id_q_order_cycle_id_in").click
             find('li', text: order_cycle.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
@@ -489,8 +477,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find("#s2id_q_order_cycle_id_in").click
             find('li', text: order_cycle3.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
@@ -520,8 +507,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find("#s2id_supplier_id_in").click
             find('li', text: supplier2.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
@@ -535,18 +521,17 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             expect(table).to have_content(cost_of_produce2)
             expect(table).to have_content(summary_row2)
 
-            expect(table).to_not have_content(supplier_state_tax1)
-            expect(table).to_not have_content(supplier_country_tax1)
-            expect(table).to_not have_content(cost_of_produce1)
-            expect(table).to_not have_content(summary_row1)
+            expect(table).not_to have_content(supplier_state_tax1)
+            expect(table).not_to have_content(supplier_country_tax1)
+            expect(table).not_to have_content(cost_of_produce1)
+            expect(table).not_to have_content(summary_row1)
           end
 
           it "should filter by fee name" do
             page.find(fee_name_selector).click
             find('li', text: supplier_fees.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
 
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -554,19 +539,19 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
             expect(table).to have_content(supplier_state_tax1)
             expect(table).to have_content(supplier_country_tax1)
-            expect(table).to_not have_content(distributor_state_tax1)
-            expect(table).to_not have_content(distributor_country_tax1)
-            expect(table).to_not have_content(coordinator_state_tax1)
-            expect(table).to_not have_content(coordinator_country_tax1)
+            expect(table).not_to have_content(distributor_state_tax1)
+            expect(table).not_to have_content(distributor_country_tax1)
+            expect(table).not_to have_content(coordinator_state_tax1)
+            expect(table).not_to have_content(coordinator_country_tax1)
             expect(table).to have_content(cost_of_produce1)
             expect(table).to have_content(summary_row1)
 
             expect(table).to have_content(supplier_state_tax3)
             expect(table).to have_content(supplier_country_tax3)
-            expect(table).to_not have_content(distributor_state_tax3)
-            expect(table).to_not have_content(distributor_country_tax3)
-            expect(table).to_not have_content(coordinator_state_tax3)
-            expect(table).to_not have_content(coordinator_country_tax3)
+            expect(table).not_to have_content(distributor_state_tax3)
+            expect(table).not_to have_content(distributor_country_tax3)
+            expect(table).not_to have_content(coordinator_state_tax3)
+            expect(table).not_to have_content(coordinator_country_tax3)
             expect(table).to have_content(cost_of_produce3)
             expect(table).to have_content(summary_row3)
           end
@@ -575,17 +560,16 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find(fee_owner_selector).click
             find('li', text: supplier.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
             expect(table).to have_content(supplier_state_tax1)
             expect(table).to have_content(supplier_country_tax1)
-            expect(table).to_not have_content(distributor_state_tax1)
-            expect(table).to_not have_content(distributor_country_tax1)
-            expect(table).to_not have_content(coordinator_state_tax1)
-            expect(table).to_not have_content(coordinator_country_tax1)
+            expect(table).not_to have_content(distributor_state_tax1)
+            expect(table).not_to have_content(distributor_country_tax1)
+            expect(table).not_to have_content(coordinator_state_tax1)
+            expect(table).not_to have_content(coordinator_country_tax1)
             expect(table).to have_content(cost_of_produce1)
             expect(table).to have_content(summary_row_after_filtering_by_fee_owner)
           end
@@ -690,7 +674,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     context "with line items from a single supplier" do
       it 'generates the report and displays fees for the respective suppliers' do
         visit_report
-        click_on "Go"
+        run_report
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -828,7 +812,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
       it 'should list all the tax rates' do
         visit_report
-        click_on "Go"
+        run_report
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -923,7 +907,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
       it 'should list all the tax rates' do
         visit_report
-        click_on "Go"
+        run_report
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -951,6 +935,5 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       report_type: :enterprise_fee_summary,
       report_subtype: :enterprise_fees_with_tax_report_by_producer
     )
-    expect(page).to have_button("Go")
   end
 end

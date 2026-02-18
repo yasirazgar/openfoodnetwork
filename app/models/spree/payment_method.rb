@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'concerns/payment_method_distributors'
-
 module Spree
   class PaymentMethod < ApplicationRecord
     include CalculatedAdjustments
@@ -31,8 +29,7 @@ module Spree
       return where(nil) if user.admin?
 
       joins(:distributors).
-        where('distributors_payment_methods.distributor_id IN (?)',
-              user.enterprises.select(&:id)).
+        where(distributors_payment_methods: { distributor_id: user.enterprises.select(&:id) }).
         select('DISTINCT spree_payment_methods.*')
     }
 
@@ -42,7 +39,7 @@ module Spree
     }
 
     scope :for_distributor, ->(distributor) {
-      joins(:distributors).where('enterprises.id = ?', distributor)
+      joins(:distributors).where(enterprises: { id: distributor })
     }
 
     scope :for_subscriptions, -> { where(type: Subscription::ALLOWED_PAYMENT_METHOD_TYPES) }
@@ -54,10 +51,6 @@ module Spree
         .where(display_on: [display_on, "", nil])
         .where(environment: [Rails.env, "", nil])
     }
-
-    def self.providers
-      Rails.application.config.spree.payment_methods
-    end
 
     def configured?
       !stripe? || stripe_configured?
@@ -96,8 +89,8 @@ module Spree
       type.demodulize.downcase
     end
 
-    def self.find_with_destroyed(*args)
-      unscoped { find(*args) }
+    def self.find_with_destroyed(*)
+      unscoped { find(*) }
     end
 
     def payment_profiles_supported?
@@ -121,8 +114,8 @@ module Spree
     end
 
     def self.clean_name
-      i18n_key = "spree.admin.payment_methods.providers." + name.demodulize.downcase
-      I18n.t(i18n_key)
+      scope = "spree.admin.payment_methods.providers"
+      I18n.t(name.demodulize.downcase, scope:)
     end
 
     private

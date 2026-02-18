@@ -42,8 +42,10 @@ angular.module('admin.payments').factory 'Payment', (AdminStripeElements, curren
 
     submit: =>
       munged = @preprocess()
-      PaymentResource.create({order_id: munged.order_id}, munged, (response, headers, status)=>
-        $window.location.pathname = "/admin/orders/" + munged.order_id + "/payments"
+      PaymentResource.create({order_id: munged.order_id}, munged, (response, headers, status) ->
+        rawHtml = Object.values(response).join('').replace('[object Object]true', '')
+        document.body.innerHTML = rawHtml
+        $window.history.pushState({}, '', "/admin/orders/" + munged.order_id + "/payments")
       , (response) ->
         StatusMessage.display 'error', t("spree.admin.payments.source_forms.stripe.error_saving_payment")
       )

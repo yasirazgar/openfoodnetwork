@@ -2,7 +2,9 @@
 
 require 'system_helper'
 
-describe "Sales Tax Totals By order" do
+RSpec.describe "Sales Tax Totals By order" do
+  include ReportsHelper
+
   #  Scenarion 1: added tax
   #  1 producer
   #  1 distributor
@@ -15,18 +17,18 @@ describe "Sales Tax Totals By order" do
     [
       "Distributor",
       "Order Cycle",
-      "Order Number",
+      "Order number",
       "Tax Category",
       "Tax Rate Name",
       "Tax Rate",
-      "Total excl. Tax ($)",
+      "Total excl. tax ($)",
       "Tax",
-      "Total incl. Tax ($)",
+      "Total incl. tax ($)",
       "First Name",
       "Last Name",
       "Code",
       "Email"
-    ].join(" ").upcase
+    ].join(" ")
   }
   let!(:state_zone){ create(:zone_with_state_member) }
   let!(:country_zone){ create(:zone_with_member) }
@@ -100,7 +102,7 @@ describe "Sales Tax Totals By order" do
       # the enterprise fees can be known only when the user selects the variants
       # we'll need to create them by calling recreate_all_fees!
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
     end
 
     it "generates the report" do
@@ -110,8 +112,7 @@ describe "Sales Tax Totals By order" do
       visit admin_reports_path
       click_on "Sales Tax Totals By Order"
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
       expect(page.find("table.report__table tbody").text).to have_content([
@@ -167,12 +168,11 @@ describe "Sales Tax Totals By order" do
 
     it "generates the report" do
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
 
       visit_sales_tax_totals_by_order
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
       expect(page.find("table.report__table tbody").text).to have_content([
@@ -321,7 +321,7 @@ describe "Sales Tax Totals By order" do
 
     before do
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
 
       customer2.update!({ first_name: 'c2fname', last_name: 'c2lname', code: 'DEF456' })
       order2.line_items.create({ variant:, quantity: 1, price: 200 })
@@ -333,14 +333,13 @@ describe "Sales Tax Totals By order" do
                        email: 'order2@example.com'
                      })
       order2.recreate_all_fees!
-      OrderWorkflow.new(order2).complete!
+      Orders::WorkflowService.new(order2).complete!
 
       visit_sales_tax_totals_by_order
     end
 
     it "should load all the orders" do
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -365,8 +364,7 @@ describe "Sales Tax Totals By order" do
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer1.email).click
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -384,8 +382,7 @@ describe "Sales Tax Totals By order" do
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer2.email).click
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -404,7 +401,7 @@ describe "Sales Tax Totals By order" do
       find('li', text: customer1.email).click
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer2.email).click
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -462,7 +459,6 @@ describe "Sales Tax Totals By order" do
 
       it_behaves_like "reports generated as", "CSV", "csv", false
       it_behaves_like "reports generated as", "Spreadsheet", "xlsx", true
-      it_behaves_like "reports generated as", "PDF", "pdf", true
     end
   end
 
@@ -472,24 +468,5 @@ describe "Sales Tax Totals By order" do
       report_type: :sales_tax,
       report_subtype: :sales_tax_totals_by_order
     )
-  end
-
-  def generate_report
-    click_on "Go"
-    wait_for_download
-  end
-
-  def load_file_txt(extension, downloaded_filename)
-    case extension
-    when "csv"
-      CSV.read(downloaded_filename).join(" ")
-    when "xlsx"
-      xlsx = Roo::Excelx.new(downloaded_filename)
-      xlsx.map(&:to_a).join(" ")
-    when "pdf"
-      # Load PDF pages and contents join into one big string
-      pdf = PDF::Reader.new(downloaded_filename)
-      pdf.pages.map(&:text).join(" ")
-    end
   end
 end

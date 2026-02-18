@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer I want to view products" do
+RSpec.describe "As a consumer I want to view products" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
@@ -25,11 +25,11 @@ describe "As a consumer I want to view products" do
                                   orders_close_at: 2.days.from_now)
     }
     let(:product) {
-      create(:simple_product, supplier:, primary_taxon: taxon, properties: [property],
-                              name: "Beans")
+      create(:simple_product, supplier_id: supplier.id, primary_taxon: taxon,
+                              properties: [property], name: "Beans")
     }
     let(:product2) {
-      create(:product, supplier:, primary_taxon: taxon2, properties: [property2],
+      create(:product, supplier_id: supplier.id, primary_taxon: taxon2, properties: [property2],
                        name: "Chickpeas")
     }
     let(:variant) { product.variants.first }
@@ -38,7 +38,7 @@ describe "As a consumer I want to view products" do
     let(:order) { create(:order, distributor:) }
 
     before do
-      set_order order
+      pick_order order
     end
 
     describe "supplier's name is displayed" do
@@ -76,15 +76,23 @@ describe "As a consumer I want to view products" do
         product.description = '<p><b>Formatted</b> product description: Lorem ipsum dolor sit amet,
                               consectetur adipiscing elit. Morbi venenatis metus diam,
                                eget scelerisque nibh auctor non. </p> Link to an ' \
-                              '<a href="http://google.fr" target="_blank">external site</a>' \
+                              '<a href="http://google.fr">external site</a>' \
                               '<img src="https://www.openfoodnetwork.org/wp-content/uploads/2019/' \
                               '05/logo-ofn-global-web@2x.png" alt="open food network logo" />'
         product.save!
 
         visit shop_path
         expect(page).to have_content product.name
-        expect_product_description_html_to_be_displayed(product, product.description, nil,
-                                                        truncate: true)
+
+        # It truncates a long product description.
+        within_product_description(product) do
+          expect(html).to include "<b>Formatted</b> product description: Lorem ipsum"
+          expect(page).to have_content "..."
+        end
+        within_product_modal(product) do
+          expect(html).to include product.description
+          expect(find_link('external site')[:target]).to eq('_blank')
+        end
       end
 
       it "does not show unsecure HTML" do
@@ -94,9 +102,24 @@ describe "As a consumer I want to view products" do
         visit shop_path
         expect(page).to have_content product.name
 
-        expect_product_description_html_to_be_displayed(
-          product, "<p>Safe</p>", "<script>alert('Dangerous!');</script>", truncate: false
-        )
+        within_product_description(product) do
+          expect(html).to include "<p>Safe</p>"
+          expect(html).not_to include "<script>alert('Dangerous!');</script>"
+          expect(page).to have_content "alert('Dangerous!'); Safe"
+        end
+        within_product_modal(product) do
+          expect(html).to include "<p>Safe</p>"
+          expect(html).not_to include "<script>alert('Dangerous!');</script>"
+          expect(page).to have_content "alert('Dangerous!'); Safe"
+        end
+      end
+
+      it "opens link in product description inside another window" do
+        product.description = "<a href='https://api.rubyonrails.org/'>external site</a>"
+        product.save!
+
+        visit shop_path
+        expect(find_link('external site')[:target]).to eq('_blank')
       end
     end
 
@@ -107,7 +130,7 @@ describe "As a consumer I want to view products" do
         add_variant_to_order_cycle(exchange1, variant2)
       end
 
-      context "product taxonomies" do
+      context "product taxons" do
         before do
           distributor.preferred_shopfront_product_sorting_method = "by_category"
           distributor.preferred_shopfront_taxon_order = taxon.id.to_s
@@ -143,22 +166,13 @@ describe "As a consumer I want to view products" do
     end
   end
 
-  def expect_product_description_html_to_be_displayed(product, html, not_include = nil,
-                                                      truncate: false)
-    # check inside list of products
-    within "#product-#{product.id} .product-description" do
-      expect(html).to include(html)
-      expect(html).not_to include(not_include) if not_include
-      expect(page).to have_content "..." if truncate # it truncates a long product description
-    end
-
-    # check in product description modal
+  def within_product_modal(product, &)
     click_link product.name
-    expect(page).to have_selector '.reveal-modal'
     modal_should_be_open_for product
-    within(".reveal-modal") do
-      expect(html).to include(html)
-      expect(html).not_to include(not_include) if not_include
-    end
+    within(".reveal-modal", &)
+  end
+
+  def within_product_description(product, &)
+    within("#product-#{product.id} .product-description", &)
   end
 end

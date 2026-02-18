@@ -24,32 +24,27 @@ module Spree
       end
 
       def create
+        # Try to redeem VINE voucher first as we don't want to create a payment and complete
+        # the order if it fails
+        return redirect_to spree.admin_order_payments_path(@order) unless redeem_vine_voucher
+
         @payment = @order.payments.build(object_params)
         load_payment_source
-
         begin
           unless @payment.save
             redirect_to spree.admin_order_payments_path(@order)
             return
           end
 
-          if @order.completed?
-            authorize_stripe_sca_payment
-            @payment.process_offline!
-            flash[:success] = flash_message_for(@payment, :successfully_created)
+          ::Orders::WorkflowService.new(@order).complete! unless @order.completed?
 
-            redirect_to spree.admin_order_payments_path(@order)
-          else
-            OrderWorkflow.new(@order).complete!
-            authorize_stripe_sca_payment
-            @payment.process_offline!
-
-            flash[:success] = Spree.t(:new_order_completed)
-            redirect_to spree.edit_admin_order_url(@order)
-          end
+          authorize_stripe_sca_payment
+          @payment.process_offline!
+          flash[:success] = flash_message_for(@payment, :successfully_created)
+          redirect_to spree.admin_order_payments_path(@order)
         rescue Spree::Core::GatewayError => e
           flash[:error] = e.message.to_s
-          redirect_to spree.new_admin_order_payment_path(@order)
+          redirect_to spree.admin_order_payments_path(@order)
         end
       end
 
@@ -59,6 +54,10 @@ module Spree
         event = params[:e]
         return unless event && @payment.payment_source
 
+        # capture_and_complete_order will complete the order, so we want to try to redeem VINE
+        # voucher first and exit if it fails
+        return if event == "capture_and_complete_order" && !redeem_vine_voucher
+
         # Because we have a transition method also called void, we do this to avoid conflicts.
         event = "void_transaction" if event == "void"
         if allowed_events.include?(event) && @payment.public_send("#{event}!")
@@ -67,6 +66,8 @@ module Spree
           flash[:error] = t(:cannot_perform_operation)
         end
       rescue StandardError => e
+        logger.error e.message
+        Alert.raise(e)
         flash[:error] = e.message
       ensure
         redirect_to request.referer
@@ -140,7 +141,8 @@ module Spree
       #
       # Otherwise redirect user to that step
       def can_transition_to_payment
-        return if @order.payment? || @order.complete? || @order.canceled? || @order.resumed?
+        return if @order.confirmation? || @order.payment? ||
+                  @order.complete? || @order.canceled? || @order.resumed?
 
         flash[:notice] = Spree.t(:fill_in_customer_info)
         redirect_to spree.edit_admin_order_customer_url(@order)
@@ -184,7 +186,24 @@ module Spree
       end
 
       def allowed_events
-        %w{capture void_transaction credit refund resend_authorization_email}
+        %w{capture void_transaction credit refund resend_authorization_email
+           capture_and_complete_order}
+      end
+
+      def redeem_vine_voucher
+        vine_voucher_redeemer = Vine::VoucherRedeemerService.new(order: @order)
+        if vine_voucher_redeemer.redeem == false
+          # rubocop:disable Rails/DeprecatedActiveModelErrorsMethods
+          flash[:error] = if vine_voucher_redeemer.errors.keys.include?(:redeeming_failed)
+                            vine_voucher_redeemer.errors[:redeeming_failed]
+                          else
+                            I18n.t('checkout.errors.voucher_redeeming_error')
+                          end
+          # rubocop:enable Rails/DeprecatedActiveModelErrorsMethods
+          return false
+        end
+
+        true
       end
     end
   end

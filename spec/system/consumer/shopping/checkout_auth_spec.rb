@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer I want to check out my cart" do
+RSpec.describe "As a consumer I want to check out my cart" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
@@ -17,7 +17,7 @@ describe "As a consumer I want to check out my cart" do
                                   coordinator: create(:distributor_enterprise),
                                   variants: [product.variants.first])
     }
-    let(:product) { create(:simple_product, supplier:) }
+    let(:product) { create(:simple_product, supplier_id: supplier.id) }
     let(:order) { create(:order, order_cycle:, distributor:) }
     let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
     let(:user) { create(:user, bill_address: address, ship_address: address) }
@@ -25,16 +25,16 @@ describe "As a consumer I want to check out my cart" do
     after { Warden.test_reset! }
 
     before do
-      set_order order
+      pick_order order
       add_product_to_cart order, product
     end
 
-    context "on split_checkout" do
+    context "on checkout" do
       it "does not render the login form when logged in" do
         login_as user
         visit checkout_path
         within "section[role='main']" do
-          expect(page).to have_no_content "Login"
+          expect(page).not_to have_content "Login"
           expect(page).to have_checkout_details
         end
       end
@@ -58,7 +58,7 @@ describe "As a consumer I want to check out my cart" do
           within(".login-modal") { click_button 'Login' }
         end
 
-        context "and populating user details on (split_checkout)" do
+        context "and populating user details" do
           it "should allow proceeding to the next step" do
             expect(page).to have_content("Logged in successfully")
             click_button "Next - Payment method"

@@ -13,14 +13,23 @@ input[type="date"],
 input[type="datetime"],
 input[type="time"],
 input[type="number"],
-textarea,
-fieldset {
-  @include border-radius($border-radius);
-  padding: $vpadding-txt $hpadding-txt;
-  border: 1px solid $lighter-grey;
+textarea {
+  padding: ($vpadding-txt - 1px) ($hpadding-txt - 1px); // Minus 1px for border
+  border: $border-input;
+  border-radius: $border-radius;
   color: $color-txt-text;
-  font-size: 90%;
-  background-color: $lighter-grey;
+  font-size: 14px;
+  line-height: 22px;
+
+  // Appears just like other text on the page.
+  // See table.products tr:hover for example of revealing them
+  .naked_inputs & {
+    background-color: inherit;
+    height: auto;
+    font-size: inherit;
+    font-weight: inherit;
+    border-color: transparent;
+  }
 
   &:focus {
     outline: none;
@@ -28,12 +37,25 @@ fieldset {
   }
 
   &[disabled] {
-    opacity: 0.7;
+    color: $color-txt-disabled-text;
+    border-color: $color-txt-disabled-brd;
   }
 
-  &.modified {
-    border-color: $color-txt-modified-brd;
+  &.changed {
+    border-color: $color-txt-changed-brd;
   }
+}
+
+input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  margin-right: 3px;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+  accent-color: $color-checkbox-fill;
 }
 
 textarea {
@@ -45,22 +67,19 @@ textarea {
 }
 
 label {
+  display: inline-block;
   font-weight: 600;
   font-size: 85%;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   color: $near-black;
-
-  &.inline {
-    display: inline-block !important;
-  }
-
-  &.block {
-    display: block !important;
-  }
 }
 
 .label-block label {
   display: block;
+}
+
+.label-inline label {
+  display: inline;
 }
 
 span.info {
@@ -76,16 +95,12 @@ span.info {
   padding: 10px 0;
 
   &.checkbox {
-    min-height: 70px;
-
-    input[type="checkbox"] {
-      display: inline-block;
-      width: auto;
-    }
-
     label {
       cursor: pointer;
       display: block;
+      font-size: inherit;
+      font-weight: normal;
+      margin-bottom: 0;
     }
   }
 
@@ -258,11 +273,11 @@ fieldset {
 }
 
 .form-actions {
-  @include defaultBoxShadow;
+  box-shadow: $box-shadow;
   background-color: $fair-pink;
   border: none;
-  border-left: 4px solid $red;
-  border-radius: 4px;
+  border-left: $border-radius solid $red;
+  border-radius: $border-radius;
   margin: 0.5em 0;
   padding: 0;
 
@@ -282,15 +297,34 @@ fieldset {
   text-align: center;
 }
 
+.modified_summary {
+  font-size: inherit;
+}
+
+.error_summary {
+  font-size: inherit;
+
+  @extend .icon-remove-sign;
+  &:before {
+    font-family: FontAwesome;
+    color: $color-error;
+  }
+}
+
 select {
   @extend input, [type="text"];
   background-color: white;
 }
 
+.rendering-options {
+  .inline-checkbox {
+    margin-top: 2px;
+  }
+}
+
 .inline-checkbox {
   display: inline-flex;
   align-items: center;
-  margin-top: 3px;
 
   input,
   label {

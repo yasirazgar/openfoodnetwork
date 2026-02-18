@@ -2,7 +2,7 @@
 
 require_relative "../swagger_helper"
 
-describe "Persons", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
+RSpec.describe "Persons", swagger_doc: "dfc.yaml" do
   let(:user) { create(:oidc_user, id: 10_000) }
   let(:other_user) { create(:oidc_user) }
 
@@ -26,7 +26,7 @@ describe "Persons", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true
         let(:id) { other_user.id }
 
         run_test! do
-          expect(response.body).to_not include "dfc-b:Person"
+          expect(response.body).not_to include "dfc-b:Person"
         end
       end
     end

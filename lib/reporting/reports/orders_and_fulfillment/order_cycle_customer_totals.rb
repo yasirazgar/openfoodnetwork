@@ -8,7 +8,6 @@ module Reporting
         # rubocop:disable Metrics/AbcSize
         # rubocop:disable Metrics/MethodLength
         # rubocop:disable Metrics/PerceivedComplexity
-        # rubocop:disable Metrics/CyclomaticComplexity
         # rubocop:disable Naming/VariableNumber
         def columns
           {
@@ -23,12 +22,16 @@ module Reporting
             product: product_name,
             variant: variant_name,
 
-            quantity: proc { |line_items| line_items.to_a.sum(&:quantity) },
-            item_price: proc { |line_items| line_items.sum(&:amount) },
-            item_fees_price: proc { |line_items| line_items.sum(&:amount_with_adjustments) },
+            quantity: proc { |line_items| line_items.map(&:quantity).sum(&:to_i) },
+            item_price: proc { |line_items| line_items.map(&:amount).sum(&:to_f) },
+            item_fees_price: proc { |line_items|
+              line_items.map(&:amount_with_adjustments).sum(&:to_f)
+            },
             admin_handling_fees: proc { |_line_items| "" },
             ship_price: proc { |_line_items| "" },
             pay_fee_price: proc { |_line_items| "" },
+            voucher_label: proc { |_line_items| "" },
+            voucher_amount: proc { |_line_items| "" },
             total_price: proc { |_line_items| "" },
             paid: proc { |line_items| line_items.all? { |li| li.order.paid? } },
 
@@ -64,13 +67,15 @@ module Reporting
 
             order_number: proc { |line_items| line_items.first.order.number },
             date: proc { |line_items| line_items.first.order.completed_at.strftime("%F %T") },
-            final_weight_volume: proc { |line_items| line_items.sum(&:final_weight_volume) },
+            final_weight_volume: proc { |line_items|
+              line_items.map(&:final_weight_volume).sum(&:to_f)
+            },
+            shipment_state: proc { |line_items| line_items.first.order.shipment_state },
           }
         end
         # rubocop:enable Metrics/AbcSize
         # rubocop:enable Metrics/MethodLength
         # rubocop:enable Metrics/PerceivedComplexity
-        # rubocop:enable Metrics/CyclomaticComplexity
         # rubocop:enable Naming/VariableNumber
 
         def rules
@@ -91,7 +96,7 @@ module Reporting
         end
 
         def line_item_includes
-          [{ variant: { product: :supplier },
+          [{ variant: [:product, :supplier],
              order: [:bill_address, :ship_address, :order_cycle, :adjustments, :payments,
                      :user, :distributor, :shipments] }]
         end
@@ -105,7 +110,7 @@ module Reporting
         def default_params
           super.merge(
             {
-              fields_to_hide: [:final_weight_volume]
+              fields_to_hide: %i[final_weight_volume voucher_label voucher_amount shipment_state]
             }
           )
         end
@@ -124,11 +129,13 @@ module Reporting
           {
             hub: rows.last.hub,
             customer: rows.last.customer,
-            item_price: rows.sum(&:item_price),
-            item_fees_price: rows.sum(&:item_fees_price),
+            item_price: rows.map(&:item_price).sum(&:to_f),
+            item_fees_price: rows.map(&:item_fees_price).sum(&:to_f),
             admin_handling_fees: order.admin_and_handling_total,
             ship_price: order.ship_total,
             pay_fee_price: order.payment_fee,
+            voucher_label: voucher_label(order),
+            voucher_amount: voucher_amount(order),
             total_price: order.total,
             paid: order.paid?,
             comments: order.special_instructions,
@@ -162,6 +169,23 @@ module Reporting
           distributor = line_items.first.order.distributor
           user = line_items.first.order.user
           user&.customer_of(distributor)
+        end
+
+        def voucher_label(order)
+          return '' unless voucher_applicable?(order)
+
+          voucher = order.voucher_adjustments.take.originator
+          voucher.code.to_s
+        end
+
+        def voucher_amount(order)
+          return '' unless voucher_applicable?(order)
+
+          order.pre_discount_total - order.total
+        end
+
+        def voucher_applicable?(order)
+          order.voucher_adjustments.present?
         end
       end
     end

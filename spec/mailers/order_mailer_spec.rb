@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe Spree::OrderMailer do
+RSpec.describe Spree::OrderMailer do
   describe '#confirm_email_for_customer' do
     subject(:email) { described_class.confirm_email_for_customer(order) }
 
@@ -35,18 +33,18 @@ describe Spree::OrderMailer do
     end
 
     it "doesn't aggressively escape double quotes body" do
-      expect(email.body).to_not include("&quot;")
+      expect(email.body).not_to include("&quot;")
     end
 
     it "accepts an order id as an alternative to an Order object" do
       expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
         described_class.confirm_email_for_customer(order.id).deliver_now
-      }.to_not raise_error
+      }.not_to raise_error
     end
 
     it "display the OFN header by default" do
-      expect(email.body).to include(ContentConfig.url_for(:footer_logo))
+      expect(email.body).to include(ContentConfig.url_for(:logo))
     end
 
     context 'when hide OFN navigation is enabled for the distributor of the order' do
@@ -55,7 +53,7 @@ describe Spree::OrderMailer do
       end
 
       it 'does not display the OFN navigation' do
-        expect(email.body).to_not include(ContentConfig.url_for(:footer_logo))
+        expect(email.body).not_to include(ContentConfig.url_for(:logo))
       end
     end
   end
@@ -67,6 +65,10 @@ describe Spree::OrderMailer do
 
     it 'renders the shared/_payment.html.haml partial' do
       expect(email.body).to include('Payment summary')
+    end
+
+    it "sets a reply-to of the customer email" do
+      expect(email.reply_to).to eq([order.email])
     end
 
     context 'when the order has outstanding balance' do
@@ -91,7 +93,7 @@ describe Spree::OrderMailer do
       expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
         Spree::OrderMailer.cancel_email(order.id).deliver_now
-      }.to_not raise_error
+      }.not_to raise_error
     end
   end
 
@@ -115,11 +117,11 @@ describe Spree::OrderMailer do
     let!(:cancel_email) { Spree::OrderMailer.cancel_email(order) }
 
     specify do
-      expect(confirmation_email.body).to_not include("Ineligible Adjustment")
+      expect(confirmation_email.body).not_to include("Ineligible Adjustment")
     end
 
     specify do
-      expect(cancel_email.body).to_not include("Ineligible Adjustment")
+      expect(cancel_email.body).not_to include("Ineligible Adjustment")
     end
   end
 
@@ -149,6 +151,28 @@ describe Spree::OrderMailer do
 
     it "includes a link to the cancelled order in admin" do
       expect(mail.body).to match /#{admin_order_link_href}/
+    end
+
+    it "sets a reply-to of the customer email" do
+      expect(mail.reply_to).to eq([order.email])
+    end
+  end
+
+  describe "#cancel_email (for_customer)" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, distributor:, state: "canceled") }
+    let(:mail) { Spree::OrderMailer.cancel_email(order) }
+
+    it "sends an email to the customer" do
+      expect(mail.to).to eq([order.email])
+    end
+
+    it "displays the order number" do
+      expect(mail.body).to include(order.number.to_s)
+    end
+
+    it "sets a reply-to of the customer email" do
+      expect(mail.reply_to).to eq([order.distributor.contact.email])
     end
   end
 
@@ -226,12 +250,12 @@ describe Spree::OrderMailer do
                        data: invoice_data_generator.serialize_for_invoice)
     }
 
-    let(:generator){ instance_double(OrderInvoiceGenerator) }
+    let(:generator){ instance_double(Orders::GenerateInvoiceService) }
     let(:renderer){ instance_double(InvoiceRenderer) }
     let(:attachment_filename){ "invoice-#{order.number}.pdf" }
     let(:deliveries){ ActionMailer::Base.deliveries }
     before do
-      allow(OrderInvoiceGenerator).to receive(:new).with(order).and_return(generator)
+      allow(Orders::GenerateInvoiceService).to receive(:new).with(order).and_return(generator)
       allow(InvoiceRenderer).to receive(:new).and_return(renderer)
     end
     context "When invoices feature is not enabled" do
@@ -241,23 +265,47 @@ describe Spree::OrderMailer do
         expect(renderer).to receive(:render_to_string).with(order, nil).and_return("invoice")
         expect {
           email.deliver_now
-        }.to_not raise_error
+        }.not_to raise_error
         expect(deliveries.count).to eq(1)
         expect(deliveries.first.attachments.count).to eq(1)
         expect(deliveries.first.attachments.first.filename).to eq(attachment_filename)
+        expect(email.reply_to).to eq([order.distributor.contact.email])
       end
     end
 
-    context "When invoices feature is enabled" do
-      before do
-        Flipper.enable(:invoices)
-      end
+    context "When invoices feature is enabled", feature: :invoices do
       it "should call the invoice renderer with invoice's presenter as argument" do
         expect(generator).to receive(:generate_or_update_latest_invoice)
         expect(order).to receive(:invoices).and_return([invoice])
         expect(renderer).to receive(:render_to_string).with(invoice.presenter, nil)
         email.deliver_now
       end
+    end
+  end
+
+  context "display adjustments" do
+    let(:order) { create(:order_with_totals_and_distribution, :completed) }
+    let(:voucher) { create(:voucher, enterprise: order.distributor) }
+
+    before do
+      voucher.create_adjustment(voucher.code, order)
+      OrderManagement::Order::Updater.new(order).update_voucher
+    end
+
+    let!(:confirmation_email_for_customer) { Spree::OrderMailer.confirm_email_for_customer(order) }
+    let!(:confirmation_email_for_shop) { Spree::OrderMailer.confirm_email_for_shop(order) }
+    let!(:cancellation_email) { Spree::OrderMailer.cancel_email(order) }
+
+    it "includes Voucher text with label" do
+      expect(confirmation_email_for_customer.body).to include("Voucher (#{voucher.code}):")
+      expect(confirmation_email_for_shop.body).to include("Voucher (#{voucher.code}):")
+      expect(cancellation_email.body).to include("Voucher (#{voucher.code}):")
+    end
+
+    it "includes Shipping label" do
+      expect(confirmation_email_for_customer.body).to include("Shipping:")
+      expect(confirmation_email_for_shop.body).to include("Shipping:")
+      expect(cancellation_email.body).to include("Shipping:")
     end
   end
 end

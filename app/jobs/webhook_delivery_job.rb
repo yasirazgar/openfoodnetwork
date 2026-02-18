@@ -13,11 +13,11 @@ class WebhookDeliveryJob < ApplicationJob
 
   queue_as :default
 
-  def perform(url, event, payload)
+  def perform(url, event, payload, at: Time.zone.now)
     body = {
       id: job_id,
-      at: Time.zone.now.to_s,
       event:,
+      at: at.to_s,
       data: payload,
     }
 
@@ -46,5 +46,7 @@ class WebhookDeliveryJob < ApplicationJob
     # Raise a failed request error and let job runner handle retrying.
     # In theory, only 5xx errors should be retried, but who knows.
     raise FailedWebhookRequestError, response.status.to_s unless response.success?
+
+    response.body
   end
 end

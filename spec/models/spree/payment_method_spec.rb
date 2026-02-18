@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 class Spree::Gateway::Test < Spree::Gateway
 end
 
-describe Spree::PaymentMethod do
+RSpec.describe Spree::PaymentMethod do
   describe ".managed_by scope" do
     subject! { create(:payment_method) }
     let(:owner) { subject.distributors.first.owner }
@@ -138,8 +136,6 @@ describe Spree::PaymentMethod do
       .to eq('Cash/EFT/etc. (payments for which automatic validation is not required)')
     expect(Spree::Gateway::PayPalExpress.clean_name).to eq('PayPal Express')
     expect(Spree::Gateway::StripeSCA.clean_name).to eq('Stripe SCA')
-    expect(Spree::Gateway::BogusSimple.clean_name).to eq('BogusSimple')
-    expect(Spree::Gateway::Bogus.clean_name).to eq('Bogus')
   end
 
   it "computes the amount of fees" do
@@ -149,11 +145,11 @@ describe Spree::PaymentMethod do
     expect(free_payment_method.compute_amount(order)).to eq 0
 
     flat_rate_payment_method = create(:payment_method,
-                                      calculator: ::Calculator::FlatRate.new(preferred_amount: 10))
+                                      calculator: Calculator::FlatRate.new(preferred_amount: 10))
     expect(flat_rate_payment_method.compute_amount(order)).to eq 10
 
     flat_percent_payment_method = create(:payment_method,
-                                         calculator: ::Calculator::FlatPercentItemTotal
+                                         calculator: Calculator::FlatPercentItemTotal
                                            .new(preferred_flat_percent: 10))
     expect(flat_percent_payment_method.compute_amount(order)).to eq 0
 

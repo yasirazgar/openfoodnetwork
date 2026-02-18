@@ -27,21 +27,24 @@ class ContentConfiguration < Spree::Preferences::Configuration
              default: I18n.t(:content_configuration_pricing_table)
   preference :producer_signup_case_studies_html, :text,
              default: I18n.t(:content_configuration_case_studies)
-  preference :producer_signup_detail_html, :text, default: I18n.t(:content_configuration_detail)
+  preference :producer_signup_detail_html, :text,
+             default: I18n.t(:content_configuration_detail)
 
   # Hubs sign-up page
   preference :hub_signup_pricing_table_html, :text,
              default: I18n.t(:content_configuration_pricing_table)
   preference :hub_signup_case_studies_html, :text,
              default: I18n.t(:content_configuration_case_studies)
-  preference :hub_signup_detail_html, :text, default: I18n.t(:content_configuration_detail)
+  preference :hub_signup_detail_html, :text,
+             default: I18n.t(:content_configuration_detail)
 
   # Groups sign-up page
   preference :group_signup_pricing_table_html, :text,
              default: I18n.t(:content_configuration_pricing_table)
   preference :group_signup_case_studies_html, :text,
              default: I18n.t(:content_configuration_case_studies)
-  preference :group_signup_detail_html, :text, default: I18n.t(:content_configuration_detail)
+  preference :group_signup_detail_html, :text,
+             default: I18n.t(:content_configuration_detail)
 
   # Main URLs
   preference :menu_1, :boolean, default: true
@@ -71,13 +74,13 @@ class ContentConfiguration < Spree::Preferences::Configuration
   preference :footer_pinterest_url, :string, default: ""
   preference :footer_email, :string, default: "hello@openfoodnetwork.org"
   preference :community_forum_url, :string, default: "http://community.openfoodnetwork.org"
-  preference :footer_links_md, :text, default: <<~EOS
+  preference :footer_links_md, :text, default: <<~FOOTERSTR
     [Newsletter sign-up](/)
 
     [News](/)
 
     [Calendar](/)
-  EOS
+  FOOTERSTR
 
   preference :footer_about_url, :string, default: "http://www.openfoodnetwork.org/ofn-local/open-food-network-australia/"
 

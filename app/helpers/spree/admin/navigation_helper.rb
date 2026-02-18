@@ -29,13 +29,7 @@ module Spree
                                   scope: [:admin, :tab]).capitalize
 
         css_classes = []
-
-        if options[:icon] && !feature?(:admin_style_v3, spree_current_user)
-          link = link_to_with_icon(options[:icon], titleized_label, destination_url)
-          css_classes << 'tab-with-icon'
-        else
-          link = link_to(titleized_label, destination_url)
-        end
+        link = link_to(titleized_label, destination_url)
 
         selected = if options[:match_path]
                      PathChecker
@@ -98,7 +92,9 @@ module Spree
         options[:class] = (options[:class].to_s + " icon_link with-tip #{icon_name}").strip
         options[:class] += ' no-text' if options[:no_text]
         options[:title] = text if options[:no_text]
+        # rubocop:disable Rails/OutputSafety
         text = options[:no_text] ? '' : raw("<span class='text'>#{text}</span>")
+        # rubocop:enable Rails/OutputSafety
         options.delete(:no_text)
         link_to(text, url, options)
       end
@@ -120,7 +116,7 @@ module Spree
           end
         else
           if html_options['data-update'].nil? && html_options[:remote]
-            object_name, action = url.split('/')[-2..-1]
+            object_name, action = url.split('/')[-2..]
             html_options['data-update'] = [action, object_name.singularize].join('_')
           end
 
@@ -131,14 +127,14 @@ module Spree
           if html_options[:icon]
             html_options[:class] += " #{html_options[:icon]}"
           end
-          link_to(text_for_button_link(text, html_options), url, html_options)
+          link_to(text, url, html_options)
         end
       end
 
       def text_for_button_link(text, _html_options)
         s = ''
         s << text
-        raw(s)
+        raw(s) # rubocop:disable Rails/OutputSafety
       end
 
       def configurations_sidebar_menu_item(link_text, url, options = {})

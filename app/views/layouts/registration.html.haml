@@ -2,6 +2,8 @@
   %head
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
+    - if !Rails.env.production? || @noindex_meta_tag
+      %meta{name: "robots", content: "noindex"}
 
     %title= content_for?(:title) ? "#{yield(:title)} - #{Spree::Config[:site_name]}".html_safe : "#{t(:welcome_to)} #{Spree::Config[:site_name]}"
     - if Rails.env.production?
@@ -12,9 +14,9 @@
     = render "layouts/matomo_tag"
     = language_meta_tags
 
-    = stylesheet_pack_tag "darkswarm"
+    = stylesheet_pack_tag "darkswarm", media: "screen"
     = javascript_include_tag "darkswarm/all"
-    = javascript_pack_tag "application"
+    = javascript_pack_tag "application", defer: false # do not use defer because our javascript currently depend on order of execution of loaded script.
 
     = csrf_meta_tags
 

@@ -29,10 +29,12 @@ fr_CM:
       spree/product:
         name: "Nom du Produit"
         price: "Prix"
-        primary_taxon: "Catégorie Produit"
-        supplier: "Fournisseur"
+        primary_taxon_id: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
-        variant_unit: "Unité"
+      spree/variant:
+        primary_taxon: "Catégorie Produit"
+        shipping_category_id: "Condition de transport"
+        supplier: "Fournisseur"
         variant_unit_name: "Unité de la variante"
       spree/credit_card:
         base: "Carte de crédit"
@@ -65,7 +67,6 @@ fr_CM:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
-            on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
       messages:
         blank: "Champ obligatoire"
@@ -183,6 +184,9 @@ fr_CM:
     integer_array_validator:
       not_array_error: "doit être une séquence"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
+  backorder_mailer:
+    backorder_failed:
+      product: "Produit"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -265,7 +269,6 @@ fr_CM:
   cancel_order: "Annuler la commande"
   confirm_send_invoice: "La facture de cette commande va être transmise au client. Etes-vous sûr de vouloir continuer ?"
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
-  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
   invoice: "Facture"
   active: "Actif"
   cancelled: "Annulée"
@@ -355,6 +358,7 @@ fr_CM:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
     cancel: "Annuler"
+    cancel_order: "Annuler"
     resume: "Reprendre"
     save: "Sauvegarder"
     edit: "Modifier"
@@ -375,6 +379,7 @@ fr_CM:
           title: Producteurs
         colums: Colonnes
       columns:
+        image: Image
         name: Produit/Variante
         unit: Unité
         price: Prix
@@ -387,6 +392,7 @@ fr_CM:
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unité
         price: Prix
@@ -400,6 +406,13 @@ fr_CM:
         import_date: "Date d'import (si import)"
       actions:
         edit: Modifier
+        clone: Dupliquer
+        delete: Supprimer
+        remove: Supprimer
+      image:
+        edit: Modifier
+      product_preview:
+        shop_tab: Faire mes courses
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -453,7 +466,6 @@ fr_CM:
     show_n_more: Montrer + %{num}
     choose: "Choisir..."
     please_select: Veuillez choisir...
-    column_save_as_default: Par défaut
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
@@ -546,6 +558,11 @@ fr_CM:
         your_content: Votre contenu
         user_guide: Guide utilisateur
         map: Carte
+    dfc_product_imports:
+      index:
+        update: Mettre à jour
+        new: Nouveau
+        import: Importer
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -599,7 +616,6 @@ fr_CM:
       variants:
         infinity: "Infini"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
-      back_to_products_list: "Retour à la liste produits"
       editing_product: "Modifier le produit"
       tabs:
         product_details: "Détails"
@@ -611,15 +627,26 @@ fr_CM:
       index:
         header:
           title: Gestion du catalogue produits
-      sort:
-        pagination:
-          clear_search: Annuler la recherche
       filters:
         producers:
           label: Producteurs
         categories:
           label: Conditions de transport
+        tags:
+          label: Tags
+          none: Aucun
         search: Rechercher
+      sort:
+        pagination:
+          clear_search: Annuler la recherche
+      product_variant_row:
+        new_variant: Nouvelle variante
+      variant_row:
+        none_tax_category: Aucun
+        category_field_name: "Catégorie"
+        tax_category_field_name: "TVA applicable"
+        producer_field_name: "Producteur"
+        add_a_tag: Ajouter un tag
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -678,7 +705,6 @@ fr_CM:
         no_name: Pas de nom
         blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
-        reset_absent_tip: Remettre le stock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier pour tous
         overwrite_empty: Modifier si vide
         default_stock: Indiquer niveau de stock
@@ -716,6 +742,7 @@ fr_CM:
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Boutiques
       product_headings:
+        distributor: Distributeur
         producer: Producteur
         sku: Référence Produit
         name: Produit/Variante
@@ -846,12 +873,6 @@ fr_CM:
         images:
           legend: "Images"
           logo: Logo
-          promo_image_placeholder: 'Cette image est affichée dans "A propos"'
-          promo_image_note1: 'ATTENTION:'
-          promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
-          promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
-          remove_logo: "Supprimer l'image"
-          remove_promo_image: "Supprimer l'image"
         inventory_settings:
           legend: "Catalogue boutique"
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
@@ -929,14 +950,16 @@ fr_CM:
           customer_names_tip: "Permettre aux producteurs de voir les noms de vos acheteurs"
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
+          customer_contacts_false: "Désactivé"
+          customer_contacts_true: "Activé"
+          producers_edit_orders_false: "Désactivé"
+          producers_edit_orders_true: "Activé"
           shopfront_message: "Message d'accueil"
           shopfront_message_placeholder: >
               Vous pouvez indiquer ici un message de bienvenue ou un message expliquant
               les particularités de votre boutique. Ce message s'affiche dans l'onglet
               Accueil de votre boutique. Si aucun message n'est affiché, l'onglet
               Accueil n'apparaitra pas.
-          shopfront_message_link_tooltip: "Insérer / modifier un lien"
-          shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
           shopfront_closed_message: "Message d'accueil boutique fermée"
           shopfront_closed_message_placeholder: >
               Vous pouvez ici expliquer à vos acheteurs pourquoi votre boutique est
@@ -979,10 +1002,11 @@ fr_CM:
             no_rules_yet: Aucune règle par défaut
             add_new_button: '+ Ajouter une règle par défaut'
           no_tags_yet: Aucun tag défini par cette entreprise pour le moment
-          no_rules_yet: Aucune règle ne concerne ce tag pour le moment
-          for_customers_tagged: 'Pour les acheteurs avec le tag:'
-          add_new_rule: '+ Ajouter une nouvelle règle'
           add_new_tag: '+ Ajouter une règle pour un autre tag'
+          show_hide_variants: 'Afficher ou Masquer les variantes dans ma boutique'
+          show_hide_shipping: 'Afficher ou Masquer les méthodes de livraison lors de la finalisation de commande'
+          show_hide_payment: 'Afficher ou Masquer les méthodes de paiement lors de la finalisation de commande'
+          show_hide_order_cycles: 'Afficher ou Masquer les cycles de vente de ma boutique'
         users:
           legend: "Utilisateurs"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
@@ -1006,6 +1030,13 @@ fr_CM:
           rate: Taux
           customers: Client
           active: Active ?
+        connected_apps:
+          affiliate_sales_data:
+            loading: "Chargement en cours"
+          discover_regen:
+            loading: "Chargement en cours"
+          vine:
+            enable: "A propos"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1058,10 +1089,8 @@ fr_CM:
         contact_name: Nom du contact principal
       edit:
         editing: 'Configuration:'
-        back_link: Revenir à la liste des entreprises
       new:
         title: Nouvelle entreprise
-        back_link: Revenir à la liste des entreprises
       welcome:
         welcome_title: Bienvenue sur CoopCircuits !
         welcome_text: 'Vous avez créé avec succès '
@@ -1080,6 +1109,14 @@ fr_CM:
         create: "Créer"
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
+      create:
+        success: 'Votre cycle de vente a été créé.'
+      update:
+        success: 'Votre cycle de vente a été mis à jour.'
+      clone:
+        success: "Votre cycle de vente %{name} a été dupliqué."
+      notify_producers:
+        success: 'Les emails à destination des producteurs ont été mis en file d''attente.'
       edit:
         save: "Sauvegarder"
         save_and_next: "Sauvegarder et suivant"
@@ -1090,6 +1127,8 @@ fr_CM:
         choose_products_from: "Choisir produits depuis :"
         re_notify_producers: Notifier les producteurs
         notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
+      date_time_warning_modal_content:
+        cancel: 'Annuler'
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les boutiques du cycle de vente)"
         supplier: "Fournisseur"
@@ -1210,6 +1249,17 @@ fr_CM:
       resume:
         could_not_resume_the_order: La commande n'a pas pu être reprise
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_remove: "Supprimer l'image"
+        logo_remove_confirm: "Le logo sera supprimé juste après votre confirmation."
+        promo_image_note1: 'ATTENTION:'
+        promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
+        promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
+        promo_image_placeholder: 'Cette image est affichée dans "A propos"'
+        promo_image_remove: "Supprimer l'image"
+        promo_image_remove_confirm: "La bannière sera supprimée juste après votre confirmation."
+        white_label_logo_remove: "Supprimer l'image"
       user_guide_link:
         user_guide: Guide utilisateur
       enterprises_hubs_tabs:
@@ -1249,7 +1299,7 @@ fr_CM:
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
       not_visible: "%{enterprise}n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
-      hidden: Masqué
+      hidden_field: "< Masqué >"
       unitsize: Unité de mesure
       total: Total
       total_items: Nb Articles
@@ -1298,7 +1348,6 @@ fr_CM:
         no_report_type: "Merci de sélectionner un type de rapport"
         report_not_found: "Le rapport n'a pas été trouvé"
         missing_ransack_params: "Veuillez renseigner un filtre ou une sélection de dates"
-      hidden_field: "< Masqué >"
       summary_row:
         total: "Total"
       table:
@@ -1425,6 +1474,9 @@ fr_CM:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
         stripe_connect_success: "Compte Stripe connecté avec succès"
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
+        remove_logo_success: "Logo supprimé avec succès"
+        remove_promo_image_success: "Bannière supprimée avec succès"
+        remove_white_label_logo_success: "Logo supprimé avec succès"
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
   api:
@@ -1441,19 +1493,92 @@ fr_CM:
     orders:
       failed_to_update: "La mise à jour de la commande échoué"
   checkout:
+    failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
+    payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas été finalisée car un ou plusieurs articles ne sont plus en stock."
+    your_details_without_number: Vos informations
+    payment_method_without_number: Moyen de paiement
+    order_summary_without_number: Récapitulatif de la commande
     already_ordered:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
-    terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link}."
-      link_text: "CGU & CGV"
-    platform_terms_of_service:
-      message_html: "J'accepte les %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
-      terms_and_conditions: "CGU & CGV"
-    failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
-    payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas été finalisée car un ou plusieurs articles ne sont plus en stock."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Numéro de téléphone
+      billing_address:
+        title: Adresse de facturation
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom
+      address:
+        address1:
+          label: Adresse (Numéro et rue)
+        address2:
+          label: Complément d'adresse (optionnel)
+        city:
+          label: Ville
+        state_id:
+          label: Statut
+        zipcode:
+          label: Code postal
+        country_id:
+          label: Pays
+      shipping_info:
+        title: Informations de livraison ou de retrait
+      submit: Etape suivante - Moyen de Paiement
+      cancel: Retour au panier
+    step2:
+      payment_method:
+        title: Moyen de paiement
+      form:
+        card_number:
+          label: Numéro de la carte
+          placeholder: par ex. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mois
+        card_year:
+          label: Année
+        stripe:
+          use_saved_card: Utilisez une carte enregistrée
+          use_new_card: Entrez les informations de votre carte
+          save_card: Enregistrez votre carte pour vos prochains achats
+          create_new_card: ou entrez les détails de votre nouvelle carte ci-dessous
+      explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
+      submit: Etape suivante - Récapitulatif de commande
+      cancel: Retour à vos coordonnées
+    step3:
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
+      payment_method:
+        title: Moyen de paiement
+        edit: Modifier
+      order:
+        edit: Modifier
+      terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link}."
+        link_text: "CGU & CGV"
+      platform_terms_of_service:
+        message_html: "J'accepte les %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
+        terms_and_conditions: "CGU & CGV"
+      submit: Valider ma commande
+      cancel: Retour à la méthode de paiement
+    errors:
+      saving_failed: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
+      terms_not_accepted: Merci d'accepter les CGU & CGV.
+      required: Ce champ ne peut pas être vide
+      invalid_number: "Merci de renseigner un numéro de téléphone valide"
+      invalid_email: "Veuillez entrer un email valide"
+      select_a_shipping_method: Sélectionner une méthode de livraison
+      select_a_payment_method: Sélectionner une méthode de paiement
   shops:
     hubs:
       show_closed_shops: "Afficher les boutiques fermées"
@@ -1527,6 +1652,8 @@ fr_CM:
   invoice_tax_total: "Total TVA :"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
+  invoice_shipping_category_delivery: "Livraison"
+  invoice_shipping_category_pickup: "Retrait"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
   abn: "SIRET"
@@ -1614,7 +1741,6 @@ fr_CM:
   label_account: "Compte"
   label_more: "Afficher plus"
   label_less: "Masquer"
-  label_notices: "Informations"
   cart_items: "Produits"
   cart_headline: "Votre panier"
   total: "Total"
@@ -1722,92 +1848,6 @@ fr_CM:
   checkout_total_price: Total
   checkout_back_to_cart: "Retour au Panier"
   cost_currency: "Devise du Coût"
-  split_checkout:
-    your_details_without_number: Vos informations
-    payment_method_without_number: Moyen de paiement
-    order_summary_without_number: Récapitulatif de la commande
-    already_ordered:
-      cart: "panier"
-      message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Numéro de téléphone
-      billing_address:
-        title: Adresse de facturation
-        first_name:
-          label: Prénom
-        last_name:
-          label: Nom
-      address:
-        address1:
-          label: Adresse (Numéro et rue)
-        address2:
-          label: Complément d'adresse (optionnel)
-        city:
-          label: Ville
-        state_id:
-          label: Statut
-        zipcode:
-          label: Code postal
-        country_id:
-          label: Pays
-      shipping_info:
-        title: Informations de livraison ou de retrait
-      submit: Etape suivante - Moyen de Paiement
-      cancel: Retour au panier
-    step2:
-      payment_method:
-        title: Moyen de paiement
-      form:
-        card_number:
-          label: Numéro de la carte
-          placeholder: par ex. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Mois
-        card_year:
-          label: Année
-        stripe:
-          use_saved_card: Utilisez une carte enregistrée
-          use_new_card: Entrez les informations de votre carte
-          save_card: Enregistrez votre carte pour vos prochains achats
-          create_new_card: ou entrez les détails de votre nouvelle carte ci-dessous
-      explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
-      submit: Etape suivante - Récapitulatif de commande
-      cancel: Retour à vos coordonnées
-    step3:
-      delivery_details:
-        title: Détails de livraison
-        edit: Modifier
-        address: Adresse de livraison
-      payment_method:
-        title: Moyen de paiement
-        edit: Modifier
-      order:
-        edit: Modifier
-      terms_and_conditions:
-        message_html: "J'accepte les %{terms_and_conditions_link}."
-        link_text: "CGU & CGV"
-      platform_terms_of_service:
-        message_html: "J'accepte les %{tos_link}."
-      all_terms_and_conditions:
-        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
-        terms_and_conditions: "CGU & CGV"
-      submit: Valider ma commande
-      cancel: Retour à la méthode de paiement
-    errors:
-      saving_failed: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
-      terms_not_accepted: Merci d'accepter les CGU & CGV.
-      required: Ce champ ne peut pas être vide
-      invalid_number: "Merci de renseigner un numéro de téléphone valide"
-      invalid_email: "Veuillez entrer un email valide"
-      select_a_shipping_method: Sélectionner une méthode de livraison
-      select_a_payment_method: Sélectionner une méthode de paiement
-      voucher_not_found: Non trouvé
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -1838,10 +1878,8 @@ fr_CM:
   email_confirmed: "Veuillez confirmer votre adresse email."
   email_confirmation_activate_account: "Avant de pouvoir activer votre compte, nous devons nous assurer de la validité de votre adresse email."
   email_confirmation_greeting: "Bonjour %{contact},"
-  email_confirmation_profile_created: "Le profil pour %{name} a été créé avec succès! Pour activer votre Profil nous devons vérifier cette adresse email."
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
-  email_confirmation_help_html: "Après confirmation de votre email, vous pourrez accéder au compte d'administration de cette entreprise. Voir %{link} pour en savoir plus à propos de %{sitename} et commencer à utiliser votre profil et/ou boutique en ligne."
   email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à bonjour@coopcircuits.fr."
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
@@ -2430,26 +2468,14 @@ fr_CM:
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
-  spree_admin_enterprises_tabs_hubs: "BOUTIQUES"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Veuillez confirmer l'adresse mail pour"
-  spree_admin_single_enterprise_alert_mail_sent: "Email envoyé à "
-  spree_admin_overview_action_required: "Action requise"
-  spree_admin_overview_check_your_inbox: "Veuillez vérifier votre boîte mail pour les prochaines étapes. Merci !"
-  spree_admin_unit_value: Nb Unités
-  spree_admin_unit_description: 'Description complémentaire (ex: "(vrac)")'
-  spree_admin_variant_unit: Unité
-  spree_admin_variant_unit_scale: Echelle unitaire (en g ou L)
   spree_admin_supplier: Fournisseur
-  spree_admin_product_category: Catégorie Produit
-  spree_admin_variant_unit_name: Nom de la pièce (si vendu à la pièce)
   unit_name: "Unité"
   change_package: "Changer de type de profil"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
   spree_admin_eg_collect_your_order: "ex : \"Veuillez récupérer votre commande au 34 rue Victor Hugo, 75018 Paris\""
-  spree_classification_primary_taxon_error: "La catégorie %{taxon}est utilisée par %{product} et ne peut être supprimée"
   spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
   spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
   spree_order_cycle_error: "Veuillez sélectionner une option pour cette commande."
@@ -2536,7 +2562,6 @@ fr_CM:
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
   report_header_shipping: Livraison
-  report_header_shipping_method: Méthode de Livraison
   report_header_shipping_instructions: Instructions de Livraison
   report_header_ship_street: Rue Livraison
   report_header_ship_street_2: ' Rue (2) Livraison'
@@ -2581,6 +2606,7 @@ fr_CM:
   report_header_quantity: Quantité
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
+  report_header_variant_unit_name: Unité de la variante
   report_header_variant_value: Nb Unités Variante
   report_header_variant_unit: Unité
   report_header_total_available: Total disponible
@@ -2650,6 +2676,8 @@ fr_CM:
   report_header_total_excl_vat: "Total HT (%{currency_symbol})"
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
   report_header_temp_controlled: Temp Contrôlée ?
+  report_header_shipment_state: "Statut livraison"
+  report_header_shipping_method: "Méthode de Livraison"
   report_header_is_producer: Producteur ?
   report_header_not_confirmed: Non confirmé
   report_header_gst_on_income: TVA
@@ -2732,11 +2760,7 @@ fr_CM:
   enterprise_bulk_update_success_notice: "Entreprises mises à jour avec succès"
   enterprise_bulk_update_error: 'Echec dans la mise à jour'
   enterprise_shop_show_error: "La boutique que vous recherchez n'existe pas ou est inactive. Veuillez sélectionner une boutique depuis la liste ci-dessous."
-  order_cycles_create_notice: 'Votre cycle de vente a été créé.'
-  order_cycles_update_notice: 'Votre cycle de vente a été mis à jour.'
   order_cycles_bulk_update_notice: 'Des cycles de vente ont été mis à jour.'
-  order_cycles_clone_notice: "Votre cycle de vente %{name} a été dupliqué."
-  order_cycles_email_to_producers_notice: 'Les emails à destination des producteurs ont été mis en file d''attente.'
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
   order_cycle_closed: "Le cycle de vente que vous avez sélectionné a fermé. "
@@ -2750,6 +2774,7 @@ fr_CM:
     ready: Prêt
     pending: En attente
     shipped: Expédié
+  business_name: Nom de l'entreprise
   js:
     saving: 'Enregistrement en cours...'
     changes_saved: 'Modifications sauvegardées.'
@@ -2934,18 +2959,6 @@ fr_CM:
           select_all_variants: "Sélectionnez toutes les %{total_number_of_variants} variantes"
           variants_loaded: " %{num_of_variants_loaded} sur %{total_number_of_variants} variantes"
           loading_variants: "Chargement des variantes"
-      tag_rules:
-        shipping_method_tagged_top: "Les méthodes de livraison taguées"
-        shipping_method_tagged_bottom: "sont:"
-        payment_method_tagged_top: "Les méthodes de payments taguées"
-        payment_method_tagged_bottom: "sont:"
-        order_cycle_tagged_top: "Les cycles de vente tagués"
-        order_cycle_tagged_bottom: "sont:"
-        inventory_tagged_top: "Les variantes du catalogue boutique taguées"
-        inventory_tagged_bottom: "sont:"
-      new_tag_rule_dialog:
-        select_rule_type: "Choisir le type de règle:"
-        add_rule: "Ajouter une règle"
       enterprise_fees:
         inherit_from_product: "Hériter du produit"
       orders:
@@ -2990,7 +3003,6 @@ fr_CM:
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
-        quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
       resend_user_email_confirmation:
         resend: "Renvoyer"
@@ -3025,10 +3037,6 @@ fr_CM:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo supprimé avec succès"
-            immediate_logo_removal_warning: "Le logo sera supprimé juste après votre confirmation."
-            removed_promo_image_successfully: "Bannière supprimée avec succès"
-            immediate_promo_image_removal_warning: "La bannière sera supprimée juste après votre confirmation."
             immediate_terms_and_conditions_removal_warning: "Le fichier sera supprimé après confirmation."
             removed_terms_and_conditions_successfully: "Le fichier a été supprimé avec succès"
     insufficient_stock: "Stock disponible insuffisant, il n'en reste que %{on_hand}"
@@ -3039,7 +3047,7 @@ fr_CM:
           un ou plusieurs produits dans votre panier est devenu insuffisant pour répondre
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
-      only_n_remainging: "plus que %{num} en stock."
+      only_n_remaining: "plus que %{num} en stock."
     shopfront:
       variant:
         add_to_cart: "Ajouter"
@@ -3071,13 +3079,6 @@ fr_CM:
       some_trouble: "Nous n'avons pas pu sauvegarder : %{errors}"
       changing_on_hand_stock: Modification des niveaux de stock en cours...
       stock_reset: Les niveaux de stock ont été réinitiatlisés (valeurs par défaut)
-    tag_rules:
-      show_hide_variants: 'Afficher ou Masquer les variantes dans ma boutique'
-      show_hide_shipping: 'Afficher ou Masquer les méthodes de livraison lors de la finalisation de commande'
-      show_hide_payment: 'Afficher ou Masquer les méthodes de paiement lors de la finalisation de commande'
-      show_hide_order_cycles: 'Afficher ou Masquer les cycles de vente de ma boutique'
-      visible: VISIBLE
-      not_visible: INVISIBLE
     services:
       unsaved_changes_message: Des modifications n'ont pas encore été sauvegardées, sauvegarder maintenant ou ignorer ?
       save: SAUVEGARDER
@@ -3093,6 +3094,8 @@ fr_CM:
           Cette action remettra tous les niveaux de stock à zero pour cette
           entreprise pour les produits non présents dans ce fichier.
     order_cycles:
+      unsaved_changes: "Des modifications n'ont pas été sauvegardées"
+      bulk_save_error: "Oups ! Nous n'avons pas réussi à sauvegarder vos modification :-("
       create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
       update_failure: "La mise à jour du cycle de vente à échoué"
@@ -3120,6 +3123,9 @@ fr_CM:
           Il a eu un problème lors de la prise en compte de votre carte.
           Merci de rafraîchir la page. Si cela ne fonctionne pas une seconde fois,
           merci de nous contacter.
+    trix:
+      code: "Code"
+      urlPlaceholder: "Veuillez entrer l'URL à insérer"
   inflections:
     each:
       one: "chacun"
@@ -3201,10 +3207,6 @@ fr_CM:
       one: "pot"
       many: "pots"
       other: "pots"
-    bundle:
-      one: "botte"
-      many: "bottes"
-      other: "bottes"
     flask:
       one: "flacon"
       many: "flacons"
@@ -3217,6 +3219,10 @@ fr_CM:
       one: "sachet"
       many: "sachets"
       other: "sachets"
+    bundle:
+      one: "botte"
+      many: "bottes"
+      other: "bottes"
   producers:
     signup:
       start_free_profile: "Créez votre profil producteur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne."
@@ -3298,7 +3304,7 @@ fr_CM:
   account: "Compte"
   logout: "Déconnexion"
   date_range: "Période"
-  status: "statut"
+  status: "Statut"
   new: "Nouveau"
   start: "Début"
   end: "Fin"
@@ -3330,11 +3336,10 @@ fr_CM:
     gateway_error: "Le paiement a échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
-    new_order_completed: "Nouvelle commande finalisée"
     new_tax_category: "Nouvelle catégorie de taxe"
-    new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
     no_pending_payments: "Aucun paiement en attente."
+    remove: "Supprimer"
     none: "Aucun"
     not_found: "Non trouvé"
     notice_messages:
@@ -3344,14 +3349,8 @@ fr_CM:
     rma_credit: "Crédit ARM"
     refund: "Remboursement"
     server_error: "Erreur serveur"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
-    taxonomy_edit: "Modifier la taxonomie"
-    taxonomy_tree_error: "Erreur de l'arbre de toxonomie"
-    taxonomy_tree_instruction: "Consignes pour l'arbre de taxonomie"
-    tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
@@ -3446,7 +3445,6 @@ fr_CM:
     tax_rate_amount_explanation: "Les taux de taxe sont présentés en nombres décimaux pour faciliter les calculs (ex : si le taux est 5,5% saisissez 0.055)"
     included_in_price: "Inclus dans le prix"
     show_rate_in_label: "Montrer le taux dans le nom"
-    back_to_tax_rates_list: "Retour à la liste des taux de taxe"
     tax_settings: "Paramètres TVA"
     zones: "Zones"
     new_zone: "Nouvelle zone"
@@ -3459,14 +3457,11 @@ fr_CM:
     iso_name: "Noms ISO"
     states_required: "États/Départements requis"
     editing_country: "Pays en cours de mise à jour"
-    back_to_countries_list: "Retour à la liste des pays"
     states: "Départements"
     abbreviation: "Code"
     new_state: "Nouveau département"
     payment_methods: "Méthodes de paiement"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "Nouvelle taxonomie"
-    back_to_taxonomies_list: "Retour à la liste des taxonomies"
+    taxons: "Catégorie Produit"
     shipping_methods: "Méthodes de livraison"
     shipping_method: "Option d'expédition"
     shipment: "Livraison"
@@ -3556,6 +3551,9 @@ fr_CM:
     validation:
       must_be_int: "doit être un entier"
     admin:
+      images:
+        edit:
+          close: Retour
       mail_methods:
         send_testmail: "Envoyer un e-mail de test"
         testmail:
@@ -3570,6 +3568,7 @@ fr_CM:
         bulk_order_management: "Gestion des commandes par lot"
         subscriptions: "Abonnements"
         products: "Produits"
+        products_v3: "Produits"
         option_types: "Types d'options"
         properties: "Propriétés / labels"
         variant_overrides: "Catalogue boutique"
@@ -3582,6 +3581,10 @@ fr_CM:
         enterprise_relationships: "Permissions"
         customers: "Acheteurs"
         groups: "Groupes"
+        overview: "Aperçu"
+        product_import: "Importer"
+        enterprise_roles: "Roles"
+        payment_methods: "Méthodes de paiement"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
@@ -3612,7 +3615,6 @@ fr_CM:
           continue: "Suivant"
         new:
           new_return_authorization: "Nouvelle autorisation de retour"
-          back_to_return_authorizations_list: "Revenir à la liste des autorisations"
           continue: "Suivant"
         edit:
           receive: "reçoit"
@@ -3783,12 +3785,8 @@ fr_CM:
         providers:
           provider: "Fournisseur"
           check: "Espèces / chèques / virements / autres "
-          pin: "Méthode de paiement réservée à l'Australie (Pin Payments)"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3843,8 +3841,6 @@ fr_CM:
       reports:
         table:
           select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
-        customer_names_message:
-          customer_names_tip: "Si les noms des acheteurs sont masqués, vous pouvez contacter le gestionnaire de la boutique. Il pourra vous donner accès à cette information."
       users:
         index:
           listing_users: "Liste des utilisateurs"
@@ -3859,7 +3855,6 @@ fr_CM:
           general_settings: "Configurations générales"
         form:
           email: "Email"
-          roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
           confirm_password: "Confirmez votre mot de passe"
           password: "Mot de passe"
@@ -3881,12 +3876,14 @@ fr_CM:
           new_variant: "Nouvelle variante"
         form:
           sku: "Référence Produit"
-          price: "Prix"
           unit_price: "Prix unitaire"
           display_as: "Unité affichée"
           display_name: "Nom affiché"
           display_as_placeholder: 'ex. 2 kg'
           display_name_placeholder: 'ex. Tomates'
+          unit: Unité
+          price: Prix
+          variant_category: Catégorie
         autocomplete:
           out_of_stock: "En rupture de stock"
           producer_name: "Producteur"
@@ -3896,6 +3893,7 @@ fr_CM:
           terms_of_service: "Conditions Générales d'Utilisation"
         sortable_header:
           name: "Produit/Variante"
+          on_hand: "En stock"
           number: "N° commande"
           completed_at: "Date"
           state: "Statut"
@@ -3904,6 +3902,12 @@ fr_CM:
           email: "Email"
           total: "Total"
           billing_address_name: "Produit/Variante"
+      taxons:
+        index:
+          title: "Catégorie Produit"
+        form:
+          name: Produit/Variante
+          description: Description
       general_settings:
         edit:
           legal_settings: "Configuration légales"
@@ -4123,13 +4127,13 @@ fr_CM:
       key_cleared: "Clé supprimée"
       shipment:
         cannot_ready: "La livraison ne peut pas être préparée."
-      invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
     activerecord:
       models:
         spree/payment:
           one: Paiement
           many: Paiements
           other: Paiements
+    unit: unité
   datetime:
     distance_in_words:
       about_x_hours:
@@ -4189,3 +4193,25 @@ fr_CM:
     pagination:
       next: Suivant
       previous: Précédent
+    tag_list_input:
+      default_placeholder: Ajouter un tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Les méthodes de livraison taguées"
+        shipping_method_tagged_bottom: "sont:"
+        payment_method_tagged_top: "Les méthodes de payments taguées"
+        payment_method_tagged_bottom: "sont:"
+        order_cycle_tagged_top: "Les cycles de vente tagués"
+        order_cycle_tagged_bottom: "sont:"
+        inventory_tagged_top: "Les variantes du catalogue boutique taguées"
+        inventory_tagged_bottom: "sont:"
+        variant_tagged_bottom: "sont:"
+        visible: VISIBLE
+        not_visible: INVISIBLE
+    tag_rule_group_form:
+      for_customers_tagged: 'Pour les acheteurs avec le tag:'
+      add_new_rule: '+ Ajouter une nouvelle règle'
+      no_rules_yet: Aucune règle ne concerne ce tag pour le moment
+    add_tag_rule_modal:
+      select_rule_type: "Choisir le type de règle:"
+      add_rule: "Ajouter une règle"

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe Spree::Admin::ShippingMethodsController, type: :controller do
+RSpec.describe Spree::Admin::ShippingMethodsController do
   include AuthenticationHelper
 
   describe "#update" do
@@ -37,7 +35,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
     ].each do |shipping_amount|
       it "diplay error message on update if #{shipping_amount} input is invalid" do
         shipping_method.calculator = create(:calculator_flat_rate, calculable: shipping_method)
-        params[:shipping_method][:calculator_attributes][shipping_amount] = "\'20.0'"
+        params[:shipping_method][:calculator_attributes][shipping_amount] = "'20.0'"
 
         spree_post :update, params
 

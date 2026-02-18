@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe ContentSanitizer do
+RSpec.describe ContentSanitizer do
   let(:service) { described_class.new }
 
   context "#strip_content" do

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe Balance do
+RSpec.describe Balance do
   context "#new_outstanding_balance" do
     context 'when orders are in cart state' do
       let(:order) { build(:order, total: 100, payment_total: 10, state: 'cart') }

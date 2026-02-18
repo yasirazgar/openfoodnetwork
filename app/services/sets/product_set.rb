@@ -8,11 +8,15 @@ module Sets
   # }
   #
   class ProductSet < ModelSet
+    attr_reader :saved_count
+
     def initialize(attributes = {})
       super(Spree::Product, [], attributes)
     end
 
     def save
+      @saved_count = 0
+
       # Attempt to save all records, collecting model errors.
       @collection_hash.each_value.map do |product_attributes|
         update_product_attributes(product_attributes)
@@ -42,37 +46,32 @@ module Sets
     #   variant.update( { price: xx.x } )
     #
     def update_product_attributes(attributes)
-      split_taxon_ids!(attributes)
-
       product = find_model(@collection, attributes[:id])
       return if product.nil?
 
       update_product(product, attributes)
     end
 
-    def split_taxon_ids!(attributes)
-      attributes[:taxon_ids] = attributes[:taxon_ids].split(',') if attributes[:taxon_ids].present?
-    end
-
     def update_product(product, attributes)
       return false unless update_product_only_attributes(product, attributes)
 
-      ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
-
-      update_product_variants(product, attributes) &&
-        update_product_master(product, attributes)
+      update_product_variants(product, attributes)
     end
 
     def update_product_only_attributes(product, attributes)
-      variant_related_attrs = [:id, :variants_attributes, :master_attributes]
+      variant_related_attrs = [:id, :variants_attributes]
       product_related_attrs = attributes.except(*variant_related_attrs)
       return true if product_related_attrs.blank?
 
       product.assign_attributes(product_related_attrs)
 
+      return true unless product.changed?
+
       validate_presence_of_unit_value_in_product(product)
 
-      product.errors.empty? && product.save
+      success = product.errors.empty? && product.save
+      count_result(success)
+      success
     end
 
     def validate_presence_of_unit_value_in_product(product)
@@ -94,12 +93,6 @@ module Sets
       update_variants_attributes(product, attributes[:variants_attributes])
     end
 
-    def update_product_master(product, attributes)
-      return true unless attributes[:master_attributes]
-
-      create_or_update_variant(product, attributes[:master_attributes])
-    end
-
     def update_variants_attributes(product, variants_attributes)
       variants_attributes.each do |attributes|
         create_or_update_variant(product, attributes)
@@ -110,48 +103,69 @@ module Sets
     def create_or_update_variant(product, variant_attributes)
       variant = find_model(product.variants, variant_attributes[:id])
       if variant.present?
-        variant.update(variant_attributes.except(:id))
+        variant.assign_attributes(variant_attributes.except(:id))
+        variant.save if variant.changed?
+
+        ExchangeVariantDeleter.new.delete(variant) if variant.saved_change_to_supplier_id?
       else
-        create_variant(product, variant_attributes)
+        variant = create_variant(product, variant_attributes)
       end
+
+      # Copy any variant errors to product
+      variant&.errors&.each do |error|
+        # The name is namespaced to avoid confusion with product attrs of same name.
+        product.errors.add(:"variant_#{error.attribute}", error.message)
+      end
+      variant&.errors.blank?
     end
 
     def create_variant(product, variant_attributes)
       return if variant_attributes.blank?
 
+      # 'You need to save the variant to create a stock item before you can set stock levels.'
       on_hand = variant_attributes.delete(:on_hand)
       on_demand = variant_attributes.delete(:on_demand)
 
       variant = product.variants.create(variant_attributes)
 
-      if variant.errors.present?
-        product.errors.merge!(variant.errors)
-        return false
-      end
+      return variant if variant.errors.present?
 
       begin
-        variant.on_demand = on_demand if on_demand.present?
-        variant.on_hand = on_hand.to_i if on_hand.present?
+        if on_hand || on_demand
+          create_stock_for_variant(variant, on_demand, on_hand)
+        else
+          create_stock_for_variant_from_desired(variant)
+        end
       rescue StandardError => e
         notify_bugsnag(e, product, variant, variant_attributes)
         raise e
       end
+
+      variant
+    end
+
+    def count_result(saved)
+      @saved_count += 1 if saved
     end
 
     def notify_bugsnag(error, product, variant, variant_attributes)
-      Bugsnag.notify(error) do |report|
-        report.add_metadata(:product, product.attributes)
-        report.add_metadata(:product_error, product.errors.first) unless product.valid?
-        report.add_metadata(:variant_attributes, variant_attributes)
-        report.add_metadata(:variant, variant.attributes)
-        report.add_metadata(:variant_error, variant.errors.first) unless variant.valid?
+      Alert.raise(error) do |report|
+        report.add_metadata( :product_set,
+                             { product: product.attributes, variant_attributes:,
+                               variant: variant.attributes } )
+        report.add_metadata(:product_set, :product_error, product.errors.first) if !product.valid?
+        report.add_metadata(:product_set, :variant_error, variant.errors.first) if !variant.valid?
       end
     end
 
-    def find_model(collection, model_id)
-      collection.find do |model|
-        model.id.to_s == model_id.to_s && model.persisted?
-      end
+    def create_stock_for_variant(variant, on_demand, on_hand)
+      variant.on_demand = on_demand if on_demand.present?
+      variant.on_hand = on_hand.to_i if on_hand.present?
+    end
+
+    def create_stock_for_variant_from_desired(variant)
+      variant.on_demand = variant.on_demand_desired if variant.on_demand_desired.present?
+      variant.on_hand = variant.on_hand_desired.to_i if variant.on_hand_desired.present?
     end
   end
 end

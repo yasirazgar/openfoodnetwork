@@ -1,7 +1,18 @@
+.admin-orders-index-search {
+  // Ensure all fields have same min. height so they align well
+  .field {
+    min-height: 6em;
+  }
+}
+
 input,
 div {
   &.update-pending {
     border: solid 1px orange;
+
+    &:focus {
+      border: solid 1px orange;
+    }
   }
 }
 

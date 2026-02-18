@@ -9,6 +9,7 @@ module Spree
       helper 'admin/injection'
       helper 'admin/orders'
       helper 'admin/enterprises'
+      helper 'admin/terms_of_service'
       helper 'enterprise_fees'
       helper 'angular_form'
 
@@ -18,15 +19,18 @@ module Spree
 
       before_action :authorize_admin
       before_action :set_locale
-      before_action :warn_invalid_order_cycles, if: :html_request?
+      before_action :warn_invalid_order_cycles, if: :page_load_request?
 
       # Warn the user when they have an active order cycle with hubs that are not ready
       # for checkout (ie. does not have valid shipping and payment methods).
       def warn_invalid_order_cycles
-        return if flash[:notice].present?
+        return if flash[:notice].present? || session[:displayed_order_cycle_warning]
 
-        warning = OrderCycleWarning.new(spree_current_user).call
-        flash[:notice] = warning if warning.present?
+        warning = OrderCycles::WarningService.new(spree_current_user).call
+        return if warning.blank?
+
+        flash.now[:notice] = warning
+        session[:displayed_order_cycle_warning] = true
       end
 
       protected
@@ -79,6 +83,12 @@ module Spree
       end
 
       private
+
+      def page_load_request?
+        return false if request.format.include?('turbo')
+
+        html_request?
+      end
 
       def html_request?
         request.format.html?

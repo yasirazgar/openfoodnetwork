@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe Spree::Admin::OverviewController, type: :controller do
+RSpec.describe Spree::Admin::OverviewController do
   describe "#index" do
     before do
       allow(controller).to receive(:spree_current_user).and_return(user)

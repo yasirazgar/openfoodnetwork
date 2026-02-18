@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe UserConfirmationsController, type: :controller do
+RSpec.describe UserConfirmationsController do
   let!(:user) { create(:user) }
   let!(:confirmed_user) { create(:user, confirmed_at: nil) }
   let!(:unconfirmed_user) { create(:user, confirmed_at: nil) }
@@ -55,7 +53,7 @@ describe UserConfirmationsController, type: :controller do
         unconfirmed_user.save!
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(response).to be_redirect
-        expect(response.body).to include spree.edit_spree_user_password_path
+        expect(response.headers["Location"]).to include spree.edit_spree_user_password_path
       end
     end
   end

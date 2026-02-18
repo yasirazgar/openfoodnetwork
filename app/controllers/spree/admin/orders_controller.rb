@@ -6,9 +6,11 @@ module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       include OpenFoodNetwork::SpreeApiKeyLoader
+
       helper CheckoutHelper
 
       before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print]
+      before_action :refuse_changing_shipped_orders, only: [:update]
       before_action :load_distribution_choices, only: [:new, :create, :edit, :update]
       before_action :require_distributor_abn, only: :invoice
       before_action :restore_saved_query!, only: :index
@@ -17,7 +19,7 @@ module Spree
 
       def index
         orders = SearchOrders.new(search_params, spree_current_user).orders
-        @pagy, @orders = pagy(orders, items: params[:per_page] || 15)
+        @pagy, @orders = pagy(orders, limit: params[:per_page] || 15)
 
         update_search_results if searching?
       end
@@ -50,7 +52,7 @@ module Spree
           return redirect_to spree.edit_admin_order_path(@order)
         end
 
-        OrderWorkflow.new(@order).advance_to_payment
+        ::Orders::WorkflowService.new(@order).advance_to_payment
 
         if @order.complete?
           redirect_to spree.edit_admin_order_path(@order)
@@ -69,7 +71,8 @@ module Spree
         @order.send_cancellation_email = params[:send_cancellation_email] != "false"
         @order.restock_items = params.fetch(:restock_items, "true") == "true"
 
-        if @order.public_send(event.to_s)
+        if allowed_events.include?(event) && @order.public_send(event.to_s)
+          AmendBackorderJob.perform_later(@order) if @order.completed?
           flash[:success] = Spree.t(:order_updated)
         else
           flash[:error] = Spree.t(:cannot_perform_operation)
@@ -104,7 +107,7 @@ module Spree
           @order = if params[:invoice_id].present?
                      @order.invoices.find(params[:invoice_id]).presenter
                    else
-                     OrderInvoiceGenerator.new(@order).generate_or_update_latest_invoice
+                     ::Orders::GenerateInvoiceService.new(@order).generate_or_update_latest_invoice
                      @order.invoices.first.presenter
                    end
         end
@@ -160,6 +163,13 @@ module Spree
         @order.update_order!
       end
 
+      def refuse_changing_shipped_orders
+        return unless @order.shipped?
+
+        flash[:error] = I18n.t("spree.admin.orders.add_product.cannot_add_item_to_shipped_order")
+        redirect_to spree.edit_admin_order_path(@order)
+      end
+
       def order_params
         return params[:order] if params[:order].blank?
 
@@ -196,6 +206,10 @@ module Spree
                         ocs.soonest_opening +
                         ocs.closed +
                         ocs.undated
+      end
+
+      def allowed_events
+        %w{cancel resume}
       end
     end
   end

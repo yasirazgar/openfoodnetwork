@@ -1,4 +1,4 @@
-%div.admin-orders-index-search{ "data-controller": "search", "data-search-restore-value": @stored_query }
+.admin-orders-index-search{ "data-controller": "search", "data-search-restore-value": @stored_query }
   = form_with url: spree.admin_orders_url, id: "orders_form", method: :get, data: { remote: true, "search-target": "form" } do
     = hidden_field_tag :page, 1, class: "page"
     = hidden_field_tag :per_page, 15, class: "per-page"
@@ -38,7 +38,7 @@
       .field
         = label_tag nil, t(:shipping_method)
         = select_tag(:shipping_method_id,
-          options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).collect {|s| [t("spree.shipping_method_names.#{s.name}"), s.id]}),
+          options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).map {|s| [s.name, s.id]}),
           { include_blank: true, class: "primary", "data-controller": "tom-select" })
     .field-block.alpha.eight.columns
       = label_tag nil, t(:distributors)

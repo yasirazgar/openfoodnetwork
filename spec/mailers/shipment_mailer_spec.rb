@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe Spree::ShipmentMailer do
+RSpec.describe Spree::ShipmentMailer do
   let(:shipment) do
     order = build(:order_with_distributor)
     product = build(:product, name: %{The "BEST" product})
@@ -25,14 +23,14 @@ describe Spree::ShipmentMailer do
   # Regression test for #2196
   it "doesn't include out of stock in the email body" do
     shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: true)
-    expect(shipment_email.body).to_not include(%{Out of Stock})
+    expect(shipment_email.body).not_to include(%{Out of Stock})
   end
 
   it "shipment_email accepts an shipment id as an alternative to an Shipment object" do
     expect(Spree::Shipment).to receive(:find).with(shipment.id).and_return(shipment)
     expect {
       Spree::ShipmentMailer.shipped_email(shipment.id, delivery: true).deliver_now
-    }.to_not raise_error
+    }.not_to raise_error
   end
 
   it "includes the distributor's name in the subject" do
@@ -54,5 +52,15 @@ describe Spree::ShipmentMailer do
   it "picked_up email has different subject" do
     shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: false)
     expect(shipment_email.subject).to include("#{distributor.name} Pick up Notification")
+  end
+
+  it "picked_up email has as the reply to email as the distributor" do
+    shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: false)
+    expect(shipment_email.reply_to).to eq([distributor.contact.email])
+  end
+
+  it "shipment_email email has as the reply to email as the distributor" do
+    shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: true)
+    expect(shipment_email.reply_to).to eq([distributor.contact.email])
   end
 end

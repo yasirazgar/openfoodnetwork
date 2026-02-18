@@ -1,6 +1,9 @@
 [ {
   "@graph" : [ {
-    "@id" : "dfc-f:AOC_FR",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf",
+    "@type" : [ "http://www.w3.org/2002/07/owl#Ontology" ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AOC_FR",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-APPELLATION_ORIGINE_CONTROLEE"
@@ -10,10 +13,10 @@
       "@value" : "AOC"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:LocalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LocalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -23,7 +26,7 @@
       "@value" : "Appellation d’origine contrôlée"
     } ]
   }, {
-    "@id" : "dfc-f:AOP_EU",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AOP_EU",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-PROTECTED_DESIGNATION_OF_ORIGIN"
@@ -36,10 +39,10 @@
       "@value" : "AOP"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:LocalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LocalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -49,16 +52,16 @@
       "@value" : "Appellation d’origine protégée"
     } ]
   }, {
-    "@id" : "dfc-f:Africa",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Africa",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q15"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -68,13 +71,13 @@
       "@value" : "Afrique"
     } ]
   }, {
-    "@id" : "dfc-f:Algae",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Algae",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -84,13 +87,13 @@
       "@value" : "Algue"
     } ]
   }, {
-    "@id" : "dfc-f:AnimalOrigin",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalOrigin",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -100,34 +103,34 @@
       "@value" : "Animal"
     } ]
   }, {
-    "@id" : "dfc-f:AnimalPartOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:Bee"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     }, {
-      "@id" : "dfc-f:Bull"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bull"
     }, {
-      "@id" : "dfc-f:Cow"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Cow"
     }, {
-      "@id" : "dfc-f:Ewe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ewe"
     }, {
-      "@id" : "dfc-f:Goat"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Goat"
     }, {
-      "@id" : "dfc-f:Hen"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Hen"
     }, {
-      "@id" : "dfc-f:Pig"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Pig"
     }, {
-      "@id" : "dfc-f:Quail"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Quail"
     }, {
-      "@id" : "dfc-f:Roster"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Sheep"
     }, {
-      "@id" : "dfc-f:Sheep"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Rooster"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -137,16 +140,16 @@
       "@value" : "Partie ou produit d'un animal"
     } ]
   }, {
-    "@id" : "dfc-f:Asia",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Asia",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q48"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -156,16 +159,16 @@
       "@value" : "Asie"
     } ]
   }, {
-    "@id" : "dfc-f:Australia",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Australia",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q3960"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Oceania"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Oceania"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -175,7 +178,7 @@
       "@value" : "Australie"
     } ]
   }, {
-    "@id" : "dfc-f:AuvergneRhoneAlpes",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AuvergneRhoneAlpes",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q18338206"
@@ -185,10 +188,10 @@
       "@value" : "ARA"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -198,13 +201,13 @@
       "@value" : "Auvergne-Rhône-Alpes"
     } ]
   }, {
-    "@id" : "dfc-f:Bacteria",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bacteria",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -214,24 +217,24 @@
       "@value" : "Bactérie"
     } ]
   }, {
-    "@id" : "dfc-f:Bee",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:BeeHoney"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeHoney"
     }, {
-      "@id" : "dfc-f:BeePollen"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeePollen"
     }, {
-      "@id" : "dfc-f:BeePropolis"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeePropolis"
     }, {
-      "@id" : "dfc-f:BeeVenom"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeVenom"
     }, {
-      "@id" : "dfc-f:BeeWax"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeWax"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -241,13 +244,13 @@
       "@value" : "Bee"
     } ]
   }, {
-    "@id" : "dfc-f:BeeHoney",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeHoney",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Bee"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -257,13 +260,13 @@
       "@value" : "Miel"
     } ]
   }, {
-    "@id" : "dfc-f:BeePollen",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeePollen",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Bee"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -273,13 +276,13 @@
       "@value" : "Pollen"
     } ]
   }, {
-    "@id" : "dfc-f:BeePropolis",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeePropolis",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Bee"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -289,13 +292,13 @@
       "@value" : "Propolis"
     } ]
   }, {
-    "@id" : "dfc-f:BeeVenom",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeVenom",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Bee"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -305,13 +308,13 @@
       "@value" : "Venom"
     } ]
   }, {
-    "@id" : "dfc-f:BeeWax",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeWax",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Bee"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -321,16 +324,16 @@
       "@value" : "Wax"
     } ]
   }, {
-    "@id" : "dfc-f:Belgium",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Belgium",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q31"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -340,16 +343,16 @@
       "@value" : "Belgique"
     } ]
   }, {
-    "@id" : "dfc-f:BiodynamicLabel",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BiodynamicLabel",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Certification"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Certification"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:Demeter"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Demeter"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -359,16 +362,16 @@
       "@value" : "Label biodynamie"
     } ]
   }, {
-    "@id" : "dfc-f:BleuBlancCoeur_FR",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BleuBlancCoeur_FR",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-BLEU_BLANC_COEUR"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -378,7 +381,7 @@
       "@value" : "Bleu-Blanc-Coeur"
     } ]
   }, {
-    "@id" : "dfc-f:BourgogneFrancheComte",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BourgogneFrancheComte",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q18578267"
@@ -388,10 +391,10 @@
       "@value" : "Burgundy-Franche-Comté"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -401,16 +404,16 @@
       "@value" : "Bourgogne-Franche-Comté"
     } ]
   }, {
-    "@id" : "dfc-f:Brittany",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Brittany",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q12130"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -420,13 +423,13 @@
       "@value" : "Bretagne"
     } ]
   }, {
-    "@id" : "dfc-f:Bulb",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bulb",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -436,16 +439,16 @@
       "@value" : "Bulbe"
     } ]
   }, {
-    "@id" : "dfc-f:Bull",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bull",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:BullBody"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BullBody"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -455,13 +458,13 @@
       "@value" : "Bœuf"
     } ]
   }, {
-    "@id" : "dfc-f:BullBody",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BullBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Bull"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bull"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -471,7 +474,7 @@
       "@value" : "Partie du boeuf"
     } ]
   }, {
-    "@id" : "dfc-f:CentreValLoire",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#CentreValLoire",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q13947"
@@ -481,10 +484,10 @@
       "@value" : "Centre Loire Valley"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -494,7 +497,7 @@
       "@value" : "Centre-Val de Loire"
     } ]
   }, {
-    "@id" : "dfc-f:Certification",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Certification",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -504,18 +507,18 @@
       "@value" : "Les certifications ou labels obtenus par les produits. Exemple : AB, EU bio, DEMETER, Label Rouge..."
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:OrganicLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OrganicLabel"
     }, {
-      "@id" : "dfc-f:LocalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LocalLabel"
     }, {
-      "@id" : "dfc-f:BiodynamicLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BiodynamicLabel"
     }, {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     }, {
-      "@id" : "dfc-f:MarketingLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MarketingLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -525,10 +528,26 @@
       "@value" : "Certification"
     } ],
     "http://www.w3.org/2004/02/skos/core#topConceptOf" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ]
   }, {
-    "@id" : "dfc-f:Claim",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ChickenBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#c_99fce7e0"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "fr",
+      "@value" : "Partie du poulet"
+    }, {
+      "@language" : "en",
+      "@value" : "Chicken's body"
+    } ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Claim",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -538,9 +557,9 @@
       "@value" : "\"Les allégations nutritionnelles et de santé sont des mentions, images ou symboles valorisant les denrées alimentaires sur le plan nutritionnel ou de la santé. Ce sont par exemple les phrases du type « jus de fruit riche en vitamine C », « riche en calcium », « allégé en sucres », « bon pour le cœur », « le calcium est nécessaire à une ossature normale », etc.\" (source: Direction générale de la concurrence, de la consommation et de la répression des fraudes, https://www.economie.gouv.fr/dgccrf/Consommation/Etiquetage-des-produits/Allegations-nutrionnelles-et-de-sante)"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     }, {
-      "@id" : "dfc-f:HealthClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HealthClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -550,10 +569,23 @@
       "@value" : "Allégations nutritionnelles et de santé"
     } ],
     "http://www.w3.org/2004/02/skos/core#topConceptOf" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ]
   }, {
-    "@id" : "dfc-f:ContainsNutrientOrSubstance",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ContainerInformation",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "en",
+      "@value" : "Container Information"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#topConceptOf" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ContainsNutrientOrSubstance",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -563,10 +595,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire contient un nutriment ou une autre substance pour lequel ou laquelle le présent règlement ne fixe pas de conditions particulières, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit respecte toutes les dispositions applicables du présent règlement, et notamment l'article 5. Pour les vitamines et les minéraux, les conditions prévues pour l'allégation «source de» s'appliquent.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -576,16 +608,16 @@
       "@value" : "Contient nutriment ou autre substance"
     } ]
   }, {
-    "@id" : "dfc-f:Corsica",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Corsica",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q14112"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -595,18 +627,18 @@
       "@value" : "Corse"
     } ]
   }, {
-    "@id" : "dfc-f:Cow",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Cow",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:CowBody"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#CowBody"
     }, {
-      "@id" : "dfc-f:CowMilk"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#CowMilk"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -616,13 +648,13 @@
       "@value" : "Vache"
     } ]
   }, {
-    "@id" : "dfc-f:CowBody",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#CowBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Cow"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Cow"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -632,13 +664,13 @@
       "@value" : "Partie de vache"
     } ]
   }, {
-    "@id" : "dfc-f:CowMilk",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#CowMilk",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Cow"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Cow"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -648,18 +680,18 @@
       "@value" : "Lait de vache"
     } ]
   }, {
-    "@id" : "dfc-f:DFC_ProductGlossary_Facet",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#ConceptScheme" ],
     "http://www.w3.org/2004/02/skos/core#hasTopConcept" : [ {
-      "@id" : "dfc-f:Certification"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Certification"
     }, {
-      "@id" : "dfc-f:Claim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Claim"
     }, {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     }, {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     }, {
-      "@id" : "dfc-f:PartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -669,16 +701,16 @@
       "@value" : "Product glossary facets"
     } ]
   }, {
-    "@id" : "dfc-f:Demeter",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Demeter",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-DEMETER_LABEL"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:BiodynamicLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BiodynamicLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -688,7 +720,7 @@
       "@value" : "Demeter"
     } ]
   }, {
-    "@id" : "dfc-f:EnergyFree",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EnergyFree",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -698,10 +730,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire n'a pas d'apport énergétique, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au maximum 4 kcal (17 kJ)/100 ml. Dans le cas des édulcorants de table, la limite de 0,4 kcal (1,7 kJ)/portion, ayant des propriétés édulcorantes équivalentes à 6 g de saccharose (approximativement 1 petite cuillérée de saccharose), s'applique.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -711,7 +743,7 @@
       "@value" : "Sans apport énergétique"
     } ]
   }, {
-    "@id" : "dfc-f:EnergyReduced",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EnergyReduced",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -721,10 +753,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire a une valeur énergétique réduite, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si la valeur énergétique est réduite d'au moins 30 %, en indiquant la ou les caractéristiques entraînant la réduction de la valeur énergétique totale de la denrée alimentaire.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -734,16 +766,16 @@
       "@value" : "Valeur énergétique réduite"
     } ]
   }, {
-    "@id" : "dfc-f:England",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#England",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q21"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:UnitedKingdom"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnitedKingdom"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -753,30 +785,30 @@
       "@value" : "Angleterre"
     } ]
   }, {
-    "@id" : "dfc-f:EthicalLabel",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Certification"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Certification"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:Milk-fed"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Milk-fed"
     }, {
-      "@id" : "dfc-f:RedLabel_FR"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RedLabel_FR"
     }, {
-      "@id" : "dfc-f:FSC"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#FSC"
     }, {
-      "@id" : "dfc-f:MSC"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MSC"
     }, {
-      "@id" : "dfc-f:HEV"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HEV"
     }, {
-      "@id" : "dfc-f:BleuBlancCoeur_FR"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BleuBlancCoeur_FR"
     }, {
-      "@id" : "dfc-f:FairTradeMaxHaavelar"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#FairTradeMaxHaavelar"
     }, {
-      "@id" : "dfc-f:RainforestAlliance"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RainforestAlliance"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -786,37 +818,37 @@
       "@value" : "Label éthique"
     } ]
   }, {
-    "@id" : "dfc-f:Europe",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q46"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     }, {
-      "@id" : "dfc-f:UnitedKingdom"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnitedKingdom"
     }, {
-      "@id" : "dfc-f:Ireland"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ireland"
     }, {
-      "@id" : "dfc-f:Belgium"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Belgium"
     }, {
-      "@id" : "dfc-f:Germany"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Germany"
     }, {
-      "@id" : "dfc-f:Spain"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Spain"
     }, {
-      "@id" : "dfc-f:Portugal"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Portugal"
     }, {
-      "@id" : "dfc-f:Italy"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Italy"
     }, {
-      "@id" : "dfc-f:Switzerland"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Switzerland"
     }, {
-      "@id" : "dfc-f:Netherlands"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Netherlands"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -826,18 +858,18 @@
       "@value" : "Europe"
     } ]
   }, {
-    "@id" : "dfc-f:Ewe",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ewe",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:EweBody"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EweBody"
     }, {
-      "@id" : "dfc-f:EweMilk"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EweMilk"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -847,13 +879,13 @@
       "@value" : "Ewe"
     } ]
   }, {
-    "@id" : "dfc-f:EweBody",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EweBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Ewe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ewe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -863,13 +895,13 @@
       "@value" : "Partie de brebis"
     } ]
   }, {
-    "@id" : "dfc-f:EweMilk",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EweMilk",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Ewe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ewe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -879,7 +911,7 @@
       "@value" : "Sheep milk"
     } ]
   }, {
-    "@id" : "dfc-f:FSC",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#FSC",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-FOREST_STEWARDSHIP_COUNCIL_LABEL"
@@ -892,10 +924,10 @@
       "@value" : "FSC"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -905,7 +937,7 @@
       "@value" : "Forêt durable FSC"
     } ]
   }, {
-    "@id" : "dfc-f:FairTradeMaxHaavelar",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#FairTradeMaxHaavelar",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-MAX_HAVELAAR"
@@ -918,10 +950,10 @@
       "@value" : "Max Haavelar"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -931,7 +963,7 @@
       "@value" : "Fairtrade Max Haavelar"
     } ]
   }, {
-    "@id" : "dfc-f:FatFree",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#FatFree",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -941,10 +973,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire ne contient pas de matières grasses, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas plus de 0,5 g de matières grasses par 100 g ou par 100 ml. Cependant, les allégations du type «à X % sans matières grasses» sont interdites.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -954,13 +986,13 @@
       "@value" : "Sans matières grasses"
     } ]
   }, {
-    "@id" : "dfc-f:Flower",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Flower",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -970,7 +1002,7 @@
       "@value" : "Flower"
     } ]
   }, {
-    "@id" : "dfc-f:France",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#altLabel" : [ {
       "@language" : "en",
@@ -980,40 +1012,40 @@
       "@value" : "FR"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q142"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:AuvergneRhoneAlpes"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AuvergneRhoneAlpes"
     }, {
-      "@id" : "dfc-f:BourgogneFrancheComte"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BourgogneFrancheComte"
     }, {
-      "@id" : "dfc-f:Brittany"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Brittany"
     }, {
-      "@id" : "dfc-f:CentreValLoire"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#CentreValLoire"
     }, {
-      "@id" : "dfc-f:Corsica"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Corsica"
     }, {
-      "@id" : "dfc-f:GrandEst"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GrandEst"
     }, {
-      "@id" : "dfc-f:HautsDeFrance"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HautsDeFrance"
     }, {
-      "@id" : "dfc-f:IleDeFrance"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#IleDeFrance"
     }, {
-      "@id" : "dfc-f:Normandy"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Normandy"
     }, {
-      "@id" : "dfc-f:NouvelleAquitaine"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NouvelleAquitaine"
     }, {
-      "@id" : "dfc-f:Occitania"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Occitania"
     }, {
-      "@id" : "dfc-f:PaysDeLoire"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PaysDeLoire"
     }, {
-      "@id" : "dfc-f:ProvenceAlpesCotesAzur"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ProvenceAlpesCotesAzur"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1023,29 +1055,29 @@
       "@value" : "France"
     } ]
   }, {
-    "@id" : "dfc-f:Fruit",
-    "@type" : [ "skos:Concept" ],
-    "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
-      "@language" : "en",
-      "@value" : "Fruit"
-    }, {
-      "@language" : "fr",
-      "@value" : "Fruit"
-    } ]
-  }, {
-    "@id" : "dfc-f:Funghi",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Fruit",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "en",
+      "@value" : "Fruit"
+    }, {
+      "@language" : "fr",
+      "@value" : "Fruit"
+    } ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Funghi",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1055,16 +1087,16 @@
       "@value" : "Champignon"
     } ]
   }, {
-    "@id" : "dfc-f:Germany",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Germany",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q183"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1074,13 +1106,13 @@
       "@value" : "Allemagne"
     } ]
   }, {
-    "@id" : "dfc-f:GlutenFree",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GlutenFree",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:OtherClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OtherClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1090,18 +1122,18 @@
       "@value" : "Sans gluten"
     } ]
   }, {
-    "@id" : "dfc-f:Goat",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Goat",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:GoatBody"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GoatBody"
     }, {
-      "@id" : "dfc-f:GoatMilk"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GoatMilk"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -1111,13 +1143,13 @@
       "@value" : "Goat"
     } ]
   }, {
-    "@id" : "dfc-f:GoatBody",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GoatBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Goat"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Goat"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1127,13 +1159,13 @@
       "@value" : "Partie de chèvre"
     } ]
   }, {
-    "@id" : "dfc-f:GoatMilk",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GoatMilk",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Goat"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Goat"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -1143,16 +1175,16 @@
       "@value" : "Goat milk"
     } ]
   }, {
-    "@id" : "dfc-f:GrandEst",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GrandEst",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q18677983"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1162,7 +1194,7 @@
       "@value" : "Grand Est"
     } ]
   }, {
-    "@id" : "dfc-f:HEV",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HEV",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-HAUTE_VALEUR_ENVIRONNEMENTALE"
@@ -1175,10 +1207,10 @@
       "@value" : "HVE"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1188,16 +1220,16 @@
       "@value" : "Haute Valeur Environnementale"
     } ]
   }, {
-    "@id" : "dfc-f:HautsDeFrance",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HautsDeFrance",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q18677767"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1207,17 +1239,17 @@
       "@value" : "Hauts-de-France"
     } ]
   }, {
-    "@id" : "dfc-f:HealthClaim",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HealthClaim",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
       "@value" : "A health claim is any statement about a relationship between food and health."
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Claim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Claim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1227,18 +1259,18 @@
       "@value" : "Allégation santé"
     } ]
   }, {
-    "@id" : "dfc-f:Hen",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Hen",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:HenBody"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HenBody"
     }, {
-      "@id" : "dfc-f:HenEgg"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HenEgg"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1248,13 +1280,13 @@
       "@value" : "Poule"
     } ]
   }, {
-    "@id" : "dfc-f:HenBody",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HenBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Hen"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Hen"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1264,13 +1296,13 @@
       "@value" : "Partie de poule"
     } ]
   }, {
-    "@id" : "dfc-f:HenEgg",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HenEgg",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Hen"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Hen"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1280,7 +1312,7 @@
       "@value" : "Œuf de poule"
     } ]
   }, {
-    "@id" : "dfc-f:HighFibre",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighFibre",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1290,10 +1322,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est riche en fibres, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins 6 g de fibres par 100 g ou au moins 3 g de fibres par 100 kcal.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1303,7 +1335,7 @@
       "@value" : "Riche en fibres"
     } ]
   }, {
-    "@id" : "dfc-f:HighMonounsaturatedFat",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighMonounsaturatedFat",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1313,10 +1345,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est riche en graisses monoinsaturées, ou toute allégation susceptible d’avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins 45 % d’acides gras dérivés de graisses monoinsaturées et si l’énergie fournie par les graisses monoinsaturées représente plus de 20 % de l’apport énergétique du produit.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1326,7 +1358,7 @@
       "@value" : "Riche en graisses monoinsaturées"
     } ]
   }, {
-    "@id" : "dfc-f:HighOmega3FattyAcids",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighOmega3FattyAcids",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1336,10 +1368,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est riche en acide gras oméga-3, ou toute allégation susceptible d’avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins 0,6 g d’acide alphalinolénique pour 100 g et 100 kcal, ou au moins 80 mg d’acide eicosapentaénoïque et d’acide docosahexénoïque combinés pour 100 g et 100 kcal.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1349,7 +1381,7 @@
       "@value" : "Riche en acide gras Oméga-3"
     } ]
   }, {
-    "@id" : "dfc-f:HighPolyunsaturatedFat",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighPolyunsaturatedFat",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1359,10 +1391,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est riche en graisses polyinsaturées, ou toute allégation susceptible d’avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins 45 % d’acides gras dérivés de graisses polyinsaturées et si l’énergie fournie par les graisses polyinsaturées représente plus de 20 % de l’apport énergétique du produit.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1372,7 +1404,7 @@
       "@value" : "Riche en graisses polyinsaturées"
     } ]
   }, {
-    "@id" : "dfc-f:HighProtein",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighProtein",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1382,10 +1414,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est riche en protéines, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si 20 % au moins de la valeur énergétique de la denrée alimentaire sont produits par des protéines.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1395,7 +1427,7 @@
       "@value" : "Riche en protéines"
     } ]
   }, {
-    "@id" : "dfc-f:HighUnsaturatedFat",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighUnsaturatedFat",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1405,10 +1437,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est riche en graisses insaturées, ou toute allégation susceptible d’avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins 70 % d’acides gras dérivés de graisses insaturées et si l’énergie fournie par les graisses insaturées représente plus de 20 % de l’apport énergétique du produit.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1418,7 +1450,7 @@
       "@value" : "Riche en graisses insaturées"
     } ]
   }, {
-    "@id" : "dfc-f:HighVitaminsMinerals",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighVitaminsMinerals",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1428,10 +1460,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est riche en vitamines et/ou en minéraux, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins deux fois la teneur requise pour l'allégation «source de [NOM DES VITAMINES] et/ou [NOM DES MINÉRAUX]».\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1441,7 +1473,7 @@
       "@value" : "Riche en vitamines et/ou de minéraux"
     } ]
   }, {
-    "@id" : "dfc-f:IGP_EU",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#IGP_EU",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-IGP"
@@ -1454,10 +1486,10 @@
       "@value" : "IGP"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:LocalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LocalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1467,7 +1499,7 @@
       "@value" : "Indication géographique de provenance"
     } ]
   }, {
-    "@id" : "dfc-f:IleDeFrance",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#IleDeFrance",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q13917"
@@ -1480,10 +1512,10 @@
       "@value" : "IDF"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1493,7 +1525,7 @@
       "@value" : "Île-de-France"
     } ]
   }, {
-    "@id" : "dfc-f:IncreasedNutrient",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#IncreasedNutrient",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1503,10 +1535,10 @@
       "@value" : "\"Une allégation affirmant que la teneur en un ou plusieurs nutriments, autres que des vitamines ou des minéraux, a été augmentée, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit remplit les conditions applicables à l'allégation «source de» et si l'augmentation de cette teneur est d'au moins 30 % par rapport à un produit similaire.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1516,7 +1548,7 @@
       "@value" : "Enrichi en nutriment"
     } ]
   }, {
-    "@id" : "dfc-f:Ireland",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ireland",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q27"
@@ -1529,10 +1561,10 @@
       "@value" : "Irlande"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1542,16 +1574,16 @@
       "@value" : "République d'Irlande"
     } ]
   }, {
-    "@id" : "dfc-f:Italy",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Italy",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q38"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1561,13 +1593,13 @@
       "@value" : "Italie"
     } ]
   }, {
-    "@id" : "dfc-f:Leaf",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Leaf",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -1577,7 +1609,7 @@
       "@value" : "Leaf"
     } ]
   }, {
-    "@id" : "dfc-f:Light",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Light",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1587,10 +1619,10 @@
       "@value" : "\"Une allégation selon laquelle un produit est «allégé» ou «light», ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, doit remplir les mêmes conditions que celles applicables aux termes «réduit en»; elle doit aussi être accompagnée d'une indication de la ou les caractéristiques entraînant l'allégement de la denrée alimentaire.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -1600,7 +1632,7 @@
       "@value" : "Light/Lite"
     } ]
   }, {
-    "@id" : "dfc-f:LightLite",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LightLite",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1610,37 +1642,37 @@
       "@value" : "\"Une allégation selon laquelle un produit est «allégé» ou «light», ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, doit remplir les mêmes conditions que celles applicables aux termes «réduit en»; elle doit aussi être accompagnée d'une indication de la ou les caractéristiques entraînant l'allégement de la denrée alimentaire.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
-      "@language" : "en",
-      "@value" : "Low/Light"
-    }, {
       "@language" : "fr",
       "@value" : "Allégé/Light"
+    }, {
+      "@language" : "en",
+      "@value" : "Low/Light"
     } ]
   }, {
-    "@id" : "dfc-f:LocalLabel",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LocalLabel",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Certification"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Certification"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:PaysansDeNature_FR"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PaysansDeNature_FR"
     }, {
-      "@id" : "dfc-f:AOC_FR"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AOC_FR"
     }, {
-      "@id" : "dfc-f:PGS"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PGS"
     }, {
-      "@id" : "dfc-f:AOP_EU"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AOP_EU"
     }, {
-      "@id" : "dfc-f:IGP_EU"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#IGP_EU"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1650,7 +1682,7 @@
       "@value" : "Label local"
     } ]
   }, {
-    "@id" : "dfc-f:LowEnergy",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowEnergy",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1660,10 +1692,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire a une faible valeur énergétique, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que pour un produit contenant au maximum 40 kcal (170 kJ)/100 g dans le cas des solides ou au maximum 20 kcal (80 kJ)/100 ml dans le cas des liquides. Dans le cas des édulcorants de table, la limite de 4 kcal (17 kJ)/portion, avec des propriétés édulcorantes équivalentes à 6 g de saccharose (approximativement 1 petite cuillérée de saccharose), s'applique.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1673,7 +1705,7 @@
       "@value" : "Faible valeur énergétique"
     } ]
   }, {
-    "@id" : "dfc-f:LowFat",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowFat",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1683,10 +1715,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire a une faible teneur en matières grasses, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas plus de 3 g de matières grasses par 100 g dans le cas des solides ou 1,5 g de matières grasses par 100 ml dans le cas des liquides (1,8 g de matières grasses par 100 ml pour le lait demi-écrémé).\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1696,7 +1728,7 @@
       "@value" : "Faible teneur en matière grasse"
     } ]
   }, {
-    "@id" : "dfc-f:LowSaturatedFat",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowSaturatedFat",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1706,10 +1738,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire a une faible teneur en graisses saturées, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si la somme des acides gras saturés et des acides gras trans contenus dans le produit n'est pas supérieure à 1,5 g par 100 g de solide ou à 0,75 g par 100 ml de liquide, la somme des acides gras saturés et des acides gras trans ne pouvant pas produire, dans les deux cas, plus de 10 % de l'énergie.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1719,7 +1751,7 @@
       "@value" : "Faible teneur en graisses saturées"
     } ]
   }, {
-    "@id" : "dfc-f:LowSodiumSalt",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowSodiumSalt",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1729,10 +1761,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est pauvre en sodium ou en sel, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas plus de 0,12 g de sodium ou de l'équivalent en sel par 100 g ou par 100 ml. En ce qui concerne les eaux, autres que les eaux minérales naturelles relevant du champ d'application de la directive 80/777/CEE, cette valeur ne devrait pas être supérieure à 2 mg de sodium par 100 ml.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1742,7 +1774,7 @@
       "@value" : "Pauvre en sodium/sel"
     } ]
   }, {
-    "@id" : "dfc-f:LowSugars",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowSugars",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1752,10 +1784,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire a une faible teneur en sucres, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas plus de 5 g de sucres par 100 g dans le cas des solides ou 2,5 g de sucres par 100 ml dans le cas des liquides.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1765,7 +1797,7 @@
       "@value" : "Faible teneur en sucres"
     } ]
   }, {
-    "@id" : "dfc-f:MSC",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MSC",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-MARINE_STEWARDSHIP_COUNCIL_LABEL"
@@ -1778,10 +1810,10 @@
       "@value" : "MSC"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1791,18 +1823,18 @@
       "@value" : "Pêche durable MSC"
     } ]
   }, {
-    "@id" : "dfc-f:MarketingLabel",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MarketingLabel",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Certification"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Certification"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:ProductOfTheYear"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ProductOfTheYear"
     }, {
-      "@id" : "dfc-f:TasteOfTheYear"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TasteOfTheYear"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1812,13 +1844,13 @@
       "@value" : "Label marketing"
     } ]
   }, {
-    "@id" : "dfc-f:Milk-fed",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Milk-fed",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1828,13 +1860,13 @@
       "@value" : "Nourri au lait"
     } ]
   }, {
-    "@id" : "dfc-f:Mineral",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Mineral",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1844,13 +1876,13 @@
       "@value" : "Minéral"
     } ]
   }, {
-    "@id" : "dfc-f:MultiGeoOrigin",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MultiGeoOrigin",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1860,13 +1892,13 @@
       "@value" : "Origine territorial multiple"
     } ]
   }, {
-    "@id" : "dfc-f:MultiNatureOrigin",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MultiNatureOrigin",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1876,13 +1908,13 @@
       "@value" : "Origine multiple"
     } ]
   }, {
-    "@id" : "dfc-f:MultiOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MultiOrigin",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1892,7 +1924,7 @@
       "@value" : "Origine multiple"
     } ]
   }, {
-    "@id" : "dfc-f:Natural",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Natural",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1902,10 +1934,10 @@
       "@value" : "\"Lorsqu'une denrée alimentaire remplit naturellement la ou les conditions fixées dans la présente annexe pour l'utilisation d'une allégation nutritionnelle, le terme «naturellement/naturel» peut accompagner cette allégation.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -1915,7 +1947,7 @@
       "@value" : "Naturally/Natural"
     } ]
   }, {
-    "@id" : "dfc-f:NatureEtProgres",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureEtProgres",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-NATURE_ET_PROGRES"
@@ -1925,10 +1957,10 @@
       "@value" : "Nature and Progress"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:OrganicLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OrganicLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1938,7 +1970,7 @@
       "@value" : "Nature et progrès"
     } ]
   }, {
-    "@id" : "dfc-f:NatureOrigin",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -1952,26 +1984,26 @@
       "@value" : "We made the list for the prototype with open nomenclature to start with for plants and animals but might be better to connected directly from relevant source ontologies for variaties, races, etc. (http://open-nomenclature.org/fra/nomenclatures/varieties/tree)."
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:UnknownNatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnknownNatureOrigin"
     }, {
-      "@id" : "dfc-f:MultiNatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MultiNatureOrigin"
     }, {
-      "@id" : "dfc-f:PlantOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantOrigin"
     }, {
-      "@id" : "dfc-f:AnimalOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalOrigin"
     }, {
-      "@id" : "dfc-f:Mineral"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Mineral"
     }, {
-      "@id" : "dfc-f:Funghi"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Funghi"
     }, {
-      "@id" : "dfc-f:Algae"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Algae"
     }, {
-      "@id" : "dfc-f:Bacteria"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bacteria"
     }, {
-      "@id" : "dfc-f:Water"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Water"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -1981,19 +2013,19 @@
       "@value" : "Source naturelle d'origine"
     } ],
     "http://www.w3.org/2004/02/skos/core#topConceptOf" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ]
   }, {
-    "@id" : "dfc-f:Netherlands",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Netherlands",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q55"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2003,16 +2035,16 @@
       "@value" : "Pays bas"
     } ]
   }, {
-    "@id" : "dfc-f:NewZealand",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NewZealand",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q664"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Oceania"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Oceania"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2022,7 +2054,7 @@
       "@value" : "Nouvelle Zélande"
     } ]
   }, {
-    "@id" : "dfc-f:NoAddedSodiumSalt",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NoAddedSodiumSalt",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2032,10 +2064,10 @@
       "@value" : "\"Une allégation selon laquelle il n’a pas été ajouté de sodium ou de sel à une denrée alimentaire, ou toute autre allégation susceptible d’avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas de sodium ou de sel ajouté ou tout autre ingrédient contenant du sodium ou du sel ajouté et si le produit ne contient pas plus de 0,12 g de sodium ou de l’équivalent en sel par 100 g ou par 100 ml.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2045,7 +2077,7 @@
       "@value" : "Sans sodium/sel ajouté"
     } ]
   }, {
-    "@id" : "dfc-f:NoAddedSugars",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NoAddedSugars",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2055,10 +2087,10 @@
       "@value" : "\"Une allégation selon laquelle il n'a pas été ajouté de sucres à une denrée alimentaire, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas de monosaccharides ou disaccharides ajoutés ou toute autre denrée alimentaire utilisée pour ses propriétés édulcorantes. Si les sucres sont naturellement présents dans la denrée alimentaire, l'indication suivante devrait également figurer sur l'étiquette: «CONTIENT DES SUCRES NATURELLEMENT PRÉSENTS».\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2068,16 +2100,16 @@
       "@value" : "Sans sucres ajoutés"
     } ]
   }, {
-    "@id" : "dfc-f:Normandy",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Normandy",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q18677875"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2087,16 +2119,16 @@
       "@value" : "Normandie"
     } ]
   }, {
-    "@id" : "dfc-f:NorthAmerica",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NorthAmerica",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q49"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2106,16 +2138,16 @@
       "@value" : "Amérique du Nord"
     } ]
   }, {
-    "@id" : "dfc-f:NorthernIreland",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NorthernIreland",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q26"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:UnitedKingdom"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnitedKingdom"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2125,7 +2157,7 @@
       "@value" : "Irlande du Nord"
     } ]
   }, {
-    "@id" : "dfc-f:NouvelleAquitaine",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NouvelleAquitaine",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q18678082"
@@ -2135,10 +2167,10 @@
       "@value" : "NA"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2148,74 +2180,74 @@
       "@value" : "Nouvelle-Aquitaine"
     } ]
   }, {
-    "@id" : "dfc-f:NutritionalClaim",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Claim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Claim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:LowEnergy"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowEnergy"
     }, {
-      "@id" : "dfc-f:EnergyReduced"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EnergyReduced"
     }, {
-      "@id" : "dfc-f:EnergyFree"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EnergyFree"
     }, {
-      "@id" : "dfc-f:LowFat"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowFat"
     }, {
-      "@id" : "dfc-f:FatFree"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#FatFree"
     }, {
-      "@id" : "dfc-f:LowSaturatedFat"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowSaturatedFat"
     }, {
-      "@id" : "dfc-f:SaturatedFatFree"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SaturatedFatFree"
     }, {
-      "@id" : "dfc-f:LowSugars"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowSugars"
     }, {
-      "@id" : "dfc-f:SugarsFree"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SugarsFree"
     }, {
-      "@id" : "dfc-f:NoAddedSugars"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NoAddedSugars"
     }, {
-      "@id" : "dfc-f:LowSodiumSalt"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LowSodiumSalt"
     }, {
-      "@id" : "dfc-f:VeryLowSodiumSalt"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#VeryLowSodiumSalt"
     }, {
-      "@id" : "dfc-f:SodiumOrSaltFree"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SodiumOrSaltFree"
     }, {
-      "@id" : "dfc-f:NoAddedSodiumSalt"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NoAddedSodiumSalt"
     }, {
-      "@id" : "dfc-f:SourceOfFibre"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SourceOfFibre"
     }, {
-      "@id" : "dfc-f:HighFibre"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighFibre"
     }, {
-      "@id" : "dfc-f:SourceOfProtein"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SourceOfProtein"
     }, {
-      "@id" : "dfc-f:HighProtein"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighProtein"
     }, {
-      "@id" : "dfc-f:SourceOfVitaminsMinerals"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SourceOfVitaminsMinerals"
     }, {
-      "@id" : "dfc-f:HighVitaminsMinerals"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighVitaminsMinerals"
     }, {
-      "@id" : "dfc-f:ContainsNutrientOrSubstance"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ContainsNutrientOrSubstance"
     }, {
-      "@id" : "dfc-f:IncreasedNutrient"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#IncreasedNutrient"
     }, {
-      "@id" : "dfc-f:ReducedNutrient"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ReducedNutrient"
     }, {
-      "@id" : "dfc-f:Light"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Light"
     }, {
-      "@id" : "dfc-f:Natural"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Natural"
     }, {
-      "@id" : "dfc-f:SourceOfOmega3FattyAcids"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SourceOfOmega3FattyAcids"
     }, {
-      "@id" : "dfc-f:HighOmega3FattyAcids"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighOmega3FattyAcids"
     }, {
-      "@id" : "dfc-f:HighMonounsaturatedFat"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighMonounsaturatedFat"
     }, {
-      "@id" : "dfc-f:HighPolyunsaturatedFat"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighPolyunsaturatedFat"
     }, {
-      "@id" : "dfc-f:HighUnsaturatedFat"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HighUnsaturatedFat"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2225,16 +2257,16 @@
       "@value" : "Allégation nutritionnelle"
     } ]
   }, {
-    "@id" : "dfc-f:Occitania",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Occitania",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q18678265"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2244,21 +2276,21 @@
       "@value" : "Occitanie"
     } ]
   }, {
-    "@id" : "dfc-f:Oceania",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Oceania",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q55643"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:Australia"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Australia"
     }, {
-      "@id" : "dfc-f:NewZealand"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NewZealand"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2268,16 +2300,16 @@
       "@value" : "Océanie"
     } ]
   }, {
-    "@id" : "dfc-f:Organic-AB",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Organic-AB",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-AGRICULTURE_BIOLOGIQUE"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:OrganicLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OrganicLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2287,13 +2319,13 @@
       "@value" : "Agriculture Biologique"
     } ]
   }, {
-    "@id" : "dfc-f:Organic-BioCoherence",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Organic-BioCoherence",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:OrganicLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OrganicLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2303,7 +2335,7 @@
       "@value" : "Bio Coherence"
     } ]
   }, {
-    "@id" : "dfc-f:Organic-EU",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Organic-EU",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-EU_ORGANIC_FARMING"
@@ -2313,10 +2345,10 @@
       "@value" : "Eurofeuille"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:OrganicLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OrganicLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2326,22 +2358,22 @@
       "@value" : "Agriculture Biologique EU"
     } ]
   }, {
-    "@id" : "dfc-f:OrganicLabel",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OrganicLabel",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Certification"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Certification"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:Organic-AB"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Organic-AB"
     }, {
-      "@id" : "dfc-f:Organic-EU"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Organic-EU"
     }, {
-      "@id" : "dfc-f:Organic-BioCoherence"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Organic-BioCoherence"
     }, {
-      "@id" : "dfc-f:NatureEtProgres"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureEtProgres"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2351,7 +2383,7 @@
       "@value" : "Label biologique"
     } ]
   }, {
-    "@id" : "dfc-f:OtherClaim",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OtherClaim",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2361,17 +2393,17 @@
       "@value" : "Toute autre allégation qui déclare, suggère ou implique qu'un aliment a des propriétés particulières."
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Claim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Claim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:Vegan"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Vegan"
     }, {
-      "@id" : "dfc-f:Vegetarian"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Vegetarian"
     }, {
-      "@id" : "dfc-f:GlutenFree"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GlutenFree"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2381,7 +2413,7 @@
       "@value" : "Autre allégation"
     } ]
   }, {
-    "@id" : "dfc-f:PGS",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PGS",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-PROTECTED_GEOGRAPHICAL_INDICATION"
@@ -2394,10 +2426,10 @@
       "@value" : "PGS"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:LocalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LocalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2407,8 +2439,21 @@
       "@value" : "Statut géographique protégé"
     } ]
   }, {
-    "@id" : "dfc-f:PartOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Package",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ContainerInformation"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "en",
+      "@value" : "Package"
+    } ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/elements/1.1/description" : [ {
       "@language" : "en",
       "@value" : "Part of natural \"living\" origin concerned"
@@ -2421,16 +2466,16 @@
       "@value" : "If I sell carrots, I can sell only the roots, the whole pants with the leaves, or only the leaves. Examples : root, leaves, seeds..."
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     }, {
-      "@id" : "dfc-f:MultiOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MultiOrigin"
     }, {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     }, {
-      "@id" : "dfc-f:UnknownPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnknownPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2440,10 +2485,10 @@
       "@value" : "Partie d'origine"
     } ],
     "http://www.w3.org/2004/02/skos/core#topConceptOf" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ]
   }, {
-    "@id" : "dfc-f:PaysDeLoire",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PaysDeLoire",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q16994"
@@ -2453,10 +2498,10 @@
       "@value" : "Loire lands"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2466,17 +2511,17 @@
       "@value" : "Pays de la Loire"
     } ]
   }, {
-    "@id" : "dfc-f:PaysansDeNature_FR",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PaysansDeNature_FR",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#altLabel" : [ {
       "@language" : "en",
       "@value" : "Farmers of Nature"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:LocalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#LocalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2486,16 +2531,16 @@
       "@value" : "Paysans de Nature"
     } ]
   }, {
-    "@id" : "dfc-f:Pig",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Pig",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:PigBody"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PigBody"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -2505,13 +2550,13 @@
       "@value" : "Pig"
     } ]
   }, {
-    "@id" : "dfc-f:PigBody",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PigBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Pig"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Pig"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -2521,13 +2566,13 @@
       "@value" : "Pig's body"
     } ]
   }, {
-    "@id" : "dfc-f:PlantOrigin",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantOrigin",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2537,32 +2582,32 @@
       "@value" : "Plante"
     } ]
   }, {
-    "@id" : "dfc-f:PlantPartOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:Bulb"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bulb"
     }, {
-      "@id" : "dfc-f:Flower"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Flower"
     }, {
-      "@id" : "dfc-f:Fruit"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Fruit"
     }, {
-      "@id" : "dfc-f:Leaf"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Leaf"
     }, {
-      "@id" : "dfc-f:Root"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Root"
     }, {
-      "@id" : "dfc-f:Seed"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Seed"
     }, {
-      "@id" : "dfc-f:Stem"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Stem"
     }, {
-      "@id" : "dfc-f:Tuber"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Tuber"
     }, {
-      "@id" : "dfc-f:WholePlant"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#WholePlant"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2572,16 +2617,16 @@
       "@value" : "Partie ou produit d'une plante"
     } ]
   }, {
-    "@id" : "dfc-f:Portugal",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Portugal",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q45"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2591,16 +2636,16 @@
       "@value" : "Portugal"
     } ]
   }, {
-    "@id" : "dfc-f:ProductOfTheYear",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ProductOfTheYear",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-PRODUCT_OF_THE_YEAR_CONSUMER_SURVEY"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:MarketingLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MarketingLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2610,7 +2655,7 @@
       "@value" : "Elu produit de l'année"
     } ]
   }, {
-    "@id" : "dfc-f:ProvenceAlpesCotesAzur",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ProvenceAlpesCotesAzur",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q15104"
@@ -2623,10 +2668,10 @@
       "@value" : "PACA"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:France"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#France"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2636,16 +2681,16 @@
       "@value" : "Provence-Alpes-Côte d’Azur"
     } ]
   }, {
-    "@id" : "dfc-f:Quail",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Quail",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:QuailEgg"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#QuailEgg"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -2655,13 +2700,13 @@
       "@value" : "Quail"
     } ]
   }, {
-    "@id" : "dfc-f:QuailEgg",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#QuailEgg",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Quail"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Quail"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2671,16 +2716,16 @@
       "@value" : "Œuf de caille"
     } ]
   }, {
-    "@id" : "dfc-f:RainforestAlliance",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RainforestAlliance",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-RAINFOREST_ALLIANCE"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2690,7 +2735,7 @@
       "@value" : "Rainforest Alliance"
     } ]
   }, {
-    "@id" : "dfc-f:RedLabel_FR",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RedLabel_FR",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "gs1:PackagingMarkedLabelAccreditationCode-LABEL_ROUGE"
@@ -2700,10 +2745,10 @@
       "@value" : "Red Label"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:EthicalLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EthicalLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2713,7 +2758,7 @@
       "@value" : "Label Rouge"
     } ]
   }, {
-    "@id" : "dfc-f:ReducedNutrient",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ReducedNutrient",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2723,10 +2768,10 @@
       "@value" : "\"Une allégation affirmant que la teneur en un ou plusieurs nutriments a été réduite, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si la réduction de cette teneur est d'au moins 30 % par rapport à un produit similaire, sauf s'il s'agit de micronutriments, pour lesquels une différence de 10 % par rapport aux valeurs de référence fixées par la directive 90/496/CEE est admissible, ou s'il s'agit de sodium ou d'équivalent en sel, pour lesquels une différence de 25 % est admissible. L’allégation «réduit en graisses saturées», ou toute autre allégation susceptible d’avoir le même sens pour le consommateur, ne peut être faite que: a) si la somme des acides gras saturés et des acides gras trans contenus dans le produit auquel s’applique l’allégation est au moins de 30 % inférieure à la somme des acides gras saturés et des acides gras trans contenus dans un produit similaire; et b) si la teneur en acides gras trans dans le produit auquel s’applique l’allégation est inférieure ou égale à celle d’un produit similaire. L’allégation «réduit en sucres», ou toute autre allégation susceptible d’avoir le même sens pour le consommateur, ne peut être faite que si la valeur énergétique du produit auquel s’applique l’allégation est inférieure ou égale à celle d’un produit similaire.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2736,32 +2781,16 @@
       "@value" : "Réduit en nutriment"
     } ]
   }, {
-    "@id" : "dfc-f:Root",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Rooster",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
-      "@language" : "fr",
-      "@value" : "Racine"
-    }, {
-      "@language" : "en",
-      "@value" : "Root"
-    } ]
-  }, {
-    "@id" : "dfc-f:Roster",
-    "@type" : [ "skos:Concept" ],
-    "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:RosterBody"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RoosterBody"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -2771,13 +2800,13 @@
       "@value" : "Rooster"
     } ]
   }, {
-    "@id" : "dfc-f:RosterBody",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RoosterBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Roster"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Rooster"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -2787,7 +2816,23 @@
       "@value" : "Rooster's body"
     } ]
   }, {
-    "@id" : "dfc-f:SaturatedFatFree",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Root",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "fr",
+      "@value" : "Racine"
+    }, {
+      "@language" : "en",
+      "@value" : "Root"
+    } ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SaturatedFatFree",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2797,10 +2842,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire ne contient pas de graisses saturées, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si la somme des acides gras saturés et des acides gras trans n'excède pas 0,1 g de graisses saturées par 100 g ou par 100 ml.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2810,16 +2855,16 @@
       "@value" : "Sans graisses saturées"
     } ]
   }, {
-    "@id" : "dfc-f:Scotland",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Scotland",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q22"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:UnitedKingdom"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnitedKingdom"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2829,13 +2874,13 @@
       "@value" : "Ecosse"
     } ]
   }, {
-    "@id" : "dfc-f:Seed",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Seed",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -2845,16 +2890,16 @@
       "@value" : "Seed"
     } ]
   }, {
-    "@id" : "dfc-f:Sheep",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Sheep",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:AnimalPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:SheepBody"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SheepBody"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -2864,13 +2909,13 @@
       "@value" : "Sheep"
     } ]
   }, {
-    "@id" : "dfc-f:SheepBody",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SheepBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Sheep"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Sheep"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -2880,7 +2925,7 @@
       "@value" : "Sheep's body"
     } ]
   }, {
-    "@id" : "dfc-f:SodiumOrSaltFree",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SodiumOrSaltFree",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2890,10 +2935,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire ne contient pas de sodium ou de sel, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas plus de 0,005 g de sodium ou de l'équivalent en sel par 100 g.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2903,7 +2948,7 @@
       "@value" : "Sans sodium ou sans sel"
     } ]
   }, {
-    "@id" : "dfc-f:SourceOfFibre",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SourceOfFibre",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2913,10 +2958,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est une source de fibres, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins 3 g de fibres par 100 g ou au moins 1,5 g de fibres par 100 kcal.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2926,7 +2971,7 @@
       "@value" : "Source de fibres"
     } ]
   }, {
-    "@id" : "dfc-f:SourceOfOmega3FattyAcids",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SourceOfOmega3FattyAcids",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2936,10 +2981,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est une source d’acide gras oméga-3, ou toute allégation susceptible d’avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins 0,3 g d’acide alphalinolénique pour 100 g et 100 kcal, ou au moins 40 mg d’acide eicosapentaénoïque et d’acide docosahexénoïque combinés pour 100 g et 100 kcal.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2949,7 +2994,7 @@
       "@value" : "Source d'acide gras Oméga-3"
     } ]
   }, {
-    "@id" : "dfc-f:SourceOfProtein",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SourceOfProtein",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2959,10 +3004,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est une source de protéines, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si 12 % au moins de la valeur énergétique de la denrée alimentaire sont produits par des protéines.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2972,7 +3017,7 @@
       "@value" : "Source de protéine"
     } ]
   }, {
-    "@id" : "dfc-f:SourceOfVitaminsMinerals",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SourceOfVitaminsMinerals",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -2982,10 +3027,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est une source de vitamines et/ou de minéraux, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit contient au moins la quantité significative définie à l'annexe de la directive 90/496/CEE ou une quantité prévue au titre de dérogations accordées conformément à l'article 6 du règlement (CE) no 1925/2006 du Parlement européen et du Conseil du 20 décembre 2006 concernant l'adjonction de vitamines, de minéraux et de certaines autres substances aux denrées alimentaires.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -2995,16 +3040,16 @@
       "@value" : "Source de vitamines et/ou de minéraux"
     } ]
   }, {
-    "@id" : "dfc-f:SouthAmerica",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SouthAmerica",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q18"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3014,16 +3059,16 @@
       "@value" : "Amérique du Sud"
     } ]
   }, {
-    "@id" : "dfc-f:Spain",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Spain",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q29"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3033,13 +3078,13 @@
       "@value" : "Espagne"
     } ]
   }, {
-    "@id" : "dfc-f:Stem",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Stem",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3049,7 +3094,7 @@
       "@value" : "Tige"
     } ]
   }, {
-    "@id" : "dfc-f:SugarsFree",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SugarsFree",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -3059,10 +3104,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire ne contient pas de sucres, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas plus de 0,5 g de sucres par 100 g ou par 100 ml.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -3072,16 +3117,16 @@
       "@value" : "Sugars-free"
     } ]
   }, {
-    "@id" : "dfc-f:Switzerland",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Switzerland",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q39"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3091,13 +3136,13 @@
       "@value" : "Suisse"
     } ]
   }, {
-    "@id" : "dfc-f:TasteOfTheYear",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TasteOfTheYear",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:MarketingLabel"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MarketingLabel"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3107,7 +3152,7 @@
       "@value" : "Reconnu Saveur de l’année"
     } ]
   }, {
-    "@id" : "dfc-f:TerritorialOrigin",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -3117,24 +3162,24 @@
       "@value" : "Origine géographique du produit concerné"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:UnknownGeoOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnknownGeoOrigin"
     }, {
-      "@id" : "dfc-f:MultiGeoOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MultiGeoOrigin"
     }, {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     }, {
-      "@id" : "dfc-f:Africa"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Africa"
     }, {
-      "@id" : "dfc-f:Asia"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Asia"
     }, {
-      "@id" : "dfc-f:Oceania"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Oceania"
     }, {
-      "@id" : "dfc-f:NorthAmerica"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NorthAmerica"
     }, {
-      "@id" : "dfc-f:SouthAmerica"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SouthAmerica"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3144,16 +3189,16 @@
       "@value" : "Origine géographique"
     } ],
     "http://www.w3.org/2004/02/skos/core#topConceptOf" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ]
   }, {
-    "@id" : "dfc-f:Tuber",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Tuber",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3163,7 +3208,7 @@
       "@value" : "Tubercule"
     } ]
   }, {
-    "@id" : "dfc-f:UnitedKingdom",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnitedKingdom",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q145"
@@ -3176,19 +3221,19 @@
       "@value" : "UK"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Europe"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Europe"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "dfc-f:England"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#England"
     }, {
-      "@id" : "dfc-f:Wales"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Wales"
     }, {
-      "@id" : "dfc-f:Scotland"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Scotland"
     }, {
-      "@id" : "dfc-f:NorthernIreland"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NorthernIreland"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3198,13 +3243,13 @@
       "@value" : "Royaume Uni"
     } ]
   }, {
-    "@id" : "dfc-f:UnknownGeoOrigin",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnknownGeoOrigin",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:TerritorialOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#TerritorialOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3214,13 +3259,13 @@
       "@value" : "Origine territoriale inconnue"
     } ]
   }, {
-    "@id" : "dfc-f:UnknownLabel",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnknownLabel",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:Certification"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Certification"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3230,13 +3275,13 @@
       "@value" : "Label inconnu"
     } ]
   }, {
-    "@id" : "dfc-f:UnknownNatureOrigin",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnknownNatureOrigin",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3246,13 +3291,13 @@
       "@value" : "Source d'origine inconnue"
     } ]
   }, {
-    "@id" : "dfc-f:UnknownPartOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnknownPartOrigin",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -3262,13 +3307,13 @@
       "@value" : "Unknown part origin"
     } ]
   }, {
-    "@id" : "dfc-f:Vegan",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Vegan",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:OtherClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OtherClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3278,13 +3323,13 @@
       "@value" : "Vegan"
     } ]
   }, {
-    "@id" : "dfc-f:Vegetarian",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Vegetarian",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:OtherClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#OtherClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3294,7 +3339,7 @@
       "@value" : "Végétarien"
     } ]
   }, {
-    "@id" : "dfc-f:VeryLowSodiumSalt",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#VeryLowSodiumSalt",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
       "@language" : "en",
@@ -3304,10 +3349,10 @@
       "@value" : "\"Une allégation selon laquelle une denrée alimentaire est très pauvre en sodium ou en sel, ou toute autre allégation susceptible d'avoir le même sens pour le consommateur, ne peut être faite que si le produit ne contient pas plus de 0,04 g de sodium ou de l'équivalent en sel par 100 g ou 100 ml. Il est interdit d'utiliser cette allégation pour les eaux minérales naturelles et les autres eaux.\" (source: Annex of Regulation (EC) No 1924/2006)"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NutritionalClaim"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NutritionalClaim"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3317,16 +3362,16 @@
       "@value" : "Très pauvre en sodium/sel"
     } ]
   }, {
-    "@id" : "dfc-f:Wales",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Wales",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy" : [ {
       "@id" : "https://www.wikidata.org/wiki/Q25"
     } ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:UnitedKingdom"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnitedKingdom"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3336,13 +3381,13 @@
       "@value" : "Pays de Galles"
     } ]
   }, {
-    "@id" : "dfc-f:Water",
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Water",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:NatureOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#NatureOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -3352,13 +3397,13 @@
       "@value" : "Eau"
     } ]
   }, {
-    "@id" : "dfc-f:WholePlant",
-    "@type" : [ "skos:Concept" ],
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#WholePlant",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "dfc-f:PlantPartOrigin"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
     "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "dfc-f:DFC_ProductGlossary_Facet"
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "fr",
@@ -3368,8 +3413,21 @@
       "@value" : "Whole plant"
     } ]
   }, {
-    "@id" : "http://static.datafoodconsortium.org/data/productGlossary_Facet.rdf",
-    "@type" : [ "http://www.w3.org/2002/07/owl#Ontology" ]
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#c_99fce7e0",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "en",
+      "@value" : "Chicken"
+    }, {
+      "@language" : "fr",
+      "@value" : "Poulet"
+    } ]
   } ],
-  "@id" : "http://static.datafoodconsortium.org/data/productGlossary_Facet.rdf"
+  "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf"
 } ]

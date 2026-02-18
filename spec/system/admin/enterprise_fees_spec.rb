@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
     As an administrator
     I want to manage enterprise fees
 ' do
@@ -79,7 +79,7 @@ describe '
     expect(page).to have_selector "input[value='Hello!']"
 
     # When I fill in the calculator fields and click update
-    fill_in("#{prefix}_calculator_attributes_preferred_flat_percent", with: "\'20.0'")
+    fill_in("#{prefix}_calculator_attributes_preferred_flat_percent", with: "'20.0'")
     click_button 'Update'
 
     # Then I should see the flash error message
@@ -137,7 +137,7 @@ describe '
       # When I fill in the calculator fields and click update
       fill_in(
         "#{prefix}_calculator_attributes_" \
-        'preferred_flat_percent', with: "\'20.0'"
+        'preferred_flat_percent', with: "'20.0'"
       )
       click_button 'Update'
 
@@ -153,8 +153,8 @@ describe '
 
       # editing to an invalid combination
       select 'Flat Rate (per order)', from: "#{prefix}_calculator_type"
-      expect{ click_button 'Update' }.to_not change { fee.reload.calculator_type }
-      expect(page).to have_content "Inheriting the tax categeory requires a per-item calculator."
+      expect{ click_button 'Update' }.not_to change { fee.reload.calculator_type }
+      expect(page).to have_content "Inheriting the tax category requires a per-item calculator."
     end
   end
 
@@ -250,7 +250,7 @@ describe '
 
     # Then my enterprise fee should have been deleted
     visit admin_enterprise_fees_path
-    expect(page).to have_no_selector "input[value='#{fee.name}']"
+    expect(page).not_to have_selector "input[value='#{fee.name}']"
   end
 
   context "as an enterprise manager" do
@@ -299,7 +299,7 @@ describe '
       end
 
       context "an error message is displayed" do
-        message = 'Inheriting the tax categeory requires a per-item calculator.'
+        message = 'Inheriting the tax category requires a per-item calculator.'
         it_behaves_like "setting it up", 'Inherit From Product',
                         'Flat Rate (per order)', message, 0
       end

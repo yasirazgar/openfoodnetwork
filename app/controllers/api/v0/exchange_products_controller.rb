@@ -7,6 +7,7 @@ module Api
   module V0
     class ExchangeProductsController < Api::V0::BaseController
       include PaginationData
+
       DEFAULT_PER_PAGE = 100
 
       skip_authorization_check only: [:index]
@@ -77,7 +78,7 @@ module Api
 
         if pagination_required?
           @pagy, results = pagy(results,
-                                items: params[:per_page] || DEFAULT_PER_PAGE)
+                                limit: params[:per_page] || DEFAULT_PER_PAGE)
         end
 
         serialized_products = ActiveModel::ArraySerializer.new(

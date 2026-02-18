@@ -5,6 +5,16 @@ class ReportBlob < ActiveStorage::Blob
   # AWS S3 limits URL expiry to one week.
   LIFETIME = 1.week
 
+  def self.create_locally!(filename, content)
+    create_and_upload!(
+      io: StringIO.new(content),
+      filename:,
+      content_type: content_type(filename),
+      identify: false,
+      service_name: :local,
+    )
+  end
+
   def self.create_for_upload_later!(filename)
     # ActiveStorage discourages modifying a blob later but we need a blob
     # before we know anything about the report file. It enables us to use the
@@ -14,6 +24,7 @@ class ReportBlob < ActiveStorage::Blob
       byte_size: 0,
       checksum: "0",
       content_type: content_type(filename),
+      service_name: :local,
     ).tap do |blob|
       ActiveStorage::PurgeJob.set(wait: LIFETIME).perform_later(blob)
     end
@@ -29,11 +40,9 @@ class ReportBlob < ActiveStorage::Blob
     save!
   end
 
-  def content_stored?
-    @content_stored ||= reload.checksum != "0"
-  end
-
   def result
+    return if checksum == "0"
+
     @result ||= download.force_encoding(Encoding::UTF_8)
   end
 

@@ -2,10 +2,25 @@
 
 require_relative "../spec_helper"
 
-describe SuppliedProductBuilder do
+RSpec.describe SuppliedProductBuilder do
+  include FileHelper
+
   subject(:builder) { described_class }
   let(:variant) {
-    build(:variant, id: 5).tap { |v| v.product.supplier_id = 7 }
+    create(:variant, id: 5, product: spree_product, primary_taxon: taxon, supplier:)
+  }
+  let(:spree_product) {
+    create(:product, id: 6)
+  }
+  let(:supplier) {
+    create(:supplier_enterprise, id: 7)
+  }
+  let(:taxon) {
+    build(
+      :taxon,
+      name: "Soft Drink",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#soft-drink"
+    )
   }
 
   describe ".supplied_product" do
@@ -28,7 +43,7 @@ describe SuppliedProductBuilder do
       variant.product.name = "Apple"
       product = builder.supplied_product(variant)
 
-      expect(product.name).to eq "Apple"
+      expect(product.name).to match /Apple/
     end
 
     it "assigns the variant name if present" do
@@ -36,14 +51,36 @@ describe SuppliedProductBuilder do
       variant.display_name = "Granny Smith"
       product = builder.supplied_product(variant)
 
-      expect(product.name).to eq "Granny Smith"
+      expect(product.name).to match /Apple - Granny Smith/
     end
 
-    it "assigns a product type" do
-      product = builder.supplied_product(variant)
-      vegetable = DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
+    context "product_type mapping" do
+      subject(:product) { builder.supplied_product(variant) }
 
-      expect(product.productType).to eq vegetable
+      it "assigns a product type" do
+        soft_drink = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
+
+        expect(product.productType).to eq soft_drink
+      end
+    end
+
+    it "assigns an image_url type" do
+      Spree::Image.create!(
+        attachment: white_logo_file,
+        viewable_id: variant.product.id,
+        viewable_type: 'Spree::Product'
+      )
+      product = builder.supplied_product(variant)
+
+      expect(product.image).to eq variant.product.image.url(:product)
+    end
+
+    it "assigns the product uri" do
+      product = builder.supplied_product(variant)
+
+      expect(product.spree_product_uri).to eq(
+        "http://test.host/api/dfc/enterprises/7?spree_product_id=6"
+      )
     end
   end
 end

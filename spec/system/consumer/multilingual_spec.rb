@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Multilingual' do
+RSpec.describe 'Multilingual' do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
@@ -25,19 +25,19 @@ describe 'Multilingual' do
   context 'can switch language by params' do
     it 'in root path' do
       visit root_path
-      expect(get_i18n_locale).to eq 'en'
+      expect(pick_i18n_locale).to eq 'en'
       expect(get_i18n_translation('label_shops')).to eq 'Shops'
-      expect(cookies).to be_empty
+      expect(cookies_name).not_to include('locale')
       expect(page).to have_content 'SHOPS'
 
       visit root_path(locale: 'es')
-      expect(get_i18n_locale).to eq 'es'
+      expect(pick_i18n_locale).to eq 'es'
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
       expect_menu_and_cookie_in_es
 
       # it is not in the list of available of available_locales
       visit root_path(locale: 'it')
-      expect(get_i18n_locale).to eq 'es'
+      expect(pick_i18n_locale).to eq 'es'
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
       expect_menu_and_cookie_in_es
     end
@@ -51,7 +51,7 @@ describe 'Multilingual' do
       let(:order) { create(:order, order_cycle:, distributor:) }
 
       before do
-        set_order order
+        pick_order order
         add_product_to_cart order, product, quantity: 1
       end
 
@@ -60,6 +60,13 @@ describe 'Multilingual' do
 
         expect_menu_and_cookie_in_es
         expect(page).to have_content 'Precio'
+      end
+
+      it "visiting checkout as a guest user" do
+        visit checkout_path(locale: 'es')
+
+        expect_menu_and_cookie_in_es
+        expect(page).to have_content 'Iniciar sesión'
       end
     end
   end
@@ -80,6 +87,7 @@ describe 'Multilingual' do
 
     it 'updates user locale and stays in cookie after logout' do
       login_as user
+
       visit root_path(locale: 'es')
       user.reload
 
@@ -89,6 +97,57 @@ describe 'Multilingual' do
 
       expect_menu_and_cookie_in_es
       expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
+    end
+
+    context "visiting checkout as logged user" do
+      let!(:zone) { create(:zone_with_member) }
+      let(:supplier) { create(:supplier_enterprise) }
+      let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
+      let(:product) {
+        create(:taxed_product, supplier_id: supplier.id, price: 10, zone:)
+      }
+      let(:variant) { product.variants.first }
+      let!(:order_cycle) {
+        create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
+                                    coordinator: create(:distributor_enterprise),
+                                    variants: [variant])
+      }
+
+      let(:free_shipping) {
+        create(:shipping_method, require_ship_address: false)
+      }
+      let!(:payment) {
+        create(:payment_method, distributors: [distributor],
+                                name: "Payment")
+      }
+      let(:order) {
+        create(:order_ready_for_confirmation, distributor:)
+      }
+      before do
+        pick_order order
+        login_as user
+      end
+
+      it "on the details step" do
+        visit checkout_step_path(:details, locale: 'es')
+
+        expect_menu_and_cookie_in_es
+        expect(page).to have_content "Sus detalles"
+      end
+
+      it "on the payment step" do
+        visit checkout_step_path(:payment, locale: 'es')
+
+        expect_menu_and_cookie_in_es
+        expect(page).to have_content "Puede revisar y confirmar su pedido"
+      end
+
+      it "on the summary step" do
+        visit checkout_step_path(:summary, locale: 'es')
+
+        expect_menu_and_cookie_in_es
+        expect(page).to have_content "Detalles de entrega"
+      end
     end
   end
 
@@ -102,7 +161,7 @@ describe 'Multilingual' do
 
       it "hides the dropdown language menu" do
         visit root_path
-        expect(page).to have_no_css 'ul.right li.language-switcher.has-dropdown'
+        expect(page).not_to have_css 'ul.right li.language-switcher.has-dropdown'
       end
     end
 

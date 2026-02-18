@@ -2,17 +2,15 @@
 
 module TermsAndConditionsHelper
   def link_to_platform_terms
-    link_to(t("terms_of_service"), TermsOfServiceFile.current_url, target: "_blank",
-                                                                   rel: "noopener")
+    content_tag(:a, t("terms_of_service"), href: TermsOfServiceFile.current_url, target: "_blank",
+                                           rel: "noopener")
   end
 
   def any_terms_required?(distributor)
     TermsOfService.required?(distributor)
   end
 
-  def platform_terms_required?
-    TermsOfService.platform_terms_required?
-  end
+  delegate :platform_terms_required?, to: :TermsOfService
 
   def distributor_terms_required?
     TermsOfService.distributor_terms_required?(current_order.distributor)

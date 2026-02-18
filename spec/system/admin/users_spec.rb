@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Managing users" do
+RSpec.describe "Managing users" do
   include AuthenticationHelper
 
   context "as super-admin" do
@@ -128,6 +128,34 @@ describe "Managing users" do
           }.to change { user.reload.show_api_key_view }.to(false)
         end
       end
+
+      context "pagination" do
+        before do
+          # creates 8 more users
+          8.times { create(:user) }
+          expect(Spree::User.count).to eq 11
+          visit spree.admin_users_path
+        end
+        it "displays pagination" do
+          # table displays 10 entries
+          within('tbody') do
+            expect(page).to have_css('tr', count: 10)
+          end
+          within ".pagination" do
+            expect(page).not_to have_content "Previous"
+            expect(page).to have_content "Next"
+            click_on "2"
+          end
+          # table displays 1 entry
+          within('tbody') do
+            expect(page).to have_css('tr', count: 1)
+          end
+          within ".pagination" do
+            expect(page).to have_content "Previous"
+            expect(page).not_to have_content "Next"
+          end
+        end
+      end
     end
 
     describe "creating a user" do
@@ -135,7 +163,7 @@ describe "Managing users" do
         visit spree.new_admin_user_path
 
         # shows no confirmation message to start with
-        expect(page).to have_no_text "Email confirmation is pending"
+        expect(page).not_to have_text "Email confirmation is pending"
 
         fill_in "Email", with: "user1@example.org"
         fill_in "Password", with: "user1Secret"

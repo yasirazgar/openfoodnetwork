@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
-require "date_time_string_validator"
-
 module Reporting
   module Reports
     module EnterpriseFeeSummary
-      describe Parameters do
+      RSpec.describe Parameters do
         describe "validation" do
           let(:parameters) { described_class.new }
 

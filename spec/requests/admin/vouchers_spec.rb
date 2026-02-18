@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
-describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
+RSpec.describe "/admin/enterprises/:enterprise_id/vouchers" do
   let(:enterprise) { create(:supplier_enterprise, name: "Feedme") }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 
   before do
-    Flipper.enable(:vouchers)
-
     enterprise_user.enterprise_roles.build(enterprise:).save
     sign_in enterprise_user
   end
@@ -41,7 +37,7 @@ describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
       let(:type) { "Vouchers::FlatRate" }
 
       it "creates a new voucher" do
-        expect { create_voucher }.to change(Vouchers::FlatRate, :count).by(1)
+        expect { create_voucher }.to change { Vouchers::FlatRate.count }.by(1)
 
         voucher = Vouchers::FlatRate.last
         expect(voucher.code).to eq(code)
@@ -62,7 +58,7 @@ describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
       let(:type) { "Vouchers::PercentageRate" }
 
       it "creates a new voucher" do
-        expect { create_voucher }.to change(Vouchers::PercentageRate, :count).by(1)
+        expect { create_voucher }.to change { Vouchers::PercentageRate.count }.by(1)
 
         voucher = Vouchers::PercentageRate.last
         expect(voucher.code).to eq(code)

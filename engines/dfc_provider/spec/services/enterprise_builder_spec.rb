@@ -2,10 +2,10 @@
 
 require_relative "../spec_helper"
 
-describe EnterpriseBuilder do
+RSpec.describe EnterpriseBuilder do
   subject(:builder) { described_class }
   let(:enterprise) {
-    build(
+    create(
       :enterprise,
       id: 10_000, name: "Fabi's Farm",
       description: "The place where stuff grows", abn: "123 456 789 0",
@@ -13,7 +13,7 @@ describe EnterpriseBuilder do
     )
   }
   let(:variant) {
-    create(:product, supplier: enterprise, name: "Apple").variants.first
+    create(:product, supplier_id: enterprise.id, name: "Apple").variants.first
   }
 
   describe ".enterprise" do
@@ -41,7 +41,7 @@ describe EnterpriseBuilder do
       expect(variant).to be_persisted
 
       expect(result.suppliedProducts.count).to eq 1
-      expect(result.suppliedProducts[0].name).to eq "Apple"
+      expect(result.suppliedProducts[0].name).to eq "Apple - 1g"
     end
 
     it "assigns an address" do

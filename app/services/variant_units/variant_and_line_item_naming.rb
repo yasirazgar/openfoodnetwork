@@ -4,8 +4,6 @@
 # It contains all of our logic for creating and naming option values (which are associated
 # with both models) and methods for printing human readable "names" for instances of these models.
 
-require 'variant_units/option_value_namer'
-
 module VariantUnits
   module VariantAndLineItemNaming
     def options_text
@@ -66,12 +64,13 @@ module VariantUnits
 
     def unit_value_attributes
       units = { unit_presentation: option_value_name }
-      units.merge!(variant_unit: product.variant_unit) if has_attribute?(:variant_unit)
+      units.merge!(variant_unit:) if has_attribute?(:variant_unit)
+      units.merge!(variant_unit_name: '') if reset_variant_unit_name?
       units
     end
 
     def weight_from_unit_value
-      (unit_value || 0) / 1000 if product.variant_unit == 'weight'
+      (unit_value || 0) / 1000 if variant_unit == 'weight'
     end
 
     private
@@ -80,6 +79,10 @@ module VariantUnits
       return display_as if has_attribute?(:display_as) && display_as.present?
 
       VariantUnits::OptionValueNamer.new(self).name
+    end
+
+    def reset_variant_unit_name?
+      has_attribute?(:variant_unit_name) && has_attribute?(:variant_unit) && variant_unit != 'items'
     end
   end
 end

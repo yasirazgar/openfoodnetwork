@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe ReportMailer do
+RSpec.describe ReportMailer do
   describe "#report_ready" do
     subject(:email) {
       ReportMailer.with(
@@ -10,7 +8,7 @@ describe ReportMailer do
         blob:,
       ).report_ready
     }
-    let(:blob) { ReportBlob.create_for_upload_later!("customers.csv") }
+    let(:blob) { ReportBlob.create_locally!("customers.csv", "report content") }
 
     it "notifies about a report" do
       expect(email.subject).to eq "Report ready"

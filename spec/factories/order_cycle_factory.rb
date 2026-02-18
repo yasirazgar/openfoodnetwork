@@ -30,12 +30,16 @@ FactoryBot.define do
 
       # Products with images
       proxy.exchanges.incoming.each do |exchange|
-        product = create(:product, supplier: exchange.sender)
+        product = create(:product).tap do |p|
+          variant = p.variants.first
+          variant.supplier = exchange.sender
+          variant.save!
+        end
         Spree::Image.create(
           viewable_id: product.id,
           viewable_type: 'Spree::Product',
           alt: "position 1",
-          attachment: Rack::Test::UploadedFile.new(white_logo_path),
+          attachment: white_logo_file,
           position: 1
         )
 

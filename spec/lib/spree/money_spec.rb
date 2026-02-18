@@ -1,13 +1,10 @@
 # frozen_string_literal: false
 
-require 'spec_helper'
-
-describe Spree::Money do
+RSpec.describe Spree::Money do
   include PreferencesHelper
 
   before do
     configure_spree_preferences do |config|
-      config.currency = "USD"
       config.currency_symbol_position = :before
       config.display_currency = false
     end
@@ -24,6 +21,11 @@ describe Spree::Money do
   end
 
   context "with currency" do
+    before do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with("CURRENCY").and_return("USD")
+    end
+
     it "passed in option" do
       money = Spree::Money.new(10, with_currency: true, html_wrap: false)
       expect(money.to_s).to eq("$10.00 USD")
@@ -92,10 +94,12 @@ describe Spree::Money do
   context "EUR" do
     before do
       configure_spree_preferences do |config|
-        config.currency = "EUR"
         config.currency_symbol_position = :after
         config.display_currency = false
       end
+
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with("CURRENCY").and_return("EUR")
     end
 
     # Regression test for Spree #2634

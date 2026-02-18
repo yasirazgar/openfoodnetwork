@@ -8,7 +8,7 @@ RSpec::Matchers.define :have_table_row do |row|
 
   match_when_negated do |node|
     @row = row
-    !rows_under(node).include? row # Robust check of columns
+    rows_under(node).exclude? row # Robust check of columns
   end
 
   failure_message do |text|
@@ -31,10 +31,7 @@ RSpec::Matchers.define :match_table do |expected_table|
       all("tr").
       map { |r| r.all("th,td").map { |c| c.text.strip } }
 
-    if rows.count != expected_table.count
-      @failure_message = "found table with #{rows.count} rows, expected #{expected_table.count}"
-
-    else
+    if rows.count == expected_table.count
       rows.each_with_index do |row, i|
         expected_row = expected_table[i]
         if row.count != expected_row.count
@@ -52,6 +49,9 @@ RSpec::Matchers.define :match_table do |expected_table|
           break if @failure_message
         end
       end
+    else
+      @failure_message = "found table with #{rows.count} rows, expected #{expected_table.count}"
+
     end
 
     @failure_message.nil?

@@ -1,10 +1,15 @@
 en_IE:
   language_name: "English"
+  time:
+    formats:
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/image:
+        attachment: Attachment
       spree/order/ship_address:
         address1: "Shipping address (Street + House number)"
         address2: "Shipping address line 2"
@@ -42,10 +47,13 @@ en_IE:
       spree/product:
         name: "Product Name"
         price: "Price"
-        primary_taxon: "Product Category"
-        supplier: "Supplier"
+        primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit: "Variant Unit"
+      spree/variant:
+        primary_taxon: "Product Category"
+        shipping_category_id: "Shipping Category"
+        supplier: "Supplier"
+        variant_unit: "Unit Scale"
         variant_unit_name: "Variant Unit Name"
         unit_value: "Unit value"
       spree/credit_card:
@@ -58,8 +66,27 @@ en_IE:
         orders_close_at: Close date
       variant_override:
         count_on_hand: "In Stock"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Calculator Flat Percent:"
+        preferred_amount: "Calculator Amount:"
+        preferred_first_item: "Calculator First Item:"
+        preferred_additional_item: "Calculator Additional Item Cost:"
+        preferred_max_items: "Calculator Max Items:"
+        preferred_minimal_amount: "Calculator Minimal Amount:"
+        preferred_normal_amount: "Calculator Normal Amount:"
+        preferred_discount_amount: "Calculator Discount Amount:"
+        preferred_unit_from_list: "Calculator Unit From List:"
+        preferred_per_unit: "Calculator Per Unit:"
+      enterprise:
+        white_label_logo_link: "Link for the logo used in shopfront"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "failed to load. Please check to ensure the file is not corrupt, and try again."
         spree/user:
           attributes:
             email:
@@ -79,10 +106,14 @@ en_IE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
-            on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+        connected_apps:
+          vine:
+            api_request_error: "An error occured when connecting to Vine API"
       messages:
+        confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
+        too_short: "is too short (minimum is %{count} characters)"
   errors:
     not_found:
       title: "The page you were looking for doesn't exist (404)"
@@ -93,6 +124,8 @@ en_IE:
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
+    general_error:
+      message: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all errors and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -145,6 +178,9 @@ en_IE:
       transaction_not_allowed: "The card has been declined for an unknown reason."
       try_again_later: "The card has been declined for an unknown reason."
       withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      disconnect_failure: "Failed to disconnect Stripe."
+    success_code:
+      disconnected: "Stripe account disconnected."
   activemodel:
     errors:
       messages:
@@ -170,10 +206,16 @@ en_IE:
               not_available_to_shop: "is not available to %{shop}"
   card_details: "Card details"
   card_type: "Card type"
+  card_type_is: "Card type is"
+  unrecognized_card_type: "Unrecognized card type"
+  use_new_cc: "Use a new credit card"
+  what_is_this: "What is this?"
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   additional_information: "Additional Information"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -252,6 +294,40 @@ en_IE:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
+  report_job:
+    report_failed: |
+        This report failed. It may be too big to process.
+        We will look into it but please let us know if the problem persists.
+  backorder_mailer:
+    backorder_failed:
+      subject: "An automatic backorder failed"
+      headline: "Backordering failed"
+      description: |
+          We tried to place or update a backorder for out-of-stock items but
+          something went wrong. You may have negative stock and need to resolve
+          the issue to order more stock in.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all products you need. And please get in touch with us if
+          you have any questions.
+      order: "Affected order: %{number}"
+      stock: "Stock"
+      product: "Product"
+    backorder_incomplete:
+      subject: "An automatic backorder failed to complete"
+      headline: "Your backorder is still a draft"
+      description: |
+          We tried to complete a backorder for out-of-stock items but
+          something went wrong. The backorder quantities may be too high if
+          you had cancellations. And your backorder won't be fulfilled while
+          it's in draft state.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all products you need. And please get in touch with us if
+          you have any questions.
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -270,7 +346,16 @@ en_IE:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+    order_cycle_report:
+      order_number: "Order Number"
   provider_settings: "Provider settings"
+  report_mailer:
+    report_ready:
+      subject: "Report ready"
+      heading: "Report ready for download"
+      intro: |
+          The link below will expire after one week.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer,"
@@ -334,9 +419,12 @@ en_IE:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "Please enter your company number."
+  must_have_valid_business_number: "%{enterprise_name} must have a company number before invoices can be used."
   invoice: "Invoice"
+  invoices: "Invoices"
+  file: "File"
   active: "Active"
+  download: "Download"
   cancelled: "Cancelled"
   more: "More"
   say_no: "No"
@@ -394,6 +482,7 @@ en_IE:
   none: None
   notes: Notes
   error: Error
+  voucher: Voucher
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
@@ -408,7 +497,7 @@ en_IE:
   password_confirmation: Password Confirmation
   reset_password_token: Reset password
   expired: has expired, please request a new one
-  back_to_payments_list: "Back to Payments List"
+  back_to_payments_list: "Back To Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "Backordered"
   on_hand: "In Stock"
@@ -424,6 +513,7 @@ en_IE:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    cancel_order: "Cancel"
     resume: "Resume"
     save: "Save"
     edit: "Edit"
@@ -447,8 +537,12 @@ en_IE:
         per_page: "%{count} items per page"
         colums: Columns
       columns:
+        image: Image
         name: Name
+        unit_scale: Unit scale
         unit: Unit
+        unit_value: Unit value
+        display_as: Display unit as
         price: Price
         producer: Producer
         category: Category
@@ -459,6 +553,7 @@ en_IE:
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
         actions: Actions
+        tags: Tags
       columns_selector:
         unit: Unit
         price: Price
@@ -472,6 +567,16 @@ en_IE:
         import_date: "Import Date"
       actions:
         edit: Edit
+        clone: Clone
+        delete: Delete
+        remove: Remove
+        preview: Preview
+      image:
+        edit: Edit
+      product_preview:
+        product_preview: Product preview
+        shop_tab: Shop
+        product_details_tab: Product details
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -525,7 +630,7 @@ en_IE:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
-    column_save_as_default: Save As Default
+    column_save_as_default: Save as default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -536,6 +641,9 @@ en_IE:
     has_n_rules: "has %{num} rules"
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     available_units: "Available Units"
+    terms_of_service_have_been_updated_html: "Open Food Network's Terms of Service have been updated: %{tos_link}"
+    terms_of_service: Read Terms of Service
+    accept_terms_of_service: Accept Terms of Service
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
@@ -560,7 +668,7 @@ en_IE:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
-        enterprise_number_required_on_invoices?: "Require an ABN to generate an invoice?"
+        enterprise_number_required_on_invoices?: "Require a company number to generate an invoice?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -571,6 +679,7 @@ en_IE:
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
+        instance_publishable_key: Instance Publishable Key
         account_id: Account ID
         business_name: Business Name
         charges_enabled: Charges Enabled
@@ -586,6 +695,17 @@ en_IE:
         info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
         config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
+    connected_app_settings:
+      edit:
+        title: "Connected app settings"
+        info_html: "Enabled apps will appear under Enterprise Settings > Connected Apps."
+        enabled_legend: "Enabled connected apps"
+        connected_apps_enabled:
+          discover_regen: Discover Regenerative portal
+          affiliate_sales_data: DFC anonymised orders API for research purposes
+          vine: Voucher Integration Engine (VINE)
+      update:
+        resource: Connected app settings
     customers:
       index:
         new_customer: "New Customer"
@@ -610,6 +730,9 @@ en_IE:
         balance_due: "Balance Due"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+    column_preferences:
+      bulk_update:
+        success: "Column preferences saved"
     contents:
       edit:
         title: Content
@@ -623,6 +746,13 @@ en_IE:
         your_content: Your content
         user_guide: User Guide
         map: Map
+    dfc_product_imports:
+      index:
+        update: Update
+        new: New
+        selected:
+          other: "%{count} selected"
+        import: Import
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -676,7 +806,7 @@ en_IE:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
-      back_to_products_list: "Back to products list"
+      back_to_products_list: "Back To Products List"
       editing_product: "Editing Product"
       tabs:
         product_details: "Product Details"
@@ -688,15 +818,81 @@ en_IE:
       index:
         header:
           title: Bulk Edit Products
-      sort:
-        pagination:
-          clear_search: Clear search
+      content:
+        loading: Loading your products
+      delete_modal:
+        delete_product_modal:
+          heading: "Delete product"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete product"
+          cancellation_text: "Keep product"
+        delete_variant_modal:
+          heading: "Delete variant"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete variant"
+          cancellation_text: "Keep variant"
       filters:
+        search_products: Search for products
+        search_for_producers: Search for producers
+        select_producer: Select producer
+        all_producers: All producers
+        search_for_categories: Search for categories
+        select_category: Select category
+        all_categories: All categories
         producers:
           label: Producers
         categories:
           label: Categories
+        tags:
+          label: Tags
+          none: None
         search: Search
+      sort:
+        pagination:
+          products_total_html:
+            one: "<strong>%{count} product</strong> found for your search criteria. Showing %{from} to %{to}."
+            other: "<strong>%{count} products</strong> found for your search criteria. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num} per page"
+          clear_search: Clear search
+      no_products:
+        no_products_found: No products found
+        import_products: Import multiple products
+        no_products_found_for_search: No products found for your search criteria
+      table:
+        changed_summary:
+          one: "%{count} product modified."
+          other: "%{count} products modified."
+        error_summary:
+          saved:
+            one: "%{count} product was saved correctly, but "
+            other: "%{count} products were saved correctly, but "
+          invalid:
+            one: "%{count} product could not be saved. Please review the errors and try again."
+            other: "%{count} products could not be saved. Please review the errors and try again."
+        reset: Discard changes
+        save: Save changes
+      product_variant_row:
+        new_variant: New variant
+      bulk_update:
+        success: Changes saved
+      delete_product:
+        success: Successfully deleted the product
+        error: Unable to delete the product
+      delete_variant:
+        success: Successfully deleted the variant
+        error: Unable to delete the variant
+      variant_row:
+        none_tax_category: None
+        search_for_tax_categories: "Search for tax categories"
+        category_field_name: "Category"
+        tax_category_field_name: "Tax Category"
+        producer_field_name: "Producer"
+        add_a_tag: Add a tag
+      clone:
+        success: Successfully cloned the product
+        error: Unable to clone the product
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -738,6 +934,10 @@ en_IE:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        title: "Import from DFC catalog"
+        catalog_url: "DFC catalog URL"
+        preview: Preview
       import:
         review: Review
         import: Import
@@ -757,7 +957,6 @@ en_IE:
         no_name: No name
         blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
-        reset_absent_tip: Set stock to zero for all exiting products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -795,6 +994,7 @@ en_IE:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: Product Code
         name: Name
@@ -838,6 +1038,8 @@ en_IE:
     orders:
       edit:
         order_sure_want_to: Are you sure you want to %{event} this order?
+        voucher_tax_included_in_price: "%{label} (tax included in voucher)"
+        tax_on_fees: "Tax on fees"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -940,12 +1142,7 @@ en_IE:
         images:
           legend: "Images"
           logo: Logo
-          promo_image_placeholder: 'This image is displayed in "About Us"'
-          promo_image_note1: 'PLEASE NOTE:'
-          promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
-          promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
-          remove_logo: "Remove Image"
-          remove_promo_image: "Remove Image"
+          logo_size: "300 x 300 pixels"
         inventory_settings:
           legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
@@ -1025,13 +1222,15 @@ en_IE:
           customer_names_tip: "Enable your suppliers to see your customers names in reports"
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
+          customer_contacts_false: "Disabled"
+          customer_contacts_true: "Enabled"
+          producers_edit_orders_false: "Disabled"
+          producers_edit_orders_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
               An optional message to welcome customers and explain how to shop with
               you. If text is entered here it will be displayed in a home tab when
               customers first arrive at your shopfront.
-          shopfront_message_link_tooltip: "Insert / edit link"
-          shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
           shopfront_closed_message_placeholder: >
               A message which provides a more detailed explanation about why your
@@ -1043,6 +1242,7 @@ en_IE:
           open_date: "Open Date"
           close_date: "Close Date"
           display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_product: "By product"
           shopfront_sort_by_category: "By category"
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
@@ -1076,10 +1276,11 @@ en_IE:
             no_rules_yet: No default rules apply yet
             add_new_button: '+ Add A New Default Rule'
           no_tags_yet: No tags apply to this enterprise yet
-          no_rules_yet: No rules apply to this tag yet
-          for_customers_tagged: 'For customers tagged:'
-          add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
+          show_hide_variants: 'Show or Hide variants in my shopfront'
+          show_hide_shipping: 'Show or Hide shipping methods at checkout'
+          show_hide_payment: 'Show or Hide payment methods at checkout'
+          show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
         users:
           legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
@@ -1100,9 +1301,57 @@ en_IE:
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
         vouchers:
+          legend: Vouchers
+          voucher_code: Voucher Code
           rate: Rate
+          label: Label
+          purpose: Purpose
+          expiry: Expiry
+          use_limit: Use/Limit
           customers: Customer
+          net_value: Net Value
           active: Active?
+          add_new: Add New
+          no_voucher_yet: No Vouchers yet
+        white_label:
+          legend: "White Label"
+          hide_ofn_navigation: "Hide OFN navigation"
+          white_label_logo_link_label: "Link for the logo used in shopfront"
+          hide_groups_tab: "Hide groups tab in shopfront"
+          create_custom_tab: "Create custom tab in shopfront"
+          custom_tab_title: "Title for custom tab"
+          custom_tab_content: "Content for custom tab"
+        connected_apps:
+          legend: "Connected apps"
+          affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Research"
+            enable: "Allow data sharing"
+            disable: "Stop sharing"
+            loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
+          discover_regen:
+            title: "Discover Regenerative"
+            tagline: "Allow Discover Regenerative to publish your enterprise information."
+            enable: "Allow data sharing"
+            disable: "Stop sharing"
+            loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
+            note: |
+                Your Open Food Network account is connected to Discover Regenerative.
+                Add or update information on your Discover Regenerative listing here.
+            link_label: "Manage listing"
+          vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Allow redemption of VINE vouchers in your shopfront."
+            enable: "Resources"
+            disable: "Disconnect"
+            need_to_be_manager: "Only managers can connect apps."
+            vine_api_key: "VINE API Key"
+            vine_secret: "VINE secret"
+            api_parameters_empty: "Please enter an API key and a secret"
+            api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
+            connection_error: "API connection error, please try again"
+            setup_error: "VINE API is not configured, please contact your instance manager"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1155,10 +1404,10 @@ en_IE:
         contact_name: Contact Name
       edit:
         editing: 'Settings:'
-        back_link: Back to enterprises list
+        back_link: Back To Enterprises List
       new:
         title: New Enterprise
-        back_link: Back to enterprises list
+        back_link: Back To Enterprises List
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -1177,6 +1426,14 @@ en_IE:
         create: "Create"
         cancel: "Cancel"
         back_to_list: "Back To List"
+      create:
+        success: 'Your order cycle has been created.'
+      update:
+        success: 'Your order cycle has been updated.'
+      clone:
+        success: "Your order cycle %{name} has been cloned."
+      notify_producers:
+        success: 'Emails to be sent to producers have been queued for sending.'
       edit:
         save: "Save"
         save_and_next: "Save and Next"
@@ -1187,6 +1444,11 @@ en_IE:
         choose_products_from: "Choose Products From:"
         re_notify_producers: Re notify producers
         notify_producers_tip: This will send an email to each producer with the list of their orders.
+      date_time_warning_modal_content:
+        title: 'Orders are linked to this order cycle.'
+        content: 'If you wish to create a new order cycle, it is recommended to duplicate the order cycle first and then change the dates.'
+        proceed: 'Proceed anyway'
+        cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -1313,13 +1575,33 @@ en_IE:
         could_not_cancel_the_order: Could not cancel the order
       resume:
         could_not_resume_the_order: Could not resume the order
+    select2:
+      minimal_search_length: Please enter %{count} or more characters
+      searching: Searching...
+      no_matches: No matches found
     shared:
+      attachment_field:
+        logo_label: "Logo"
+        logo_hint: 300 x 300 pixels
+        logo_remove: "Remove Image"
+        logo_remove_confirm: "The logo will be removed immediately after you confirm."
+        promo_image_note1: 'PLEASE NOTE:'
+        promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
+        promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
+        promo_image_placeholder: 'This image is displayed in "About Us"'
+        promo_image_remove: "Remove Image"
+        promo_image_remove_confirm: "The promo image will be removed immediately after you confirm."
+        white_label_logo_label: "Logo used in shopfront"
+        white_label_logo_remove: "Remove Image"
+        white_label_logo_remove_confirm: "Are you sure you want to remove this logo?"
       user_guide_link:
         user_guide: User Guide
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      flashes:
+        dismiss: Dismiss
       side_menu:
         enterprise:
           primary_details: "Primary Details"
@@ -1338,6 +1620,9 @@ en_IE:
           tag_rules: "Tag Rules"
           shop_preferences: "Shop Preferences"
           users: "Users"
+          vouchers: Vouchers
+          white_label: "White Label"
+          connected_apps: "Connected apps"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -1353,7 +1638,8 @@ en_IE:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
-      hidden: HIDDEN
+      deprecated: "This report is deprecated and will be removed in a future release."
+      hidden_field: "< Hidden >"
       unitsize: UNITSIZE
       total: TOTAL
       total_items: TOTAL ITEMS
@@ -1376,6 +1662,20 @@ en_IE:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      display:
+        report_is_big: "This report is big and may slow down your device."
+        display_anyway: "Display anyway"
+      download:
+        button: "Download Report"
+      show:
+        report_taking_longer: >
+            Sorry, this report took too long to process. It may contain a lot of data
+            or we are busy with other reports. You can try again later.
+        report_taking_longer_html: >
+            This report is taking longer to process. It may contain a lot of data
+            or we are busy with other reports. Once it's finished, we'll notify you
+            via email.
+        report_link_label: Download report (when available)
       revenues_by_hub:
         name: Revenues By Hub
         description: Revenues by hub
@@ -1407,11 +1707,12 @@ en_IE:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
+      enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
         missing_ransack_params: "Please supply Ransack search params in the request"
-      hidden_field: "< Hidden >"
       summary_row:
         total: "TOTAL"
       table:
@@ -1443,10 +1744,15 @@ en_IE:
       index:
         title: "OIDC Settings"
         connect: "Connect Your Account"
-        already_connected: "Your account is already linked to this DFC authorization account:"
+        disconnect: "Disconnect"
+        connected: "Your account is linked to %{uid}."
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"
+        note_expiry: |
+            Tokens to access connected apps have expired. Please refresh your
+            account connection to keep all integrations working.
+        refresh: "Refresh authorisation"
         view_account: "To view your account, see:"
     subscriptions:
       index:
@@ -1545,14 +1851,22 @@ en_IE:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
     vouchers:
       new:
+        legend: New Voucher
         back: Back
         save: Save
+        voucher_code: Voucher Code
         voucher_amount: Amount
+        voucher_type: Voucher Type
+        flat_rate: Flat
+        percentage_rate: Percentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
         stripe_connect_success: "Stripe account connected successfully"
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
+        remove_logo_success: "Logo removed successfully"
+        remove_promo_image_success: "Promo image removed successfully"
+        remove_white_label_logo_success: "Logo removed successfully"
       stripe_connect_settings:
         resource: Stripe Connect configuration
     resend_confirmation_emails_feedback:
@@ -1582,20 +1896,107 @@ en_IE:
         title: Invalid query parameter
         extra_fields: "Unsupported fields: %{fields}"
   checkout:
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-    terms_and_conditions:
-      message_html: "I agree to the seller's %{terms_and_conditions_link}."
-      link_text: "Terms and Conditions"
-    platform_terms_of_service:
-      message_html: "I agree to the platform %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
-      terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
     payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
     order_not_loaded: "No valid order found for checkout processing"
+    your_details_without_number: Your details
+    payment_method_without_number: Payment method
+    order_summary_without_number: Order summary
+    already_ordered:
+      cart: "cart"
+      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    step1:
+      contact_information:
+        title: Contact information
+        email:
+          label: Email
+        phone:
+          label: Phone number
+      billing_address:
+        title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
+      address:
+        address1:
+          label: Address (Street + House Number)
+        address2:
+          label: Additional address info (optional)
+        city:
+          label: City
+        state_id:
+          label: County
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Country
+      shipping_info:
+        title: Shipping info
+      submit: Next - Payment method
+      cancel: Back to Edit basket
+    step2:
+      payment_method:
+        title: Payment method
+      form:
+        card_number:
+          label: Card number
+          placeholder: e.g. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Month
+        card_year:
+          label: Year
+        stripe:
+          use_saved_card: Use saved card
+          use_new_card: Enter your card identifiers
+          save_card: Save card for future use
+          create_new_card: or enter new card details below
+      explaination: You can review and confirm your order in the next step which includes the final costs.
+      submit: Next - Order summary
+      cancel: Back to Your details
+      voucher:
+        voucher: "%{voucher_amount} Voucher"
+        apply_voucher: Apply voucher
+        apply: Apply
+        placeholder: Enter voucher code
+        remove_code: Remove code
+        confirm_delete: Are you sure you want to remove the voucher?
+        warning_forfeit_remaining_amount: "Note: if your order total is less than your voucher you may not be able to spend the remaining value."
+    step3:
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+        instructions: Instructions
+      payment_method:
+        title: Payment method
+        edit: Edit
+        instructions: Instructions
+      order:
+        title: Order details
+        edit: Edit
+      terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link}."
+        link_text: "Terms and Conditions"
+      platform_terms_of_service:
+        message_html: "I agree to the platform %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
+        terms_and_conditions: "Terms and Conditions"
+      submit: Complete order
+      cancel: Back to Payment method
+    errors:
+      saving_failed: "Saving failed, please update the highlighted fields."
+      terms_not_accepted: Please accept Terms and Conditions
+      required: Field cannot be blank
+      invalid_number: "Please enter a valid phone number"
+      invalid_email: "Please enter a valid email address"
+      select_a_shipping_method: Select a shipping method
+      select_a_payment_method: Select a payment method
+      no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
+      add_voucher_error: There was an error while adding the voucher
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1662,19 +2063,26 @@ en_IE:
   invoice_column_price: "Price"
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
+  invoice_column_weight_volume: "Weight / VOL."
   invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"
   invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
+  invoice_column_price_per_unit_without_taxes: "Price Per unit (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "VAT Total:"
+  invoice_cancel_and_replace_invoice: "cancels and replaces invoice"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_category_delivery: "Delivery"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
+  total_all_tax: "Total tax:"
   abn: "Company Number:"
   acn: "Charity Number:"
   invoice_issued_on: "Invoice issued on:"
+  order_number: "Order number:"
   date_of_transaction: "Date of transaction:"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
@@ -1686,8 +2094,8 @@ en_IE:
   menu_4_url: "/groups"
   menu_5_title: "About"
   menu_5_url: "https://about.openfoodnetwork.ie"
-  menu_6_title: "Blog"
-  menu_6_url: "https://about.openfoodnetwork.ie/blog"
+  menu_6_title: "Resources"
+  menu_6_url: "https://about.openfoodnetwork.ie/resources"
   menu_7_title: "Support"
   menu_7_url: "https://about.openfoodnetwork.ie/support"
   logo: "Logo (640x130)"
@@ -1757,7 +2165,6 @@ en_IE:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Community Forum"
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
@@ -1865,101 +2272,11 @@ en_IE:
   checkout_total_price: Total
   checkout_back_to_cart: "Back to cart"
   cost_currency: "Cost Currency"
-  split_checkout:
-    your_details_without_number: Your details
-    payment_method_without_number: Payment method
-    order_summary_without_number: Order summary
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-    step1:
-      contact_information:
-        title: Contact information
-        email:
-          label: Email
-        phone:
-          label: Phone number
-      billing_address:
-        title: Billing address
-        first_name:
-          label: First Name
-        last_name:
-          label: Last Name
-      address:
-        address1:
-          label: Address (Street + House Number)
-        address2:
-          label: Additional address info (optional)
-        city:
-          label: City
-        state_id:
-          label: County
-        zipcode:
-          label: Postcode
-        country_id:
-          label: Country
-      shipping_info:
-        title: Shipping info
-      submit: Next - Payment method
-      cancel: Back to Edit basket
-    step2:
-      payment_method:
-        title: Payment method
-      form:
-        card_number:
-          label: Card number
-          placeholder: e.g. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Month
-        card_year:
-          label: Year
-        stripe:
-          use_saved_card: Use saved card
-          use_new_card: Enter your card identifiers
-          save_card: Save card for future use
-          create_new_card: or enter new card details below
-      explaination: You can review and confirm your order in the next step which includes the final costs.
-      submit: Next - Order summary
-      cancel: Back to Your details
-    step3:
-      delivery_details:
-        title: Delivery details
-        edit: Edit
-        address: Delivery address
-        instructions: Instructions
-      payment_method:
-        title: Payment method
-        edit: Edit
-        instructions: Instructions
-      order:
-        title: Order details
-        edit: Edit
-      terms_and_conditions:
-        message_html: "I agree to the seller's %{terms_and_conditions_link}."
-        link_text: "Terms and Conditions"
-      platform_terms_of_service:
-        message_html: "I agree to the platform %{tos_link}."
-      all_terms_and_conditions:
-        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
-        terms_and_conditions: "Terms and Conditions"
-      submit: Complete order
-      cancel: Back to Payment method
-    errors:
-      saving_failed: "Saving failed, please update the highlighted fields."
-      terms_not_accepted: Please accept Terms and Conditions
-      required: Field cannot be blank
-      invalid_number: "Please enter a valid phone number"
-      invalid_email: "Please enter a valid email address"
-      select_a_shipping_method: Select a shipping method
-      select_a_payment_method: Select a payment method
-      no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
-      voucher_not_found: Not found
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
   order_payment: "Paying via:"
+  no_payment_required: "No payment required"
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
@@ -1977,6 +2294,9 @@ en_IE:
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
   order_back_to_website: Back To Website
+  checkout_details_title: Checkout Details
+  checkout_payment_title: Checkout Payment
+  checkout_summary_title: Checkout Summary
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
@@ -1987,10 +2307,8 @@ en_IE:
   email_confirmed: "Thank you for confirming your email address."
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
-  email_confirmation_profile_created: "A profile for %{name} has been successfully created! To activate your Profile we need to confirm this email address."
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
-  email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise. See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
   email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
@@ -2256,6 +2574,7 @@ en_IE:
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
+  thank_you_for_your_order: "Thank you for your order"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
   products_cart_distributor_is: "Your distributor for this order is %{name}."
@@ -2456,6 +2775,7 @@ en_IE:
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   fees: "Fees"
   fee_name: "Fee Name"
+  fee_owner: "Fee Owner"
   item_cost: "Item cost"
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
@@ -2582,26 +2902,14 @@ en_IE:
   spree_admin_enterprises_fees: "Enterprise Fees"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREATE A NEW ENTERPRISE"
   spree_admin_enterprises_none_text: "You don't have any enterprises yet"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
-  spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
-  spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
-  spree_admin_overview_action_required: "Action Required"
-  spree_admin_overview_check_your_inbox: "Please check your inbox for further instructions. Thanks!"
-  spree_admin_unit_value: Unit Value
-  spree_admin_unit_description: Unit Description
-  spree_admin_variant_unit: Variant unit
-  spree_admin_variant_unit_scale: Variant unit scale
   spree_admin_supplier: Supplier
-  spree_admin_product_category: Product Category
-  spree_admin_variant_unit_name: Variant unit name
   unit_name: "Unit name"
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
   spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Dublin, D01 XXXX'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
   spree_order_cycle_error: "Please choose an order cycle for this order."
@@ -2704,7 +3012,6 @@ en_IE:
   report_header_paid: Paid?
   report_header_delivery: Delivery?
   report_header_shipping: Shipping
-  report_header_shipping_method: Shipping Method
   report_header_shipping_instructions: Shipping instructions
   report_header_ship_street: Ship Street
   report_header_ship_street_2: Ship Street 2
@@ -2753,6 +3060,7 @@ en_IE:
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
+  report_header_variant_unit_name: Variant Unit Name
   report_header_variant_value: Variant Value
   report_header_variant_unit: Variant Unit
   report_header_total_available: Total available
@@ -2826,6 +3134,8 @@ en_IE:
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
+  report_header_shipment_state: "Shipment County"
+  report_header_shipping_method: "Shipping Method"
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
   report_header_gst_on_income: 20%(VAT on Income)
@@ -2838,6 +3148,11 @@ en_IE:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_header_voucher_label: Voucher Label
+  report_header_voucher_amount: "Voucher Amount (%{currency_symbol})"
+  report_line_cost_of_produce: Cost of produce
+  report_line_line_items: line items
+  report_header_last_completed_order_date: Last completed order date
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -2912,24 +3227,25 @@ en_IE:
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
   enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
-  order_cycles_create_notice: 'Your order cycle has been created.'
-  order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
-  order_cycles_clone_notice: "Your order cycle %{name} has been cloned."
-  order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   order_cycle_closed: "The order cycle you've selected has just closed. Please try again!"
-  back_to_orders_list: "Back to order list"
+  back_to_orders_list: "Back To Orders List"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
+  invoice_number: "Invoice Number"
+  invoice_file: "File"
+  invalid_url: "'%{url}' is an invalid URL"
   state_names:
     ready: Ready
     pending: Pending
     shipped: Shipped
+  business_name: Business Name
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
@@ -3098,18 +3414,8 @@ en_IE:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
-      tag_rules:
-        shipping_method_tagged_top: "Shipping methods tagged"
-        shipping_method_tagged_bottom: "are:"
-        payment_method_tagged_top: "Payment methods tagged"
-        payment_method_tagged_bottom: "are:"
-        order_cycle_tagged_top: "Order Cycles tagged"
-        order_cycle_tagged_bottom: "are:"
-        inventory_tagged_top: "Inventory variants tagged"
-        inventory_tagged_bottom: "are:"
-      new_tag_rule_dialog:
-        select_rule_type: "Select a rule type:"
-        add_rule: "Add Rule"
+          no_variants: "No variant available for this product (hidden via inventory settings)."
+          some_variants_hidden: "(Some variants might be hidden via inventory settings)"
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -3154,7 +3460,7 @@ en_IE:
           processing: "processing"
           void: "void"
           invalid: "invalid"
-        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
+        quantity_unavailable: "Insufficient stock available. Line item unsaved!"
         quantity_unchanged: "Quantity unchanged from previous amount."
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
@@ -3196,10 +3502,6 @@ en_IE:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo removed successfully"
-            immediate_logo_removal_warning: "The logo will be removed immediately after you confirm."
-            removed_promo_image_successfully: "Promo image removed successfully"
-            immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
             immediate_terms_and_conditions_removal_warning: "The Terms and Conditions file will be removed immediately after you confirm."
             removed_terms_and_conditions_successfully: "Terms and Conditions file removed successfully"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
@@ -3209,7 +3511,7 @@ en_IE:
           While you've been shopping, the stock levels for one or more of the products
           in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
-      only_n_remainging: "now only has %{num} remaining."
+      only_n_remaining: "now only has %{num} remaining."
     shopfront:
       variant:
         add_to_cart: "Add"
@@ -3242,13 +3544,6 @@ en_IE:
       some_trouble: "I had some trouble saving: %{errors}"
       changing_on_hand_stock: Changing 'in stock' stock levels...
       stock_reset: Stocks reset to defaults.
-    tag_rules:
-      show_hide_variants: 'Show or Hide variants in my shopfront'
-      show_hide_shipping: 'Show or Hide shipping methods at checkout'
-      show_hide_payment: 'Show or Hide payment methods at checkout'
-      show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
-      visible: VISIBLE
-      not_visible: NOT VISIBLE
     services:
       unsaved_changes_message: Unsaved changes currently exist, save now or ignore?
       save: SAVE
@@ -3264,6 +3559,8 @@ en_IE:
           This will set stock level to zero on all products for this
           enterprise that are not present in the uploaded file.
     order_cycles:
+      unsaved_changes: "You have unsaved changes"
+      bulk_save_error: "Oh no! I was unable to save your changes."
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
       update_failure: "Failed to update order cycle"
@@ -3291,6 +3588,24 @@ en_IE:
           There was a problem setting up your card in our payments gateway.
           Please refresh the page and try again, if it fails a second time,
           please contact us for support.
+    trix:
+      bold: "Bold"
+      bullets: "Bullets"
+      code: "Code"
+      heading1: "Heading"
+      hr: "Horizontal rule"
+      indent: "Increase Level"
+      italic: "Italic"
+      link: "Link"
+      numbers: "Numbers"
+      outdent: "Decrease Level"
+      quote: "Quote"
+      redo: "Redo"
+      strike: "Strikethrough"
+      undo: "Undo"
+      unlink: "Unlink"
+      url: "URL"
+      urlPlaceholder: "Please enter a URL to insert"
   inflections:
     each:
       one: "each"
@@ -3352,9 +3667,6 @@ en_IE:
     pot:
       one: "pot"
       other: "pots"
-    bundle:
-      one: "bundle"
-      other: "bundles"
     flask:
       one: "flask"
       other: "flasks"
@@ -3364,6 +3676,9 @@ en_IE:
     sack:
       one: "sack"
       other: "sacks"
+    bundle:
+      one: "bundle"
+      other: "bundles"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
@@ -3445,7 +3760,7 @@ en_IE:
   account: "Account"
   logout: "Logout"
   date_range: "Date Range"
-  status: "status"
+  status: "Status"
   new: "New"
   start: "Start"
   end: "End"
@@ -3461,6 +3776,7 @@ en_IE:
       success: Webhook endpoint successfully deleted
       error: Webhook endpoint failed to delete
   spree:
+    order_updated: "Order Updated"
     add_country: "Add country"
     add_state: "Add state"
     adjustment: "Adjustment"
@@ -3477,6 +3793,7 @@ en_IE:
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
     editing_zone: "Editing zone"
+    editing_state: "Editing County"
     expiration: "Expiration"
     invalid_payment_provider: "Invalid payment provider"
     items_cannot_be_shipped: "Items cannot be shipped"
@@ -3484,11 +3801,10 @@ en_IE:
     gateway_error: "Payment failed"
     more: "More"
     new_adjustment: "New adjustment"
-    new_order_completed: "New order completed"
     new_tax_category: "New Tax Category"
-    new_taxon: "New taxon"
     new_user: "New user"
     no_pending_payments: "No pending payments"
+    remove: "Remove"
     none: "None"
     not_found: "Not found"
     notice_messages:
@@ -3498,16 +3814,8 @@ en_IE:
     rma_credit: "RMA credit"
     refund: "Refund"
     server_error: "Server error"
-    shipping_method_names:
-      UPS Ground: "UPS Ground"
-      pick_up: "Pick-up at the farm"
-      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
-    taxonomy_edit: "Taxonomy edit"
-    taxonomy_tree_error: "Taxonomy tree error"
-    taxonomy_tree_instruction: "Taxonomy tree instruction"
-    tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
@@ -3515,6 +3823,7 @@ en_IE:
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
     back_to_payments_list: "Back To Payments List"
+    back_to_states_list: "Back to Counties List"
     return_authorizations: "Return Authorisations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
@@ -3559,6 +3868,7 @@ en_IE:
     credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
+    capture_and_complete_order: "Capture and complete order"
     void: "Void"
     login: "Login"
     password: "Password"
@@ -3570,6 +3880,7 @@ en_IE:
     logourl: "Logourl"
     are_you_sure_delete: "Are you sure you want to delete this record?"
     confirm_delete: "Confirm Deletion"
+    voucher: "Voucher"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -3603,7 +3914,7 @@ en_IE:
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
     show_rate_in_label: "Show rate in label"
-    back_to_tax_rates_list: "Back to Tax Rates List"
+    back_to_tax_rates_list: "Back To Tax Rates List"
     tax_settings: "Tax Settings"
     zones: "Zones"
     new_zone: "New Zone"
@@ -3616,14 +3927,12 @@ en_IE:
     iso_name: "ISO Name"
     states_required: "Counties Required"
     editing_country: "Editing Country"
-    back_to_countries_list: "Back to Countries List"
+    back_to_countries_list: "Back To Countries List"
     states: "Counties"
     abbreviation: "Abbreviation"
     new_state: "New County"
     payment_methods: "Payment Methods"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "New Taxonomy"
-    back_to_taxonomies_list: "Back to Taxonomies List"
+    taxons: "Product Categories"
     shipping_methods: "Shipping Methods"
     shipping_method: "Shipping Method"
     shipment: "Shipment"
@@ -3632,6 +3941,7 @@ en_IE:
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
+    editing_shipping_category: "Editing Shipping Category"
     name: "Name"
     description: "Description"
     type: "Type"
@@ -3661,6 +3971,7 @@ en_IE:
     alt_text: "Alternative Text"
     thumbnail: "Thumbnail"
     back_to_images_list: "Back To Images List"
+    api_key: "API key"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -3715,6 +4026,11 @@ en_IE:
     validation:
       must_be_int: "must be an integer"
     admin:
+      images:
+        edit:
+          title: Edit product photo
+          close: Back
+          upload: Upload photo
       mail_methods:
         send_testmail: "Send test email"
         testmail:
@@ -3729,6 +4045,7 @@ en_IE:
         bulk_order_management: "Bulk Order Management"
         subscriptions: "Subscriptions"
         products: "Products"
+        products_v3: "Products"
         option_types: "Option Types"
         properties: "Properties"
         variant_overrides: "Inventory"
@@ -3742,6 +4059,10 @@ en_IE:
         customers: "Customers"
         groups: "Groups"
         oidc_settings: "OIDC Settings"
+        overview: "Overview"
+        product_import: "Import"
+        enterprise_roles: "Roles"
+        payment_methods: "Payment Methods"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
@@ -3772,7 +4093,7 @@ en_IE:
           continue: "Continue"
         new:
           new_return_authorization: "New Return Authorisation"
-          back_to_return_authorizations_list: "Back To Return Authorisation List"
+          back_to_return_authorizations_list: "Back to Return Authorisations List"
           continue: "Continue"
         edit:
           receive: "receive"
@@ -3799,6 +4120,9 @@ en_IE:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
           include_out_of_stock_variants: "Include variants with no available stock"
+        shipment:
+          mark_as_shipped_message_html: "This will mark the order as Shipped.<br />Are you sure you want to proceed?"
+          mark_as_shipped_label_message: "Send a shipment/pick up notification email to the customer."
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
@@ -3839,9 +4163,12 @@ en_IE:
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+          order_number: "Order Number"
+          invoice_number: "Invoice Number"
           payments_list:
             date_time: "Date/time"
             payment_method: "Payment method"
+            payment_state: "Payment state"
             amount: "Amount"
         note:
           note_label: "Note:"
@@ -3854,6 +4181,9 @@ en_IE:
           line_item_adjustments: "Line Item Adjustments"
           order_adjustments: "Order Adjustments"
           order_total: "Order Total"
+      invoices:
+        index:
+          order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
       overview:
         enterprises_header:
           ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
@@ -3862,6 +4192,7 @@ en_IE:
           has_no_payment_methods: "has no payment methods"
           has_no_shipping_methods: "has no shipping methods"
         products:
+          products_tip: "The products that you sell through the Open Food Network."
           active_products:
             zero: "You don't have any active products."
             one: "You have one active product"
@@ -3878,6 +4209,8 @@ en_IE:
             many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+        version:
+          view_all_releases: View all releases
       shipping_methods:
         index:
           shipping_methods: "Shipping Methods"
@@ -3954,12 +4287,8 @@ en_IE:
         providers:
           provider: "Provider"
           check: "Cash/EFT/etc. (payments for which automatic validation is not required)"
-          pin: "Pin Payments"
           paypalexpress: "PayPal Express"
-          stripeconnect: "Stripe (Obsolete version)"
           stripesca: "Stripe"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -3969,11 +4298,14 @@ en_IE:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
+        image_not_processable: "Image attachment is not a valid image."
         new:
           title: "New Product"
           new_product: "New Product"
           supplier: "Supplier"
           supplier_select_placeholder: "Select a supplier"
+          search_for_suppliers: "Search for suppliers"
+          search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -4008,16 +4340,17 @@ en_IE:
           product_name: Product Name
         primary_taxon_form:
           product_category: Product Category
+          search_for_categories: "Search for categories"
         group_buy_form:
           group_buy: "Group Buy?"
           bulk_unit_size: Bulk unit size
         display_as:
           display_as: Display As
+        clone:
+          success: Product cloned
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."
-        customer_names_message:
-          customer_names_tip: "If customer names are hidden for orders you have supplied, you can contact the distributor and ask if they can update their shop preferences to allow their suppliers to view customer names."
         products_and_inventory:
           all_products:
             message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities these values will be ignored in this report."
@@ -4036,10 +4369,10 @@ en_IE:
         form:
           disabled: "Disabled?"
           email: "Email"
-          roles: "Roles"
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"
+          locale: "Language"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
@@ -4058,12 +4391,16 @@ en_IE:
           new_variant: "New Variant"
         form:
           sku: "Product Code"
-          price: "Price"
           unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'eg. 2 kg'
           display_name_placeholder: 'eg. Tomatoes'
+          unit_scale: "Unit scale"
+          unit: Unit
+          price: Price
+          unit_value: Unit value
+          variant_category: Category
         autocomplete:
           out_of_stock: "Out of Stock"
           producer_name: "Producer"
@@ -4073,6 +4410,7 @@ en_IE:
           terms_of_service: "Terms of Service"
         sortable_header:
           name: "Name"
+          on_hand: "In Stock"
           number: "Number"
           completed_at: "Completed At"
           state: "County"
@@ -4081,6 +4419,26 @@ en_IE:
           email: "Email"
           total: "Total"
           billing_address_name: "Name"
+      taxons:
+        back_to_list: "Back To Product Categories List"
+        index:
+          title: "Product Categories"
+          new_taxon: 'New product category'
+        new:
+          title: "New Product Category"
+        edit:
+          title: "Edit Product Category"
+        destroy:
+          delete_taxon:
+            success: "Successfully deleted the product category"
+            error: "Unable to delete the product category due to assigned products."
+        form:
+          name: Name
+          meta_title: Meta Title
+          meta_description: Meta Description
+          meta_keywords: Meta Keywords
+          description: Description
+          dfc_id: DFC URI
       general_settings:
         edit:
           legal_settings: "Legal Settings"
@@ -4243,13 +4601,10 @@ en_IE:
       webhook_endpoints:
         title: Webhook Endpoints
         description: Events in the system may trigger webhooks to external systems.
-        event_types:
-          order_cycle_opened: Order Cycle Opened
         event_type:
           header: Event type
         url:
           header: Endpoint URL
-          create_placeholder: Enter the URL of the remote webhook endpoint
       developer_settings:
         title: Developer Settings
       form:
@@ -4317,7 +4672,6 @@ en_IE:
       key_cleared: "Key cleared"
       shipment:
         cannot_ready: "Cannot ready shipment."
-      invalid_taxonomy_id: "Invalid taxonomy id."
       toggle_api_key_view: "Show API key view for user"
     activerecord:
       models:
@@ -4376,3 +4730,33 @@ en_IE:
     pagination:
       next: Next
       previous: Previous
+    tag_list_input:
+      default_placeholder: Add a tag
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "Shipping methods tagged"
+        shipping_method_tagged_bottom: "are:"
+        payment_method_tagged_top: "Payment methods tagged"
+        payment_method_tagged_bottom: "are:"
+        order_cycle_tagged_top: "Order Cycles tagged"
+        order_cycle_tagged_bottom: "are:"
+        inventory_tagged_top: "Inventory variants tagged"
+        inventory_tagged_bottom: "are:"
+        variant_tagged_bottom: "are:"
+        visible: VISIBLE
+        not_visible: NOT VISIBLE
+    tag_rule_group_form:
+      for_customers_tagged: 'For customers tagged:'
+      add_new_rule: '+ Add A New Rule'
+      no_rules_yet: No rules apply to this tag yet
+    add_tag_rule_modal:
+      select_rule_type: "Select a rule type:"
+      add_rule: "Add Rule"
+    webhook_endpoint_form:
+      url:
+        create_placeholder: Enter the URL of the remote webhook endpoint
+      event_types:
+        order_cycle_opened: Order Cycle Opened
+  invisible_captcha:
+    sentence_for_humans: "Please leave empty"
+    timestamp_error_message: "Please try again after 5 seconds."

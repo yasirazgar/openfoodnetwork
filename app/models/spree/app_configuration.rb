@@ -31,16 +31,11 @@ module Spree
     preference :admin_products_per_page, :integer, default: 10
     # Should only be true if you don't need to track inventory
     preference :allow_backorder_shipping, :boolean, default: false
-    preference :allow_checkout_on_gateway_error, :boolean, default: false
     preference :allow_guest_checkout, :boolean, default: true
-    # Replace with the name of a zone if you would like to limit the countries
-    preference :checkout_zone, :string, default: nil
-    preference :currency, :string, default: "USD"
     preference :currency_decimal_mark, :string, default: "."
     preference :currency_symbol_position, :string, default: "before"
     preference :currency_thousands_separator, :string, default: ","
     preference :display_currency, :boolean, default: false
-    preference :default_country_id, :integer
     preference :default_meta_description, :string, default: 'OFN demo site'
     preference :default_meta_keywords, :string, default: 'ofn, demo'
     preference :default_seo_title, :string, default: ''
@@ -135,9 +130,12 @@ module Spree
 
     # Enable cache
     preference :enable_products_cache?, :boolean,
-               default: (Rails.env.production? || Rails.env.staging?)
+               default: Rails.env.production? || Rails.env.staging?
 
     # Available units
     preference :available_units, :string, default: "g,kg,T,mL,L,kL"
+
+    # Connected Apps
+    preference :connected_apps_enabled, :string, default: nil
   end
 end

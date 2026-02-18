@@ -1,93 +1,73 @@
-= form_with url: bulk_update_admin_products_path, method: :patch, id: "products-form",
-            html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update',
-                   'data-controller': "bulk-form", 'data-bulk-form-disable-selector-value': "#sort,#filters"} do |form|
-  %fieldset.form-actions.hidden{ 'data-bulk-form-target': "actions" }
-    .container
-      .status.ten.columns
-        .modified_summary{ 'data-bulk-form-target': "modifiedSummary", 'data-translation-key': 'admin.products_v3.table.modified_summary'}
-        - if defined?(error_msg) && error_msg.present?
-          .error
-            = error_msg
-      .form-buttons.six.columns
-        = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
-        = form.submit t('.save'), class: "medium"
-  %table.products
-    %col{ width:"15%" }
-    %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"8%" }
-    %col{ width:"5%", style: "max-width:5em"}
-    %col{ width:"5%", style: "max-width:5em"}
-    %col{ width:"10%" }= # producer
-    %col{ width:"10%" }
-    %col{ width:"5%" }
-    %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"5%", style: "max-width:5em" }
+-# locals: (products:, producer_options:, category_options:, tax_category_options:, allowed_producers:)
+= form_with url: admin_products_bulk_update_path, method: :post, id: "products-form",
+            builder: BulkFormBuilder,
+            html: { data: { 'turbo-frame': "_self",
+              controller: "bulk-form",
+              'bulk-form-disable-selector-value': "#sort,#filters",
+              'bulk-form-error-value': defined?(@error_counts),
+              } } do |form|
+  = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
+
+  = hidden_field_tag :page, @page
+  = hidden_field_tag :per_page, @per_page
+  = hidden_field_tag :search_term, @search_term
+  = hidden_field_tag :producer_id, @producer_id
+  = hidden_field_tag :category_id, @category_id
+
+  %table.products{ 'data-column-preferences-target': "table", class: (hide_producer_column?(producer_options) ? 'hide-producer' : '') }
+    %colgroup
+      -# The `min-width` property works in Chrome but not Firefox so is considered progressive enhancement.
+      %col.col-image{ width:"44px" }= # (image size + padding)
+      %col.col-name{ style:"min-width: 6em" }= # (grow to fill)
+      %col.col-sku{ width:"8%", style:"min-width: 6em" }
+      %col.col-unit_scale{ width:"8%" }
+      %col.col-unit{ width:"8%" }
+      %col.col-price{ width:"10%", style:"min-width: 5em" }
+      %col.col-on_hand{ width:"8%" }
+      %col.col-producer{ style:"min-width: 6em" }= # (grow to fill)
+      %col.col-category{ width:"8%" }
+      %col.col-tax_category{ width:"8%" }
+      - if variant_tag_enabled?(spree_current_user)
+        %col.col-tags{ width:"8%" }
+      %col.col-inherits_properties{ width:"5%" }
+      %col{ width:"5%", style:"min-width: 3em"}= # Actions
     %thead
       %tr
-        %th.align-left.with-input= t('admin.products_page.columns.name')
-        %th.align-right= t('admin.products_page.columns.sku')
-        %th.align-right= t('admin.products_page.columns.unit')
-        %th.align-right= t('admin.products_page.columns.price')
-        %th.align-right= t('admin.products_page.columns.on_hand')
-        %th.align-left= t('admin.products_page.columns.producer')
-        %th.align-left= t('admin.products_page.columns.category')
-        %th.align-left= t('admin.products_page.columns.tax_category')
-        %th.align-left= t('admin.products_page.columns.inherits_properties')
+        - colspan = variant_tag_enabled?(spree_current_user) ? 13 : 12
+        %td.form-actions-wrapper{ colspan: "#{colspan}" }
+          .form-actions-wrapper2
+            %fieldset.form-actions{ class: ("hidden" unless defined?(@error_counts)), 'data-bulk-form-target': "actions" }
+              .container
+                .status
+                  .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
+                  - if defined?(@error_counts)
+                    .error_summary
+                      - if @error_counts[:saved] > 0
+                        -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
+                        = t('.error_summary.saved', count: @error_counts[:saved]) + t('.error_summary.invalid', count: @error_counts[:invalid])
+                      - else 
+                        -# Y products could not be saved correctly. Please review errors and try again
+                        = t('.error_summary.invalid', count: @error_counts[:invalid])
+                .form-buttons
+                  %a.button.reset.medium{ href: admin_products_path(page: @page, per_page: @per_page, search_term: @search_term, producer_id: @producer_id, category_id: @category_id), 'data-turbo': "false" }
+                    = t('.reset')
+                  = form.submit t('.save'), { class: "medium", data: { action: "click->bulk-form#popoutEmptyVariantUnit" }}
+      %tr
+        %th.col-image.align-left= # image
+        = render partial: 'spree/admin/shared/stimulus_sortable_header',
+            locals: { column: :name, sorted: params.dig(:q, :s), default: 'name asc' }
+        %th.align-left.col-sku.with-input= t('admin.products_page.columns.sku')
+        %th.align-left.col-unit_scale.with-input= t('admin.products_page.columns.unit_scale')
+        %th.align-left.col-unit.with-input= t('admin.products_page.columns.unit')
+        %th.align-left.col-price.with-input= t('admin.products_page.columns.price')
+        = render partial: 'spree/admin/shared/stimulus_sortable_header',
+            locals: { column: :on_hand, sorted: params.dig(:q, :s), default: 'name asc' }
+        %th.align-left.col-producer= t('admin.products_page.columns.producer')
+        %th.align-left.col-category= t('admin.products_page.columns.category')
+        %th.align-left.col-tax_category= t('admin.products_page.columns.tax_category')
+        - if variant_tag_enabled?(spree_current_user)
+          %th.align-left.col-tags= t('admin.products_page.columns.tags')
+        %th.align-left.col-inherits_properties= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
-    - products.each do |product|
-      = form.fields_for("products", product, index: nil) do |product_form|
-        %tbody.relaxed{ 'data-record-id': product_form.object.id }
-          %tr
-            %td.field.align-left.header
-              = product_form.hidden_field :id
-              = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
-              = error_message_on product, :name
-            %td.field
-              = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
-              = error_message_on product, :sku
-            %td.align-right
-              .content
-                = product.variant_unit.upcase_first
-                / TODO: properly handle custom unit names
-                = WeightsAndMeasures::UNITS[product.variant_unit] && "(" + WeightsAndMeasures::UNITS[product.variant_unit][product.variant_unit_scale]["name"] + ")"
-            %td.align-right
-              -# empty
-            %td.align-right
-              -# TODO: new requirement "DISPLAY ON DEMAND IF ALL VARIANTS ARE ON DEMAND". And translate value
-              .content= if product.variants.all?(&:on_demand) then "On demand" else product.on_hand || 0 end
-            %td.align-left
-              .content= product.supplier&.name
-            %td.align-left
-              .content= product.primary_taxon&.name
-            %td.align-left
-            %td.align-left
-              .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
-            %td.align-right
-              = render partial: 'admin/products_v3/components/product_actions', locals: { product: product }
-          - product.variants.each do |variant|
-            = form.fields_for("products][][variants_attributes][", variant, index: nil) do |variant_form|
-              %tr.condensed
-                %td.field
-                  = variant_form.hidden_field :id
-                  = variant_form.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name
-                  = error_message_on variant, :display_name
-                %td.field
-                  = variant_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
-                  = error_message_on variant, :sku
-                %td.align-right
-                  .content= variant.unit_to_display
-                %td.field
-                  = variant_form.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
-                  = error_message_on variant, :price
-                %td.align-right
-                  .content= variant.on_hand || 0 #TODO: spec for this according to requirements.
-                %td.align-left
-                  .content= variant.product.supplier&.name # same as product
-                %td.align-left
-                  -# empty
-                %td.align-left
-                  .content= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
-                %td.align-left
-                  -# empty
-                %td.align-right
-                  = render partial: 'admin/products_v3/components/product_actions', locals: { product: product, variant: variant }
+    - products.each_with_index do |product, product_index|
+      = render partial: 'product_variant_row', locals: { form:, product:, product_index:, producer_options:, category_options:, tax_category_options: , allowed_producers:}

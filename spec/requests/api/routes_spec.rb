@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 # test a single endpoint to make sure the redirects are working as intended.
-require 'spec_helper'
 
-describe 'Orders Cycles endpoint', type: :request do
+RSpec.describe 'Orders Cycles endpoint' do
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
 
@@ -23,7 +22,7 @@ describe 'Orders Cycles endpoint', type: :request do
 
     it "does not redirect" do
       get path
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 end

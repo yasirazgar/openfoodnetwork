@@ -5,17 +5,18 @@ module Reporting
     class QueryBuilder < QueryInterface
       include Joins
       include Tables
+      include MaskData
 
       attr_reader :grouping_fields
 
       def initialize(model, grouping_fields = proc { [] })
         @grouping_fields = instance_exec(&grouping_fields)
 
-        super model.arel_table
+        super(model.arel_table)
       end
 
       def selecting(lambda)
-        fields = instance_exec(&lambda).map{ |key, value| value.public_send(:as, key.to_s) }
+        fields = instance_exec(&lambda).map{ |key, value| value.as(key.to_s) }
 
         reflect query.project(*fields)
       end
@@ -49,13 +50,6 @@ module Reporting
         reflect query.order(*instance_exec(&ordering_fields))
       end
 
-      def masked(field, message = nil, mask_rule = nil)
-        Case.new.
-          when(mask_rule || default_mask_rule).
-          then(field).
-          else(quoted(message || I18n.t("hidden_field", scope: i18n_scope)))
-      end
-
       def distinct_results(fields = nil)
         return reflect query.distinct if fields.blank?
 
@@ -68,7 +62,9 @@ module Reporting
         options_text = variant_table[:unit_presentation]
 
         unit_to_display = coalesce(nullify_empty_strings(display_as), options_text)
+        # rubocop:disable Rails/OutputSafety
         combined_description = sql_concat(display_name, raw("' ('"), unit_to_display, raw("')'"))
+        # rubocop:enable Rails/OutputSafety
 
         Case.new.
           when(nullify_empty_strings(display_name).eq(nil)).then(unit_to_display).
@@ -77,11 +73,6 @@ module Reporting
       end
 
       private
-
-      def default_mask_rule
-        line_item_table[:order_id].in(raw("#{managed_orders_alias.name}.id")).
-          or(distributor_alias[:show_customer_names_to_suppliers].eq(true))
-      end
 
       def summary_row_title
         I18n.t("total", scope: i18n_scope)

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 
-describe Api::Admin::ExchangeSerializer do
+RSpec.describe Api::Admin::ExchangeSerializer do
   let(:v1) { create(:variant) }
   let(:v2) { create(:variant) }
   let(:v3) { create(:variant) }
@@ -40,7 +39,7 @@ describe Api::Admin::ExchangeSerializer do
           .with(exchange.order_cycle.coordinator)
         expect(exchange.variants).to include v1, v2, v3
         expect(visible_variants.keys).to include v1.id
-        expect(visible_variants.keys).to_not include v2.id, v3.id
+        expect(visible_variants.keys).not_to include v2.id, v3.id
       end
     end
 
@@ -54,10 +53,10 @@ describe Api::Admin::ExchangeSerializer do
         visible_variants = serializer.variants
         expect(permissions_mock).to have_received(:visible_variants_for_incoming_exchanges_from)
           .with(exchange.sender)
-        expect(permitted_variants).to_not have_received(:visible_for)
+        expect(permitted_variants).not_to have_received(:visible_for)
         expect(exchange.variants).to include v1, v2, v3
         expect(visible_variants.keys).to include v1.id, v2.id
-        expect(visible_variants.keys).to_not include v3.id
+        expect(visible_variants.keys).not_to include v3.id
       end
     end
   end
@@ -88,10 +87,10 @@ describe Api::Admin::ExchangeSerializer do
         expect(permissions_mock).to have_received(:visible_variants_for_outgoing_exchanges_to)
           .with(exchange.receiver)
         expect(permitted_variants).to have_received(:not_hidden_for).with(exchange.receiver)
-        expect(permitted_variants).to_not have_received(:visible_for)
+        expect(permitted_variants).not_to have_received(:visible_for)
         expect(exchange.variants).to include v1, v2, v3
         expect(visible_variants.keys).to include v1.id, v2.id
-        expect(visible_variants.keys).to_not include v3.id
+        expect(visible_variants.keys).not_to include v3.id
       end
     end
 
@@ -107,10 +106,10 @@ describe Api::Admin::ExchangeSerializer do
         expect(permissions_mock).to have_received(:visible_variants_for_outgoing_exchanges_to)
           .with(exchange.receiver)
         expect(permitted_variants).to have_received(:visible_for).with(exchange.receiver)
-        expect(permitted_variants).to_not have_received(:not_hidden_for)
+        expect(permitted_variants).not_to have_received(:not_hidden_for)
         expect(exchange.variants).to include v1, v2, v3
         expect(visible_variants.keys).to include v1.id
-        expect(visible_variants.keys).to_not include v2.id, v3.id
+        expect(visible_variants.keys).not_to include v2.id, v3.id
       end
     end
   end

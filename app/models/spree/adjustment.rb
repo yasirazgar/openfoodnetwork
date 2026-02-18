@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spree/localized_number'
-require 'concerns/adjustment_scopes'
 
 # Adjustments represent a change to the +item_total+ of an Order. Each adjustment
 # has an +amount+ that can be either positive or negative.
@@ -87,6 +86,22 @@ module Spree
 
     localize_number :amount
 
+    def self.by_originator_and_enterprise_role(originator, enterprise_role)
+      joins(:metadata)
+        .find_by(
+          originator:,
+          adjustment_metadata: { enterprise_role: }
+        )
+    end
+
+    def self.by_originator_and_not_enterprise_role(originator, enterprise_role)
+      joins(:metadata)
+        .where(originator:)
+        .where.not(
+          spree_adjustments: { adjustment_metadata: { enterprise_role: } }
+        ).first
+    end
+
     # Update both the eligibility and amount of the adjustment. Adjustments
     # delegate updating of amount to their Originator when present, but only if
     # +locked+ is false. Adjustments that are +locked+ will never change their amount.
@@ -121,7 +136,7 @@ module Spree
     end
 
     def currency
-      adjustable ? adjustable.currency : Spree::Config[:currency]
+      adjustable ? adjustable.currency : CurrentConfig.get(:currency)
     end
 
     def display_amount

@@ -29,10 +29,12 @@ ko:
       spree/product:
         name: "제품 이름"
         price: "가격"
-        primary_taxon: "물품 목록"
-        supplier: "공급업체"
+        primary_taxon_id: "물품 목록"
         shipping_category_id: "전송물품 목록"
-        variant_unit: "구성 단위 변경"
+      spree/variant:
+        primary_taxon: "물품 목록"
+        shipping_category_id: "전송물품 목록"
+        supplier: "공급업체"
         variant_unit_name: "변경된 구성 단위 이름"
       spree/credit_card:
         base: "신용카드"
@@ -65,32 +67,9 @@ ko:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "생산자 제고 관리를 위해 빈 칸으로 남겨야 합니다."
-            on_demand_but_count_on_hand_set: "요구 사항이 있을 경우 빈 칸으로 남겨야 합니다."
             limited_stock_but_no_count_on_hand: "한정된 재고 사항에 따라 명시되어야 합니다."
       messages:
         blank: "빈칸이 될 수 없습니다."
-  errors:
-    messages:
-      content_type_invalid: "사용 불가한 컨텐츠 타입입니다."
-      file_size_out_of_range: "%{file_size}의 크기는 요구된 범위에 있지 않습니다."
-      limit_out_of_range: "총합이 범위를 넘어섭니다."
-      image_metadata_missing: "가능한 이미지 파일이 아닙니다."
-      dimension_min_inclusion: "%{width} x %{height} 픽셀보다 크거나 같아야 합니다."
-      dimension_max_inclusion: "%{width} x %{height} 픽셀보다 작거나 같아야 합니다."
-      dimension_width_inclusion: "가로의 길이가 %{min} 과 %{max} 픽셀 사이에 있지 않습니다."
-      dimension_height_inclusion: "세로이 길이가 %{min} 과%{max} 픽셀 사이에 있지 않습니다."
-      dimension_width_greater_than_or_equal_to: "가로의 길이는%{length} 픽셀보다 크거나 같아야 합니다."
-      dimension_height_greater_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 크거나 같아야 합니다."
-      dimension_width_less_than_or_equal_to: "가로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
-      dimension_height_less_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
-      dimension_width_equal_to: "가로의 길이는 %{length} 픽셀이어야 합니다."
-      dimension_height_equal_to: "세로의 길이는 %{length} 픽셀이어야 합니다."
-      aspect_ratio_not_square: "정사각형 형태의 사진이어야 합니다."
-      aspect_ratio_not_portrait: "세로로 찍은 사진이어야 합니다."
-      aspect_ratio_not_landscape: "가로로 찍은 사진이어야 합니다."
-      aspect_ratio_is_not: "화면 비율이 %{aspect_ratio} 이어야 합니다."
-      aspect_ratio_unknown: "알 수 없는 화면 비율 입니다."
-      image_not_processable: "가능한 이미지 파일이 아닙니다."
   stripe:
     error_code:
       incorrect_number: "카드 숫자가 맞지 않습니다."
@@ -247,6 +226,9 @@ ko:
     integer_array_validator:
       not_array_error: "배열 형태여야 합니다."
       invalid_element_error: "허용되는 숫자 형태만을 포함해야 합니다."
+  backorder_mailer:
+    backorder_failed:
+      product: "상품"
   enterprise_mailer:
     confirmation_instructions:
       subject: "%{enterprise}의 이메일 주소를 확인해 주세요."
@@ -329,7 +311,6 @@ ko:
   cancel_order: "주문 취소"
   confirm_send_invoice: "이 주문에 대한 청구서가 고객님께 보내질 예정입니다. 계속해서 진행하시겠습니까?"
   confirm_resend_order_confirmation: "주문 확인 이메일을 재전송하기를 원하시는 것이 확실합니까?"
-  must_have_valid_business_number: "%{enterprise_name}는 청구서가 보내기 전에 사용가능한 호주 사업 번호를 가져야 합니다. "
   invoice: "청구서"
   active: "활성화"
   cancelled: "취소됨"
@@ -403,7 +384,7 @@ ko:
   password_confirmation: 비밀번호 확인
   reset_password_token: 비밀번호 초기화
   expired: 만료되었습니다. 새로 요청하세요.
-  back_to_payments_list: "결제 리스트로 돌아가기"
+  back_to_payments_list: "결제 목록으로 돌아가기"
   maestro_or_solo_cards: "마스터/전용 카드"
   backordered: "일시 품절됨"
   on_hand: "대기 중"
@@ -419,6 +400,7 @@ ko:
     create_and_add_another: "추가 및 생성"
     create: "생성"
     cancel: "취소"
+    cancel_order: "취소"
     resume: "계속"
     save: "저장"
     edit: "편집"
@@ -439,6 +421,7 @@ ko:
           title: 생산자들
         colums: 열
       columns:
+        image: 사진
         name: 이름
         unit: 단위
         price: 가격
@@ -451,6 +434,7 @@ ko:
         inherits_properties: "속성을 상속하시겠습니까?"
         import_date: "수입 날짜"
         actions: 사용자 응용
+        tags: 태그
       columns_selector:
         unit: 단위
         price: 가격
@@ -464,6 +448,13 @@ ko:
         import_date: "수입 날짜"
       actions:
         edit: 편집
+        clone: 복사
+        delete: 삭제
+        remove: 제거
+      image:
+        edit: 편집
+      product_preview:
+        shop_tab: 쇼핑
     adjustments:
       skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
     begins_at: 시작 시간
@@ -517,7 +508,6 @@ ko:
     show_n_more: '%{num}를 더 보기'
     choose: "선택..."
     please_select: 선택 해주세요...
-    column_save_as_default: 기본값으로 설정
     columns: 열
     actions: 사용자 응용
     viewing: "보기 : %{current_view_name}"
@@ -610,6 +600,11 @@ ko:
         your_content: 당신의 콘텐트
         user_guide: 사용자 가이드
         map: 지도
+    dfc_product_imports:
+      index:
+        update: 업데이트
+        new: 새로하기
+        import: 수입
     enterprise_fees:
       index:
         title: "회사 수수료"
@@ -663,7 +658,6 @@ ko:
       variants:
         infinity: "무한성"
         to_order_tip: "주문 제작 품목은 갓 주문한 빵 덩어리와 같이 정해진 재고 수준이 없습니다."
-      back_to_products_list: "제품 목록으로 돌아가기"
       editing_product: "제품 편집"
       tabs:
         product_details: "상품 세부사항"
@@ -675,15 +669,26 @@ ko:
       index:
         header:
           title: 제품 대량 편집
-      sort:
-        pagination:
-          clear_search: 검색 지우기
       filters:
         producers:
           label: 생산자들
         categories:
           label: 카테고리
+        tags:
+          label: 태그
+          none: None
         search: 탐색
+      sort:
+        pagination:
+          clear_search: 검색 지우기
+      product_variant_row:
+        new_variant: 새로운 변경사항
+      variant_row:
+        none_tax_category: None
+        category_field_name: "목록"
+        tax_category_field_name: "세금 목록"
+        producer_field_name: "제공자"
+        add_a_tag: 태그 추가
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.
@@ -742,7 +747,6 @@ ko:
         no_name: 이름 없음
         blank_enterprise: 일부 제품이 회사가 정의되지 않았습니다.
         reset_absent?: 없는 제품 재설정하기
-        reset_absent_tip: 파일에 없는 모든 기존 제품에 대해 재고를 0으로 설정하기
         overwrite_all: 모두 덮어쓰기
         overwrite_empty: 비어 있는 경우 덮어쓰기
         default_stock: 재고 수준 설정
@@ -780,6 +784,7 @@ ko:
         view_products: 제품 페이지로 이동
         view_inventory: 인벤토리 페이지로 이동
       product_headings:
+        distributor: 유통업체
         producer: 제공자
         sku: 재고 관리 단위
         name: 이름
@@ -918,12 +923,6 @@ ko:
         images:
           legend: "사진"
           logo: 로고
-          promo_image_placeholder: '이 이미지는 "About Us"에 전시됩니다.'
-          promo_image_note1: '참고 사항: '
-          promo_image_note2: 여기에 업로드된 프로모션 이미지는 1200 x 260으로 잘립니다.
-          promo_image_note3: 프로모션 이미지는 기업의 프로필 페이지 및 팝업 맨 위에 표시됩니다.
-          remove_logo: "사진 삭제"
-          remove_promo_image: "사진 삭제"
         inventory_settings:
           legend: "인벤토리 설정"
           text1: 다음을 통해 재고 수준 및 가격을 관리할 수 있습니다.
@@ -1001,12 +1000,14 @@ ko:
           customer_names_tip: "공급업체가 보고서에서 고객 이름을 볼 수 있도록 지원"
           customer_names_false: "비활성화"
           customer_names_true: "활성화"
+          customer_contacts_false: "비활성화"
+          customer_contacts_true: "활성화"
+          producers_edit_orders_false: "비활성화"
+          producers_edit_orders_true: "활성화"
           shopfront_message: "상점 메세지"
           shopfront_message_placeholder: >
               고객을 환영하고 함께 쇼핑하는 방법을 설명하는 선택적 메시지입니다. 여기에 텍스트를 입력하면 고객이 처음 상점에 도착했을
               때 홈 탭에 표시됩니다.
-          shopfront_message_link_tooltip: "링크 삽입 / 수정"
-          shopfront_message_link_prompt: "삽입할 URL을 입력하십시오."
           shopfront_closed_message: "매장 폐쇄 메시지"
           shopfront_closed_message_placeholder: >
               가게가 문을 닫은 이유 및/또는 고객이 가게가 언제 다시 문을 열 것으로 예상할 수 있는지에 대하여 보다 자세한 설명을 제공하는
@@ -1049,10 +1050,11 @@ ko:
             no_rules_yet: 아직 적용되는 기본 규칙이 없습니다.
             add_new_button: '+ 새 기본 규칙 추가'
           no_tags_yet: 아직 이 회사에 적용되는 태그가 없습니다.
-          no_rules_yet: 아직 이 태그에 적용되는 규칙이 없습니다.
-          for_customers_tagged: '태그된 고객의 경우:'
-          add_new_rule: '+ 새 규칙 추가'
           add_new_tag: '+ 새 태그 추가'
+          show_hide_variants: '내 매장 안에 변경 사항 보여주기 또는 숨기기'
+          show_hide_shipping: '체크아웃 시 배송 방법 표시 또는 숨기기'
+          show_hide_payment: '체크아웃 시 결제 방법 표시 또는 숨기기'
+          show_hide_order_cycles: '내 상점에서 주문 주기 표시 또는 숨기기.'
         users:
           legend: "사용자"
           email_confirmation_notice_html: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
@@ -1076,6 +1078,13 @@ ko:
           rate: 비율
           customers: 고객
           active: 활성화 하시겠습니까?
+        connected_apps:
+          affiliate_sales_data:
+            loading: "로딩 중"
+          discover_regen:
+            loading: "로딩 중"
+          vine:
+            enable: "함께하고 싶으시다면"
       actions:
         edit_profile: 설정
         properties: 특성
@@ -1128,10 +1137,8 @@ ko:
         contact_name: 연락처 이름
       edit:
         editing: '설정 :'
-        back_link: 회사 목록으로 돌아가기
       new:
         title: 새로운 회사
-        back_link: 회사 목록으로 돌아가기
       welcome:
         welcome_title: Open Food Network에 오신 것을 환영합니다!
         welcome_text: 성공적으로 생성되었습니다.
@@ -1150,6 +1157,14 @@ ko:
         create: "생성"
         cancel: "취소"
         back_to_list: "목록으로 돌아가기"
+      create:
+        success: '주문 주기가 생성되었습니다.'
+      update:
+        success: '주문 주기가 업데이트 되었습니다.'
+      clone:
+        success: "%{name} 주문 주기가 복사되었습니다."
+      notify_producers:
+        success: '생산자에게 보낼 이메일이 전송 대기열에 있습니다.'
       edit:
         save: "저장"
         save_and_next: "저장 후 다음"
@@ -1160,6 +1175,8 @@ ko:
         choose_products_from: "제품 위치 선택:"
         re_notify_producers: 생산자에게 재통보
         notify_producers_tip: 이렇게 하면 각 생산자에게 주문 목록과 함께 이메일이 전송됩니다.
+      date_time_warning_modal_content:
+        cancel: '취소'
       incoming:
         incoming: "새로 들어옴"
         supplier: "공급업체"
@@ -1280,6 +1297,17 @@ ko:
       resume:
         could_not_resume_the_order: 주문을 진행할 수 없습니다.
     shared:
+      attachment_field:
+        logo_label: "로고"
+        logo_remove: "사진 삭제"
+        logo_remove_confirm: "확인 후 로고가 즉시 제거됩니다."
+        promo_image_note1: '참고 사항: '
+        promo_image_note2: 여기에 업로드된 프로모션 이미지는 1200 x 260으로 잘립니다.
+        promo_image_note3: 프로모션 이미지는 기업의 프로필 페이지 및 팝업 맨 위에 표시됩니다.
+        promo_image_placeholder: '이 이미지는 "About Us"에 전시됩니다.'
+        promo_image_remove: "사진 삭제"
+        promo_image_remove_confirm: "확인 후 바로 프로모션 이미지가 제거됩니다."
+        white_label_logo_remove: "사진 삭제"
       user_guide_link:
         user_guide: 사용자 가이드
       enterprises_hubs_tabs:
@@ -1319,7 +1347,7 @@ ko:
       email_confirmation: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
       not_visible: "%{enterprise}가 표시되지 않으므로 지도 또는 검색에서 찾을 수 없습니다."
     reports:
-      hidden: 숨김
+      hidden_field: "< 숨기기 >"
       unitsize: 단위 크기
       total: 총량
       total_items: 총 항목 수
@@ -1371,7 +1399,6 @@ ko:
         no_report_type: "보고서 유형을 지정하십시오."
         report_not_found: "보고서를 찾을 수 없음"
         missing_ransack_params: "요구 사항에 Ransack 검색 매개 변수를 제공하십시오."
-      hidden_field: "< 숨기기 >"
       summary_row:
         total: "총량"
       table:
@@ -1504,6 +1531,9 @@ ko:
         stripe_connect_cancelled: "Stripe와의 연결이 취소되었습니다"
         stripe_connect_success: "Stripe 계정이 성공적으로 연결되었습니다."
         stripe_connect_fail: 죄송합니다. 당신의 Stripe 계정에 연결하는 것이 실패했습니다.
+        remove_logo_success: "로고가 삭제되었습니다."
+        remove_promo_image_success: "프로모션 이미지가 제거되었습니다."
+        remove_white_label_logo_success: "로고가 삭제되었습니다."
       stripe_connect_settings:
         resource: Stripe Connect  환경 설정
   api:
@@ -1523,20 +1553,93 @@ ko:
     orders:
       failed_to_update: "주문을 업데이트하는데 실패했습니다."
   checkout:
-    already_ordered:
-      cart: "카트"
-      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 동안 항목을 취소할 수도 있습니다."
-    terms_and_conditions:
-      message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
-      link_text: "조건"
-    platform_terms_of_service:
-      message_html: "플랫폼 %{tos_link}에 대하여 동의합니다."
-    all_terms_and_conditions:
-      message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
-      terms_and_conditions: "조건"
     failed: "체크아웃에 실패했습니다. 우리가 당신의 주문을 처리할 수 있도록 우리에게 알려주세요."
     payment_cancelled_due_to_stock: "결제 취소: 재고 문제로 인해 체크아웃을 완료할 수 없습니다."
     order_not_loaded: "체크아웃 처리에 대한 올바른 주문을 찾을 수 없습니다."
+    your_details_without_number: 세부 사항
+    payment_method_without_number: 결제 방식
+    order_summary_without_number: 주문 요약
+    already_ordered:
+      cart: "카트"
+      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 동안 항목을 취소할 수도 있습니다."
+    step1:
+      contact_information:
+        email:
+          label: 이메일
+        phone:
+          label: 전화번호
+      billing_address:
+        title: 청구서 발송지
+        first_name:
+          label: 이름
+        last_name:
+          label: 성
+      address:
+        address1:
+          label: 주소 (도로명 + 집 번혼)
+        address2:
+          label: 추가 주소 정보(선택 사항)
+        city:
+          label: 시
+        state_id:
+          label: 주
+        zipcode:
+          label: 우편번호
+        country_id:
+          label: 나라
+      shipping_info:
+        title: 배송 정보
+      submit: 다음 - 결제 방식
+      cancel: 장바구니 편집으로 돌아가기
+    step2:
+      payment_method:
+        title: 결제 방식
+      form:
+        card_number:
+          label: 카드 번호
+          placeholder: 예. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Month
+        card_year:
+          label: Year
+        stripe:
+          use_saved_card: 저장된 카드 사용
+          use_new_card: 카드 식별자 입력
+          save_card: 나중에 사용할 수 있도록 카드 저장
+          create_new_card: 또는 아래에 새 카드 세부 정보를 입력
+      explaination: 최종 비용이 포함된 다음 단계에서 주문을 검토하고 확인할 수 있습니다.
+      submit: 다음 - 주문 요약
+      cancel: 세부 사항으로 돌아가기
+    step3:
+      delivery_details:
+        title: 배달 세부 사항
+        edit: 편집
+        address: 배달 주소
+      payment_method:
+        title: 결제 방식
+        edit: 편집
+      order:
+        edit: 편집
+      terms_and_conditions:
+        message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
+        link_text: "조건"
+      platform_terms_of_service:
+        message_html: "플랫폼 %{tos_link}에 대하여 동의합니다."
+      all_terms_and_conditions:
+        message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
+        terms_and_conditions: "조건"
+      submit: 주문 완료
+      cancel: 결제 방식으로 돌아가기
+    errors:
+      saving_failed: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
+      terms_not_accepted: 약관에 동의하십시오.
+      required: 필드는 비워 둘 수 없습니다.
+      invalid_number: "올바른 전화 번호를 입력하십시오."
+      invalid_email: "올바른 이메일 주소를 입력하십시오."
+      select_a_shipping_method: 전송 방법을 선택하세요.
+      select_a_payment_method: 결제 방법을 선택하세요.
   shops:
     hubs:
       show_closed_shops: "휴무점 표시"
@@ -1611,6 +1714,8 @@ ko:
   invoice_tax_total: "물품·용역소비세 총합 :"
   tax_invoice: "세금 계산서"
   tax_total: "총 세금 (%{rate}) :"
+  invoice_shipping_category_delivery: "배달"
+  invoice_shipping_category_pickup: "직접 수령"
   total_excl_tax: "총합 (세금 별도)"
   total_incl_tax: "총합 (세금 포함) :"
   abn: "호주 비즈니스 번호 :"
@@ -1698,7 +1803,6 @@ ko:
   label_account: "계정"
   label_more: "더 보기"
   label_less: "적게 표시"
-  label_notices: "공지사항"
   cart_items: "항목"
   cart_headline: "당신의 쇼핑 카트"
   total: "총합"
@@ -1806,92 +1910,6 @@ ko:
   checkout_total_price: 총합
   checkout_back_to_cart: "카트로 돌아가기"
   cost_currency: "가격 통화"
-  split_checkout:
-    your_details_without_number: 세부 사항
-    payment_method_without_number: 결제 방식
-    order_summary_without_number: 주문 요약
-    already_ordered:
-      cart: "카트"
-      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 한 항목을 취소할 수도 있습니다."
-    step1:
-      contact_information:
-        email:
-          label: 이메일
-        phone:
-          label: 전화번호
-      billing_address:
-        title: '청구서 발송지 :'
-        first_name:
-          label: 이름
-        last_name:
-          label: 성
-      address:
-        address1:
-          label: 주소 (도로명 + 집 번혼)
-        address2:
-          label: 추가 주소 정보(선택 사항)
-        city:
-          label: 시
-        state_id:
-          label: 상태
-        zipcode:
-          label: 우편번호
-        country_id:
-          label: 나라
-      shipping_info:
-        title: 배송 정보
-      submit: 다음 - 결제 방식
-      cancel: 장바구니 편집으로 돌아가기
-    step2:
-      payment_method:
-        title: 결제 방식
-      form:
-        card_number:
-          label: 카드 번호
-          placeholder: 예. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: 달
-        card_year:
-          label: Year
-        stripe:
-          use_saved_card: 저장된 카드 사용
-          use_new_card: 카드 식별자 입력
-          save_card: 나중에 사용할 수 있도록 카드 저장
-          create_new_card: 또는 아래에 새 카드 세부 정보를 입력
-      explaination: 최종 비용이 포함된 다음 단계에서 주문을 검토하고 확인할 수 있습니다.
-      submit: 다음 - 주문 요약
-      cancel: 세부 사항으로 돌아가기
-    step3:
-      delivery_details:
-        title: 배달 세부 사항
-        edit: 편집
-        address: 배달 주소
-      payment_method:
-        title: 결제 방식
-        edit: 편집
-      order:
-        edit: 편집
-      terms_and_conditions:
-        message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
-        link_text: "조건"
-      platform_terms_of_service:
-        message_html: "플랫폼 %{tos_link}에 대하여 동의합니다."
-      all_terms_and_conditions:
-        message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
-        terms_and_conditions: "조건"
-      submit: 주문 완료
-      cancel: 결제 방식으로 돌아가기
-    errors:
-      saving_failed: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
-      terms_not_accepted: 약관에 동의하십시오.
-      required: 필드는 비워 둘 수 없습니다.
-      invalid_number: "올바른 전화 번호를 입력하십시오."
-      invalid_email: "올바른 이메일 주소를 입력하십시오."
-      select_a_shipping_method: 전송 방법을 선택하세요.
-      select_a_payment_method: 결제 방법을 선택하세요.
-      voucher_not_found: 찾을 수 없습니다
   order_paid: 유료
   order_not_paid: 무료
   order_total: 총 주문
@@ -1923,10 +1941,8 @@ ko:
   email_confirmed: "이메일 주소를 확인해주셔서 감사합니다."
   email_confirmation_activate_account: "새 계정을 활성화하기 전에 이메일 주소를 확인해야 합니다."
   email_confirmation_greeting: "안녕하세요,  %{contact}님!"
-  email_confirmation_profile_created: "%{name}에 대한 프로필이 성공적으로 생성되었습니다! 프로필을 활성화하려면 이 이메일 주소를 확인해야 합니다."
   email_confirmation_click_link: "아래 링크를 클릭하여 이메일을 확인하고 프로필 설정을 계속하십시오."
   email_confirmation_link_label: "이 이메일 주소 확인 »"
-  email_confirmation_help_html: "이메일을 확인한 후 이 기업의 관리 계정에 접근할 수 있습니다. %{sitename}의 기능에 대해 자세히 알아보고 프로필 또는 온라인 상점을 사용하려면 %{link}를 참조하십시오."
   email_confirmation_notice_unexpected: "%{sitename}으로 등록하셨거나 아는 사람의 초대로 이 메시지를 받으셨습니다. 이 이메일을 받는 이유를 이해하지 못하셨을 경우, %{contact}로 메세지를 보내십시오."
   email_social: "연락 방법 :"
   email_contact: "이메일 주소 :"
@@ -2515,26 +2531,14 @@ ko:
   spree_admin_enterprises_fees: "기업 수수료"
   spree_admin_enterprises_none_create_a_new_enterprise: "내 회사 생성하기"
   spree_admin_enterprises_none_text: "아직 어떤 회사도 가지고 있지 않습니다"
-  spree_admin_enterprises_tabs_hubs: "허브"
   spree_admin_enterprises_producers_manage_products: "생산품 관리"
   spree_admin_enterprises_create_new_product: "새 생산품 생성하기"
-  spree_admin_single_enterprise_alert_mail_confirmation: "이메일 주소를 확인해 주십시요."
-  spree_admin_single_enterprise_alert_mail_sent: "이메일을 전송했습니다"
-  spree_admin_overview_action_required: "필요한 작업"
-  spree_admin_overview_check_your_inbox: "자세한 내용은 받은 편지함을 확인하시면 됩니다. 감사합니다!"
-  spree_admin_unit_value: 단위 값
-  spree_admin_unit_description: 단위 설명
-  spree_admin_variant_unit: 구성 단위 변경
-  spree_admin_variant_unit_scale: 변경할 구성 단위 크기
   spree_admin_supplier: 공급업체
-  spree_admin_product_category: 물품 목록
-  spree_admin_variant_unit_name: 변경된 구성 단위 이름
   unit_name: "단위 이름"
   change_package: "패키지 변경"
   spree_admin_single_enterprise_hint: "힌트 : 다른 사용자가 사용자를 찾을 수 있도록 하려면 다음에서 사용자 가시성을 켜십시오."
   spree_admin_eg_pickup_from_school: "예. '초등학교에서 픽업'"
   spree_admin_eg_collect_your_order: "예. '123 Imaginary St, Northcote, 3070번지에서 주문을 받으십시오.'"
-  spree_classification_primary_taxon_error: "분류군%{taxon}은 %{product}의 기본 분류군이며 삭제할 수 없습니다."
   spree_order_availability_error: "대리점 또는 주문 주기가 카트의 제품을 제공할 수 없습니다."
   spree_order_populator_error: "해당 유통업체나 주문 주기가 카트에 있는 모든 제품을 공급할 수는 없습니다. 다른 항목을 선택하십시오."
   spree_order_cycle_error: "이 주문에 대한 주문 주기를 선택하십시오."
@@ -2625,7 +2629,6 @@ ko:
   report_header_paid: 유급 입니까?
   report_header_delivery: 배달 입니까?
   report_header_shipping: 배송
-  report_header_shipping_method: 배송 방법
   report_header_shipping_instructions: 배송 지침
   report_header_ship_street: 주문 도로명
   report_header_ship_street_2: 주문 도로명 2
@@ -2670,6 +2673,7 @@ ko:
   report_header_quantity: 수량
   report_header_max_quantity: 최대 수량
   report_header_variant: 다른 상품
+  report_header_variant_unit_name: 변경된 구성 단위 이름
   report_header_variant_value: 변경된 값
   report_header_variant_unit: 구성 단위 변경
   report_header_total_available: 사용 가능한 항목 총합
@@ -2739,6 +2743,8 @@ ko:
   report_header_total_excl_vat: "세금 제외 합계 (%{currency_symbol})"
   report_header_total_incl_vat: "세금 포함 합계 (%{currency_symbol})"
   report_header_temp_controlled: 온도를 제어하시겠습니까?
+  report_header_shipment_state: "배송 현황"
+  report_header_shipping_method: "배송 방법"
   report_header_is_producer: 생산자 이십니까?
   report_header_not_confirmed: 확인되지 않음
   report_header_gst_on_income: 소득 내 물품·용역소비세
@@ -2822,11 +2828,7 @@ ko:
   enterprise_bulk_update_success_notice: "기업이 성공적으로 업데이트됨"
   enterprise_bulk_update_error: '업데이트 실패됨'
   enterprise_shop_show_error: "찾고 있는 상점이 없거나 OFN에서 비활성 상태입니다. 다른 상점도 확인해주세요."
-  order_cycles_create_notice: '주문 주기가 생성되었습니다.'
-  order_cycles_update_notice: '주문 주기가 업데이트 되었습니다.'
   order_cycles_bulk_update_notice: '주문 주기가 업데이트 되었습니다.'
-  order_cycles_clone_notice: "%{name} 주문 주기가 복사되었습니다."
-  order_cycles_email_to_producers_notice: '생산자에게 보낼 이메일이 전송 대기열에 있습니다.'
   order_cycles_no_permission_to_coordinate_error: "주문 주기를 조정할 권한이 있는 기업이 없습니다."
   order_cycles_no_permission_to_create_error: "해당 기업에서 조정한 주문 주기를 생성할 권한이 없습니다."
   order_cycle_closed: "선택한 주문 주기가 방금 마감되었습니다. 다시 시도하십시오!"
@@ -2840,6 +2842,7 @@ ko:
     ready: 준비
     pending: 보류 중
     shipped: 배송됨
+  business_name: 사업자명
   js:
     saving: '저장 중...'
     changes_saved: '변경 내용이 저장되었습니다.'
@@ -2981,18 +2984,6 @@ ko:
           select_all_variants: "모든 %{total_number_of_variants}개의 변경 사항을 선택하기"
           variants_loaded: "%{total_number_of_variants}개 중 %{num_of_variants_loaded}개의 변경사항 불러오기"
           loading_variants: "변경 사항 불러오기"
-      tag_rules:
-        shipping_method_tagged_top: "태그된 배송 방법"
-        shipping_method_tagged_bottom: "다음 항목:"
-        payment_method_tagged_top: "태그된 결제 방법"
-        payment_method_tagged_bottom: "다음 항목:"
-        order_cycle_tagged_top: "태그된 주문 주기"
-        order_cycle_tagged_bottom: "다음 항목:"
-        inventory_tagged_top: "태그된 변경 사항 인벤토리"
-        inventory_tagged_bottom: "다음 항목:"
-      new_tag_rule_dialog:
-        select_rule_type: "규칙 유형 선택 :"
-        add_rule: "규칙 추가"
       enterprise_fees:
         inherit_from_product: "제품에서의 상속 사항"
       orders:
@@ -3037,7 +3028,6 @@ ko:
           processing: "진행 중"
           void: "공백"
           invalid: "효력 없음"
-        quantity_adjusted: "재고가 부족합니다. 라인 항목이 사용 가능한 최대 수량으로 업데이트되었습니다."
         quantity_unchanged: "이전 수량과 비교할 때 변동사항이 없습니다."
         cancel_the_order_html: "현재 주문이 취소됩니다. <br />계속하시겠습니까?"
         cancel_the_order_send_cancelation_email: "고객에게 취소 이메일 보내기"
@@ -3076,10 +3066,6 @@ ko:
       enterprises:
         form:
           images:
-            removed_logo_successfully: "로고가 삭제되었습니다."
-            immediate_logo_removal_warning: "확인 후 로고가 즉시 제거됩니다."
-            removed_promo_image_successfully: "프로모션 이미지가 제거되었습니다."
-            immediate_promo_image_removal_warning: "확인 후 바로 프로모션 이미지가 제거됩니다."
             immediate_terms_and_conditions_removal_warning: "확인 후 계약 조건 파일이 즉시 제거됩니다."
             removed_terms_and_conditions_successfully: "계약 조건 파일이 제거되었습니다."
     insufficient_stock: "재고 부족, %{on_hand}만 남아 있습니다."
@@ -3088,7 +3074,7 @@ ko:
       out_of_stock_text: >
           쇼핑하는 동안 카트에 있는 하나 이상의 제품에 대한 재고 수준이 감소했습니다. 변경된 내용은 다음과 같습니다 :
       now_out_of_stock: 현재 품절되었습니다.
-      only_n_remainging: "이제 %{num}개만 남았습니다."
+      only_n_remaining: "이제 %{num}개만 남았습니다."
     shopfront:
       variant:
         add_to_cart: "추가"
@@ -3121,13 +3107,6 @@ ko:
       some_trouble: "저장하는 데 문제가 발생했습니다 : %{errors}"
       changing_on_hand_stock: 재고 수준 변경 중...
       stock_reset: 재고를 기본값으로 재설정했습니다.
-    tag_rules:
-      show_hide_variants: '내 매장 안에 변경 사항 보여주기 또는 숨기기'
-      show_hide_shipping: '체크아웃 시 배송 방법 표시 또는 숨기기'
-      show_hide_payment: '체크아웃 시 결제 방법 표시 또는 숨기기'
-      show_hide_order_cycles: '내 상점에서 주문 주기 표시 또는 숨기기.'
-      visible: 표시
-      not_visible: 숨기기
     services:
       unsaved_changes_message: 저장하지 않은 변경 사항이 현재 존재합니다. 지금 저장하시겠습니까? 아니면 무시하시겠습니까?
       save: 저장
@@ -3142,6 +3121,8 @@ ko:
       confirmation: |
           업로드된 파일에 없는 이 기업의 모든 제품에 대한 재고 수준이 0으로 설정됩니다.
     order_cycles:
+      unsaved_changes: "저장되지 않은 변경이 있습니다."
+      bulk_save_error: "이런! 변경 내용을 저장할 수 없습니다."
       create_failure: "주문 주기를 생성하지 못했습니다."
       update_success: '주문 주기가 업데이트 되었습니다.'
       update_failure: "주문 주기를 업데이트하지 못했습니다."
@@ -3169,6 +3150,9 @@ ko:
           결제 게이트웨이에서 카드를 설정하는 동안 문제가 발생했습니다.
           페이지를 새로 고친 후 다시 시도하십시오. 만약 다시 실패하신면,
           저희에게 지원을 요청해주세요.
+    trix:
+      code: "코드"
+      urlPlaceholder: "삽입할 URL을 입력하십시오."
   inflections:
     each:
       other: "각"
@@ -3210,14 +3194,14 @@ ko:
       other: "조각"
     pot:
       other: "냄비 갯수"
-    bundle:
-      other: "묶음"
     flask:
       other: "플라스크 몇 개"
     basket:
       other: "바구니"
     sack:
       other: "자루"
+    bundle:
+      other: "묶음"
   producers:
     signup:
       start_free_profile: "무료 프로필로 시작해보시고, 준비가 되면 확장해보세요!"
@@ -3331,11 +3315,10 @@ ko:
     gateway_error: "결제 실패"
     more: "추가 정보"
     new_adjustment: "새 조정"
-    new_order_completed: "신규 주문 완료"
     new_tax_category: "신규 세금 카테고리"
-    new_taxon: "새 분류군"
     new_user: "신규 사용자"
     no_pending_payments: "미지금급"
+    remove: "제거"
     none: "아니다"
     not_found: "찾을 수 없습니다"
     notice_messages:
@@ -3345,14 +3328,8 @@ ko:
     rma_credit: "RMA 거래"
     refund: "환불"
     server_error: "서버 오류"
-    shipping_method_names:
-      UPS Ground: "UPS 배경"
     start_date: "시작 날짜"
     successfully_removed: "성공적으로 제거됨"
-    taxonomy_edit: "분류법 편집"
-    taxonomy_tree_error: "분류법 트리 오류"
-    taxonomy_tree_instruction: "분류법 트리 소개"
-    tree: "트리"
     updating: "업데이트 중"
     your_order_is_empty_add_product: "주문이 비어 있습니다. 위의 제품을 검색하여 추가하십시오."
     add_product: "상품 추가"
@@ -3447,7 +3424,6 @@ ko:
     tax_rate_amount_explanation: "세율은 소수로 계산하면 도움이 됩니다. (예: 세율이 5%인 경우라면 0.05를 입력하세요.)"
     included_in_price: "가격에 포함되어있음"
     show_rate_in_label: "레이블에 비율 표시"
-    back_to_tax_rates_list: "세율 리스트로 돌아가기"
     tax_settings: "세금 설정"
     zones: "구역"
     new_zone: "신규 구역"
@@ -3460,14 +3436,11 @@ ko:
     iso_name: "ISO 이름"
     states_required: "주를 작성하셔야 합니다."
     editing_country: "국가 편집"
-    back_to_countries_list: "국가 리스트로 돌아가기"
     states: "주"
     abbreviation: "축약"
     new_state: "신규 주"
     payment_methods: "결제 방법"
-    taxonomies: "분류법"
-    new_taxonomy: "신규 분류법"
-    back_to_taxonomies_list: "분류법 리스트로 돌아가기"
+    taxons: "제품 카테고리"
     shipping_methods: "전송 방법"
     shipping_method: "배송 방법"
     shipment: "수송"
@@ -3557,6 +3530,9 @@ ko:
     validation:
       must_be_int: "정수여야 합니다"
     admin:
+      images:
+        edit:
+          close: 뒤로
       mail_methods:
         send_testmail: "테스트 이메일 보내기"
         testmail:
@@ -3571,6 +3547,7 @@ ko:
         bulk_order_management: "대량 주문 관리"
         subscriptions: "구독"
         products: "생산품"
+        products_v3: "생산품"
         option_types: "옵션 유형"
         properties: "특성"
         variant_overrides: "물품 목록"
@@ -3583,6 +3560,10 @@ ko:
         enterprise_relationships: "사용 권한"
         customers: "소비자"
         groups: "그룹"
+        overview: "개요"
+        product_import: "수입"
+        enterprise_roles: "역할"
+        payment_methods: "결제 방법"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} 속성을 상속하시겠습니까? (위에서 재정의하지 않는 경우)"
@@ -3613,7 +3594,6 @@ ko:
           continue: "계속하기"
         new:
           new_return_authorization: "신규 반품 승인"
-          back_to_return_authorizations_list: "반품 승인 리스트로 돌아가기"
           continue: "계속하기"
         edit:
           receive: "수신"
@@ -3784,12 +3764,8 @@ ko:
         providers:
           provider: "제공자"
           check: "현금/온라인 이체/기타 등등 (자동 유효성 검사가 필요하지 않은 지불)"
-          pin: "핀 결제"
           paypalexpress: "페이팔 익스프레스"
-          stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
-          bogus: "보거스"
-          bogussimple: "보거스심플"
       payments:
         source_forms:
           stripe:
@@ -3844,8 +3820,6 @@ ko:
       reports:
         table:
           select_and_search: "필터를 선택하고 %{option}를 클릭하여 데이터에 액세스합니다."
-        customer_names_message:
-          customer_names_tip: "제공한 주문에 대해 고객 이름이 숨겨져 있는 경우 대리점에 연락하여 공급업체가 고객 이름을 볼 수 있도록 상점 기본 설정을 업데이트할 수 있는지 물어볼 수 있습니다."
       users:
         index:
           listing_users: "사용자 정렬"
@@ -3861,7 +3835,6 @@ ko:
         form:
           disabled: "비활성화 하시겠습니까?"
           email: "이메일"
-          roles: "역할"
           enterprise_limit: "회사 최대치"
           confirm_password: "비밀번호 확인"
           password: "비밀번호"
@@ -3883,12 +3856,14 @@ ko:
           new_variant: "새로운 변경사항"
         form:
           sku: "재고 관리 단위"
-          price: "가격"
           unit_price: "단가"
           display_as: "다른 이름으로 표시"
           display_name: "이름 표시"
           display_as_placeholder: '예. 2 kg'
           display_name_placeholder: '예. Tomatoes'
+          unit: 단위
+          price: 가격
+          variant_category: 목록
         autocomplete:
           out_of_stock: "품절"
           producer_name: "제공자"
@@ -3898,6 +3873,7 @@ ko:
           terms_of_service: "서비스 약관"
         sortable_header:
           name: "이름"
+          on_hand: "대기 중"
           number: "숫자"
           completed_at: "완료 시간:"
           state: "상태"
@@ -3906,6 +3882,12 @@ ko:
           email: "이메일"
           total: "총합"
           billing_address_name: "이름"
+      taxons:
+        index:
+          title: "제품 카테고리"
+        form:
+          name: 이름
+          description: 설명
       general_settings:
         edit:
           legal_settings: "법적 설정"
@@ -4124,7 +4106,6 @@ ko:
       key_cleared: "키 지워짐"
       shipment:
         cannot_ready: "발송을 준비할 수 없습니다."
-      invalid_taxonomy_id: "분류법 ID가 잘못되었습니다."
     activerecord:
       models:
         spree/payment:
@@ -4166,3 +4147,25 @@ ko:
     pagination:
       next: 다음
       previous: 이전으로
+    tag_list_input:
+      default_placeholder: 태그 추가
+    tag_rule_form:
+      tag_rules:
+        shipping_method_tagged_top: "태그된 배송 방법"
+        shipping_method_tagged_bottom: "다음 항목:"
+        payment_method_tagged_top: "태그된 결제 방법"
+        payment_method_tagged_bottom: "다음 항목:"
+        order_cycle_tagged_top: "태그된 주문 주기"
+        order_cycle_tagged_bottom: "다음 항목:"
+        inventory_tagged_top: "태그된 변경 사항 인벤토리"
+        inventory_tagged_bottom: "다음 항목:"
+        variant_tagged_bottom: "다음 항목:"
+        visible: 표시
+        not_visible: 숨기기
+    tag_rule_group_form:
+      for_customers_tagged: '태그된 고객의 경우:'
+      add_new_rule: '+ 새 규칙 추가'
+      no_rules_yet: 아직 이 태그에 적용되는 규칙이 없습니다.
+    add_tag_rule_modal:
+      select_rule_type: "규칙 유형 선택 :"
+      add_rule: "규칙 추가"

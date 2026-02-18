@@ -3,7 +3,7 @@
 module Spree
   module BaseHelper
     def available_countries
-      checkout_zone = Zone.find_by(name: Spree::Config[:checkout_zone])
+      checkout_zone = Zone.find_by(name: ENV.fetch("CHECKOUT_ZONE", nil))
 
       countries = if checkout_zone && checkout_zone.kind == 'country'
                     checkout_zone.countries
@@ -36,8 +36,7 @@ module Spree
     end
 
     def pretty_time(time)
-      [I18n.l(time.to_date, format: :long),
-       time.strftime("%l:%M %p")].join(" ")
+      I18n.l(time, format: :long)
     end
   end
 end

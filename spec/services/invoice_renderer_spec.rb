@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'spree/payment_methods_helper'
-
-describe InvoiceRenderer do
+RSpec.describe InvoiceRenderer do
   include Spree::PaymentMethodsHelper
 
   let(:service) { described_class.new }

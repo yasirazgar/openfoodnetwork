@@ -45,19 +45,12 @@ b {
 }
 
 // links
+// Design reference: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Design-styleguide%3A-links-and-buttons
 //--------------------------------------------------------------
 a:not(.button) {
   color: $color-link;
   text-decoration: none;
   line-height: inherit;
-
-  &,
-  &:hover,
-  &:active,
-  &:visited,
-  &:focus {
-    outline: none;
-  }
 
   &:visited {
     color: $color-link-visited;

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Check out with Stripe" do
+RSpec.describe "Check out with Stripe" do
   include AuthenticationHelper
   include ShopWorkflow
   include CheckoutRequestsHelper
@@ -36,7 +36,7 @@ describe "Check out with Stripe" do
 
   before do
     stripe_enable
-    set_order order
+    pick_order order
     add_product_to_cart order, product
     distributor.shipping_methods << [shipping_with_fee, free_shipping]
   end
@@ -71,6 +71,8 @@ describe "Check out with Stripe" do
           checkout_with_stripe
 
           expect(page).to have_content "Confirmed"
+          expect(page.find("#amount-paid").text).to have_content "$19.99"
+
           expect(order.reload.completed?).to eq true
           expect(order.payments.first.state).to eq "completed"
         end
@@ -203,7 +205,7 @@ describe "Check out with Stripe" do
           new_order = create(:order, user:, order_cycle:,
                                      distributor:, bill_address_id: nil,
                                      ship_address_id: nil)
-          set_order(new_order)
+          pick_order(new_order)
           add_product_to_cart(new_order, product, quantity: 10)
           stub_payment_intents_post_request order: new_order
           stub_successful_capture_request order: new_order

@@ -18,15 +18,15 @@ FactoryBot.define do
     end
   end
 
-  factory :bogus_payment_method, class: Spree::Gateway::Bogus do
-    name { 'Credit Card' }
-    environment { 'test' }
-  end
-
   factory :stripe_sca_payment_method, class: Spree::Gateway::StripeSCA do
     name { 'StripeSCA' }
     environment { 'test' }
     distributors { [FactoryBot.create(:stripe_account).enterprise] }
     preferred_enterprise_id { distributors.first.id }
+  end
+
+  factory :distributor_payment_method, class: DistributorPaymentMethod do
+    distributor { FactoryBot.create(:distributor_enterprise) }
+    payment_method { FactoryBot.create(:payment_method) }
   end
 end

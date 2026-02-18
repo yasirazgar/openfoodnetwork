@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
   As an Administrator
   I want to manage relationships between users and enterprises
 ' do
@@ -23,6 +23,7 @@ create(:enterprise)
       create(:enterprise_role, user: u2, enterprise: e4)
 
       # When I go to the roles page
+      scroll_to(:bottom)
       click_link 'Users'
       click_link 'Roles'
 
@@ -64,7 +65,7 @@ create(:enterprise)
 
         # Then I should see an error message
         expect(page).to have_content "That role is already present."
-      end.to change(EnterpriseRole, :count).by(0)
+      end.to change { EnterpriseRole.count }.by(0)
     end
 
     it "deleting a relationship" do
@@ -140,7 +141,7 @@ create(:enterprise)
         within 'table.managers' do
           within "tr#manager-#{user1.id}" do
             expect(page).to have_css 'i.owner'
-            expect(page).to have_no_css 'i.contact'
+            expect(page).not_to have_css 'i.contact'
           end
           within "tr#manager-#{user2.id}" do
             expect(page).to have_css 'i.contact'
@@ -149,7 +150,7 @@ create(:enterprise)
       end
 
       xit "can invite unregistered users to be managers" do
-        find('a.button.help-modal').click
+        find('a.button.modal').click
         expect(page).to have_css '#invite-manager-modal'
 
         within '#invite-manager-modal' do
@@ -179,6 +180,7 @@ create(:enterprise)
   private
 
   def navigate_to_enterprise_users
+    scroll_to(:bottom)
     within ".side_menu" do
       click_link "Users"
     end

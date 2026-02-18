@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe Spree::Admin::OrdersController, type: :controller do
+RSpec.describe Spree::Admin::OrdersController do
   describe "#edit" do
     let!(:order) { create(:order_with_totals_and_distribution, ship_address: create(:address)) }
 
@@ -24,7 +22,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         spree_get :edit, id: order
 
-        expect(response.body).to_not match adjustment.label
+        expect(response.body).not_to match adjustment.label
       end
     end
   end
@@ -47,7 +45,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         spree_put :update, params
 
-        expect(response.status).to eq 302
+        expect(response).to have_http_status :found
       end
 
       context "recalculating fees and taxes" do
@@ -75,7 +73,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
         let!(:exchange) {
-          create(:exchange, incoming: true, sender: variant1.product.supplier,
+          create(:exchange, incoming: true, sender: variant1.supplier,
                             receiver: order_cycle.coordinator, variants: [variant1, variant2],
                             enterprise_fees: [enterprise_fee])
         }
@@ -85,7 +83,7 @@ describe Spree::Admin::OrdersController, type: :controller do
                                                        order_cycle:)
           order.reload.line_items.first.update(variant_id: variant1.id)
           order.line_items.last.update(variant_id: variant2.id)
-          break unless order.next! while !order.completed?
+          Orders::WorkflowService.new(order).complete!
           order.recreate_all_fees!
           order
         end
@@ -204,7 +202,7 @@ describe Spree::Admin::OrdersController, type: :controller do
                 order.reload
 
                 expect(order.all_adjustments.tax.count).to eq 2
-                expect(order.all_adjustments.tax).to_not include legacy_tax_adjustment
+                expect(order.all_adjustments.tax).not_to include legacy_tax_adjustment
                 expect(order.additional_tax_total).to eq 0.5
               end
             end
@@ -226,6 +224,17 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
       end
 
+      context "when order is shipped" do
+        it "redirects to order details page with flash error" do
+          order.update(shipment_state: :ready)
+          order.update(shipment_state: :shipped)
+          spree_put :update, { id: order }
+
+          expect(flash[:error]).to eq "Cannot add item to shipped order"
+          expect(response).to redirect_to spree.edit_admin_order_path(order)
+        end
+      end
+
       context "with line items" do
         let!(:distributor){ create(:distributor_enterprise) }
         let!(:shipment){ create(:shipment) }
@@ -234,7 +243,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         }
 
         before do
-          line_item.product.supplier = distributor
+          line_item.variant.supplier = distributor
           order.shipments << shipment
           order.line_items << line_item
           distributor.shipping_methods << shipment.shipping_method
@@ -290,7 +299,62 @@ describe Spree::Admin::OrdersController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { order.distributor.owner } }
 
       it "should allow access" do
-        expect(response.status).to eq 200
+        expect(response).to have_http_status :ok
+      end
+    end
+  end
+
+  describe "#fire" do
+    let(:order) { create(:completed_order_with_totals) }
+
+    before do
+      controller_login_as_admin
+
+      allow(Spree::Order).to receive_message_chain(:includes, :find_by!).and_return(order)
+      @request.env['HTTP_REFERER'] = spree.edit_admin_order_path(order)
+    end
+
+    %w{cancel resume}.each do |event|
+      it "calls allowed event #{event}" do
+        expect(order).to receive(:public_send).with(event)
+
+        spree_get :fire, { id: order, e: event }
+
+        expect(response).to redirect_to spree.edit_admin_order_path(order)
+      end
+    end
+
+    it "returns a success flash message" do
+      spree_get :fire, { id: order, e: "cancel" }
+
+      expect(flash[:success]).to eq "Order Updated"
+    end
+
+    it "amends back order" do
+      expect(AmendBackorderJob).to receive(:perform_later)
+
+      spree_get :fire, { id: order, e: "cancel" }
+    end
+
+    context "with a non allowed event" do
+      it "returns an error" do
+        expect(order).not_to receive(:public_send).with("state")
+
+        spree_get :fire, { id: order, e: "state" }
+
+        expect(flash[:error]).to eq "Can not perform this operation"
+        expect(response).to redirect_to spree.edit_admin_order_path(order)
+      end
+    end
+
+    context "when a GatewayError is raised" do
+      it "returns an error flash message" do
+        allow(order).to receive(:public_send).and_raise(Spree::Core::GatewayError, "Some error")
+
+        spree_get :fire, { id: order, e: "cancel" }
+
+        expect(flash[:error]).to eq "Some error"
+        expect(response).to redirect_to spree.edit_admin_order_path(order)
       end
     end
   end

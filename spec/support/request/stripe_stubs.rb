@@ -44,7 +44,7 @@ module StripeStubs
   # Stubs the customers call to both the main stripe account and the connected account
   def stub_customers_post_request(email:, response: {}, stripe_account_header: false)
     stub = stub_request(:post, "https://api.stripe.com/v1/customers")
-      .with(body: { email: })
+      .with(body: { expand: ["sources"], email: })
     stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
     stub.to_return(customers_response_mock(response))
   end
@@ -69,7 +69,7 @@ module StripeStubs
 
   def stub_add_metadata_request(payment_method: "pm_456", response: {})
     stub = stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{payment_method}")
-    stub = stub.with(body: { metadata: { "ofn-clone": true } })
+    stub = stub.with(body: { metadata: { 'ofn-clone': true } })
     stub = stub.with(
       headers: { 'Stripe-Account' => 'abc123' }
     )
