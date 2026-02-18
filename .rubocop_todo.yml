@@ -9,6 +9,9 @@
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: RequireParenthesesForMethodChains.
+Lint/Debugger:
+  Severity: error
+
 Lint/AmbiguousRange:
   Exclude:
     - 'app/models/concerns/permalink_generator.rb'
