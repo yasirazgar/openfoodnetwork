@@ -17,7 +17,7 @@ echo "::group:: Running prettier with reviewdog 🐶 ..."
       -efm="%Z[error]%r" \
       -efm="%-G%r" \
       -name="prettier" \
-      -reporter="github-pr-annotations" \
+      -reporter="github-annotations" \
       -filter-mode="nofilter" \
       -fail-level="any" \
       -level="error" \
