@@ -126,17 +126,40 @@ jobs:
             echo "🔍 DEBUG: Using github.sha for pull_request: ${TARGET_SHA}"
           fi
 
-          # Find this check run to update it
-          echo "🔍 DEBUG: Looking for check runs on commit: ${TARGET_SHA}"
-          CHECK_RUNS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                           -H "Accept: application/vnd.github.v3+json" \
-                           "https://api.github.com/repos/${{ github.repository }}/commits/${TARGET_SHA}/check-runs")
+          # Find this check run to update it with pagination support
+          echo "🔍 DEBUG: Looking for 'rubocop' check run on commit: ${TARGET_SHA}"
 
-          echo "🔍 DEBUG: Check runs response (first 1000 chars):"
-          echo "${CHECK_RUNS}" | head -c 1000
+          CHECK_RUN_ID=""
+          PAGE=1
 
-          CHECK_RUN_ID=$(echo "${CHECK_RUNS}" | grep -A10 -B10 '"name":"RuboCop Lint"' | grep '"id"' | head -1 | sed 's/.*"id": *\([0-9]*\).*/\1/')
-          echo "🔍 DEBUG: Extracted check run ID: ${CHECK_RUN_ID}"
+          while [ -z "${CHECK_RUN_ID}" ] && [ ${PAGE} -le 5 ]; do
+            echo "🔍 DEBUG: Fetching page ${PAGE} of check runs..."
+
+            CHECK_RUNS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                             -H "Accept: application/vnd.github.v3+json" \
+                             "https://api.github.com/repos/${{ github.repository }}/commits/${TARGET_SHA}/check-runs?per_page=100&page=${PAGE}")
+
+            # Look for rubocop check run
+            CHECK_RUN_ID=$(echo "${CHECK_RUNS}" | grep -A10 -B10 '"name":"rubocop"' | grep '"id"' | head -1 | sed 's/.*"id": *\([0-9]*\).*/\1/')
+
+            if [ -n "${CHECK_RUN_ID}" ]; then
+              echo "✅ DEBUG: Found rubocop check run ID: ${CHECK_RUN_ID} on page ${PAGE}"
+              break
+            fi
+
+            # Check if there are more pages
+            TOTAL_COUNT=$(echo "${CHECK_RUNS}" | grep '"total_count"' | sed 's/.*"total_count": *\([0-9]*\).*/\1/')
+            CURRENT_COUNT=$((PAGE * 100))
+
+            echo "🔍 DEBUG: Page ${PAGE} - Total: ${TOTAL_COUNT}, Current: ${CURRENT_COUNT}"
+
+            if [ "${CURRENT_COUNT}" -ge "${TOTAL_COUNT}" ]; then
+              echo "🔍 DEBUG: No more pages to check"
+              break
+            fi
+
+            PAGE=$((PAGE + 1))
+          done
 
           if [ -n "${CHECK_RUN_ID}" ]; then
             echo "🔍 DEBUG: Updating check run ${CHECK_RUN_ID} with approval info..."
