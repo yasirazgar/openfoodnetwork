@@ -17,7 +17,7 @@ env:
   RAILS_NEXT: 0
 jobs:
   rubocop:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: >-
       ${{ github.event_name == 'pull_request' ||
           (github.event_name == 'issue_comment' &&
@@ -33,13 +33,7 @@ jobs:
       statuses: read
       issues: read
       pull-requests: read
-      id-token: write
-
-    container:
-      image: ghcr.io/introhive/introhive:master
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      id-token: write    
 
     steps:
       - name: Check approval comment (from other user)
@@ -120,40 +114,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Ruby version for cache
-        if: github.event_name == 'pull_request'
-        id: gem-cache-version
-        run: |
-          echo "ruby_version=${RUBY_VERSION}" >> "$GITHUB_OUTPUT"
-
-      - name: Update repo permissions
-        if: github.event_name == 'pull_request'
-        run: |
-          git config --global --add safe.directory /__w/introhive/introhive
-
-      - name: Cache ruby gems
-        if: github.event_name == 'pull_request'
-        uses: actions/cache@v4
-        id: gem-cache
-        env:
-          cache-name: gem-cache
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          path: vendor/bundle
-          key:  ${{env.REPO_RUNTIME}}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.gem-cache-version.outputs.ruby_version }}-${{ env.RAILS_NEXT }}-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{env.REPO_RUNTIME}}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.gem-cache-version.outputs.ruby_version }}-${{ env.RAILS_NEXT }}-
-
-      - name: Install gems
-        if: github.event_name == 'pull_request'
-        env:
-          BUNDLE_GITHUB__COM: "oauth2:${{ secrets.PRIVATE_REPOS_TOKEN }}"
-        run: |
-          gem install bundler:2.6.8
-          bundle config --local deployment true
-          bundle config set path 'vendor/bundle'
-          bundle config set without 'development production console'
-          bundle install --jobs 4
-          bundle clean
+          bundler-cache: true
 
       - name: Run RuboCop only on changed lines
         if: github.event_name == 'pull_request'
