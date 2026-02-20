@@ -7,7 +7,13 @@ require 'open_food_network/order_cycle_permissions'
 class BackorderUpdater
   # Given an OFN order was created, changed or cancelled,
   # we re-calculate how much to order in for every variant.
-  def amend_backorder(order)
+  def amend_backorder(order, unused)
+    binding.pry
+
+
+
+
+    
     order_cycle = order.order_cycle
     distributor = order.distributor
     variants = distributed_linked_variants(order_cycle, distributor)
