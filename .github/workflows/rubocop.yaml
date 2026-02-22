@@ -1,12 +1,5 @@
 name: RuboCop Lint
-on:
-  workflow_dispatch:
-    inputs:
-      action:
-        description: 'Action to perform'
-        required: false
-        default: 'lint'
-        type: string
+on:  
   pull_request:
     types: [opened, reopened, synchronize]
   issue_comment:
@@ -17,14 +10,11 @@ env:
   RAILS_NEXT: 0
 jobs:
   rubocop:
-    runs-on: ubuntu-22.04
-    if: >-
-      ${{ github.event_name == 'pull_request' ||
-          (github.event_name == 'issue_comment' &&
-           github.event.issue.pull_request &&
-           startsWith(github.event.comment.body, '/linters approve')) ||
-          (github.event_name == 'workflow_dispatch' &&
-           contains(github.event.inputs.action, 'linters approve')) }}
+    runs-on: ubuntu-latest
+    # Only run on PRs or on issue_comment events that are on PRs
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request)
 
     permissions:
       packages: read
@@ -36,155 +26,15 @@ jobs:
       id-token: write    
 
     steps:
-      - name: Check approval comment (from other user)
+      - name: Linter Manual Approval
         id: check-approval
-        if: github.event_name == 'issue_comment'
+        if: |
+          github.event_name == 'issue_comment' &&
+          contains(github.event.comment.body, 'linters approve')
         run: |
-          echo "🔍 DEBUG: Processing issue comment approval"
-          echo "🔍 DEBUG: Comment body: '${{ github.event.comment.body }}'"
-          echo "🔍 DEBUG: Comment user: ${{ github.event.comment.user.login }}"
-
-          # Get PR details to find the creator
-          PR_URL="${{ github.event.issue.pull_request.url }}"
-          echo "🔍 DEBUG: Fetching PR data from: ${PR_URL}"
-
-          PR_DATA=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                         -H "Accept: application/vnd.github.v3+json" \
-                         "${PR_URL}")
-
-          echo "🔍 DEBUG: PR data response (first 500 chars):"
-          echo "${PR_DATA}" | head -c 500
-
-          # Extract PR creator and head SHA
-          PR_CREATOR=$(echo "${PR_DATA}" | grep -A 10 '"user"' | grep '"login"' | head -n 1 | sed 's/.*"login": *"\([^"]*\)".*/\1/')
-          PR_HEAD_SHA=$(echo "${PR_DATA}" | grep -A 10 '"head"' | grep '"sha"' | head -n 1 | sed 's/.*"sha": *"\([^"]*\)".*/\1/')
-          COMMENT_USER="${{ github.event.comment.user.login }}"
-
-          echo "🔍 DEBUG: PR Creator extracted: ${PR_CREATOR}"
-          echo "🔍 DEBUG: PR Head SHA extracted: ${PR_HEAD_SHA}"
-          echo "🔍 DEBUG: Comment User: ${COMMENT_USER}"
-
-          if [ "${COMMENT_USER}" = "${PR_CREATOR}" ]; then
-            echo "❌ DEBUG: Self-approval not allowed (${COMMENT_USER} == ${PR_CREATOR})"
-            exit 1
-          else
-            echo "✅ DEBUG: Valid approval from different user"
-            echo "approved=true" >> "$GITHUB_OUTPUT"
-            echo "approver=${COMMENT_USER}" >> "$GITHUB_OUTPUT"
-            echo "pr_head_sha=${PR_HEAD_SHA}" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Check workflow dispatch approval
-        id: dispatch-approval
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          echo "🔍 DEBUG: Workflow dispatch triggered"
-          echo "🔍 DEBUG: Action input: '${{ github.event.inputs.action }}'"
-          echo "🔍 DEBUG: Commit SHA input: '${{ github.event.inputs.commit_sha }}'"
-
-          # Check if this is an approval dispatch (either by action text or commit SHA)
-          if [[ "${{ github.event.inputs.action }}" == *"linters approve"* ]] || [[ -n "${{ github.event.inputs.commit_sha }}" ]]; then
-            echo "✅ DEBUG: Workflow dispatch approval detected"
-            echo "approved=true" >> "$GITHUB_OUTPUT"
-            echo "approver=${{ github.actor }}" >> "$GITHUB_OUTPUT"
-
-            # Use provided commit SHA or default to current
-            DISPATCH_SHA="${{ github.event.inputs.commit_sha || github.sha }}"
-            echo "dispatch_sha=${DISPATCH_SHA}" >> "$GITHUB_OUTPUT"
-            echo "🔍 DEBUG: Workflow dispatch targeting SHA: ${DISPATCH_SHA}"
-          else
-            echo "❌ DEBUG: Regular workflow dispatch, not an approval"
-            echo "approved=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Set regular PR mode
-        id: pr-mode
-        if: github.event_name == 'pull_request'
-        run: |
-          echo "approved=false" >> "$GITHUB_OUTPUT"
-
-      - name: RuboCop approval success
-        if: steps.check-approval.outputs.approved == 'true' || steps.dispatch-approval.outputs.approved == 'true'
-        run: |
-          # Determine approver from whichever step ran
-          APPROVER="${{ steps.check-approval.outputs.approver || steps.dispatch-approval.outputs.approver }}"
-          echo "🔍 DEBUG: Approver determined as: ${APPROVER}"
-
-          # Determine the correct SHA to look for check runs
-          if [ "${{ github.event_name }}" = "issue_comment" ]; then
-            TARGET_SHA="${{ steps.check-approval.outputs.pr_head_sha }}"
-            echo "🔍 DEBUG: Using PR head SHA for issue_comment: ${TARGET_SHA}"
-          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            TARGET_SHA="${{ steps.dispatch-approval.outputs.dispatch_sha }}"
-            echo "🔍 DEBUG: Using dispatch SHA for workflow_dispatch: ${TARGET_SHA}"
-          else
-            TARGET_SHA="${{ github.sha }}"
-            echo "🔍 DEBUG: Using github.sha for pull_request: ${TARGET_SHA}"
-          fi
-
-          # Find this check run to update it with pagination support
-          echo "🔍 DEBUG: Looking for 'rubocop' check run on commit: ${TARGET_SHA}"
-
-          CHECK_RUN_ID=""
-          PAGE=1
-
-          while [ -z "${CHECK_RUN_ID}" ] && [ ${PAGE} -le 5 ]; do
-            echo "🔍 DEBUG: Fetching page ${PAGE} of check runs..."
-
-            CHECK_RUNS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                             -H "Accept: application/vnd.github.v3+json" \
-                             "https://api.github.com/repos/${{ github.repository }}/commits/${TARGET_SHA}/check-runs?per_page=100&page=${PAGE}")
-
-            # Look for rubocop check run
-            CHECK_RUN_ID=$(echo "${CHECK_RUNS}" | grep -A10 -B10 '"name":"rubocop"' | grep '"id"' | head -1 | sed 's/.*"id": *\([0-9]*\).*/\1/')
-
-            if [ -n "${CHECK_RUN_ID}" ]; then
-              echo "✅ DEBUG: Found rubocop check run ID: ${CHECK_RUN_ID} on page ${PAGE}"
-              break
-            fi
-
-            # Check if there are more pages
-            TOTAL_COUNT=$(echo "${CHECK_RUNS}" | grep '"total_count"' | sed 's/.*"total_count": *\([0-9]*\).*/\1/')
-            CURRENT_COUNT=$((PAGE * 100))
-
-            echo "🔍 DEBUG: Page ${PAGE} - Total: ${TOTAL_COUNT}, Current: ${CURRENT_COUNT}"
-
-            if [ "${CURRENT_COUNT}" -ge "${TOTAL_COUNT}" ]; then
-              echo "🔍 DEBUG: No more pages to check"
-              break
-            fi
-
-            PAGE=$((PAGE + 1))
-          done
-
-          if [ -n "${CHECK_RUN_ID}" ]; then
-            echo "🔍 DEBUG: Updating check run ${CHECK_RUN_ID} with approval info..."
-
-            # Update check run with approval info
-            UPDATE_RESPONSE=$(curl -s -X PATCH \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              "https://api.github.com/repos/${{ github.repository }}/check-runs/${CHECK_RUN_ID}" \
-              -d "{
-                \"conclusion\": \"success\",
-                \"output\": {
-                  \"title\": \"✅ RuboCop approved by ${APPROVER}\",
-                  \"summary\": \"RuboCop check manually approved by @${APPROVER}\\n\\nLinting was bypassed - ensure code quality through manual review.\"
-                }
-              }")
-
-            echo "🔍 DEBUG: Update response:"
-            echo "${UPDATE_RESPONSE}"
-
-            if echo "${UPDATE_RESPONSE}" | grep -q '"conclusion":"success"'; then
-              echo "✅ Successfully updated check run!"
-            else
-              echo "❌ Failed to update check run"
-            fi
-          else
-            echo "❌ DEBUG: Could not find RuboCop Lint check run ID"
-          fi
+          echo "✅ Linters manually approved via comment by @${{ github.event.comment.user.login }}"
+          echo "Comment: ${{ github.event.comment.html_url }}"
+          exit 0
 
       - name: Add reaction to approval comment
         if: steps.check-approval.outputs.approved == 'true'
