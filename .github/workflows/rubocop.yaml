@@ -145,19 +145,14 @@ jobs:
             # Look for failed rubocop check run (skip in_progress ones)
             echo "🔍 DEBUG: Looking for failed rubocop check run..."
 
-            # Extract all rubocop check runs and find the failed one
-            RUBOCOP_CHECKS=$(echo "${CHECK_RUNS}" | grep -A 20 '"name":"rubocop"')
-            echo "🔍 DEBUG: Found rubocop checks:"
-            echo "${RUBOCOP_CHECKS}"
+            # Find all check runs with conclusion "failure"
+            FAILED_CHECKS=$(echo "${CHECK_RUNS}" | grep -B 10 -A 5 '"conclusion":"failure"')
+            echo "🔍 DEBUG: Failed checks found:"
+            echo "${FAILED_CHECKS}" | head -c 500
 
-            # Look specifically for a rubocop check with "failure" conclusion
-            CHECK_RUN_ID=$(echo "${CHECK_RUNS}" | jq -r '.check_runs[] | select(.name == "rubocop" and .conclusion == "failure") | .id' 2>/dev/null || echo "")
-
-            # Fallback to grep if jq is not available
-            if [ -z "${CHECK_RUN_ID}" ]; then
-              echo "🔍 DEBUG: jq not available, using grep fallback..."
-              CHECK_RUN_ID=$(echo "${CHECK_RUNS}" | grep -B 5 -A 15 '"conclusion":"failure"' | grep -B 10 -A 10 '"name":"rubocop"' | grep '"id"' | head -1 | sed 's/.*"id": *\([0-9]*\).*/\1/')
-            fi
+            # From those, find the one with name "rubocop"
+            CHECK_RUN_ID=$(echo "${FAILED_CHECKS}" | grep -B 15 '"name":"rubocop"' | grep '"id"' | tail -1 | sed 's/.*"id": *\([0-9]*\).*/\1/')
+            echo "🔍 DEBUG: Extracted failed rubocop check ID: ${CHECK_RUN_ID}"
 
             if [ -n "${CHECK_RUN_ID}" ]; then
               echo "✅ DEBUG: Found rubocop check run ID: ${CHECK_RUN_ID} on page ${PAGE}"
