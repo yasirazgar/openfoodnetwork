@@ -145,13 +145,13 @@ jobs:
             # Look for failed rubocop check run (skip in_progress ones)
             echo "🔍 DEBUG: Looking for failed rubocop check run..."
 
-            # Find all check runs with conclusion "failure"
-            FAILED_CHECKS=$(echo "${CHECK_RUNS}" | grep -B 10 -A 5 '"conclusion":"failure"')
+            # Find all check runs with conclusion "failure" (handle spacing)
+            FAILED_CHECKS=$(echo "${CHECK_RUNS}" | grep -B 10 -A 5 'conclusion.*failure')
             echo "🔍 DEBUG: Failed checks found:"
             echo "${FAILED_CHECKS}" | head -c 500
 
             # From those, find the one with name "rubocop"
-            CHECK_RUN_ID=$(echo "${FAILED_CHECKS}" | grep -B 15 '"name":"rubocop"' | grep '"id"' | tail -1 | sed 's/.*"id": *\([0-9]*\).*/\1/')
+            CHECK_RUN_ID=$(echo "${FAILED_CHECKS}" | grep -B 15 'name.*rubocop' | grep '"id"' | tail -1 | sed 's/.*"id": *\([0-9]*\).*/\1/')
             echo "🔍 DEBUG: Extracted failed rubocop check ID: ${CHECK_RUN_ID}"
 
             if [ -n "${CHECK_RUN_ID}" ]; then
