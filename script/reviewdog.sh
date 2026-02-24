@@ -31,8 +31,8 @@ bundle exec rubocop \
   --fail-level info \
   | reviewdog -f="rubocop" \
       -name="rubocop" \
-      -reporter="github-pr-annotations" \
-      -filter-mode="nofilter" \
+      -reporter="github-pr-review" \
+      -filter-mode="added" \
       -level="error" \
       -fail-level="any" \
       -tee
