@@ -5,6 +5,10 @@ class ScopedChannel < ApplicationCable::Channel
     def for_id(id)
       "ScopedChannel:#{id}"
     end
+
+    def test
+      binding.pry
+    end
   end
 
   def subscribed
