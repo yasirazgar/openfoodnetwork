@@ -9,6 +9,7 @@ module Calculator
     end
 
     def compute(computable)
+      binding.pry
       case computable
       when Spree::Order
         compute_order(computable)
