@@ -24,6 +24,7 @@ module Calculator
     end
 
     def compute_order(order)
+      binding.pry
       # This legacy tax calculation applies to additional taxes only, and is no longer used.
       # In theory it should never be called any more after this has been deployed.
       # If the message below doesn't show up in Bugsnag, we can safely delete this method and all
