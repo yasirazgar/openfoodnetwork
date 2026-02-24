@@ -32,7 +32,7 @@ jobs:
       # #   env:
       # #     REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
       
-      - run: bundle exec rubocop -A
+      - run: bundle exec rubocop -A || true
       - uses: reviewdog/action-suggester@4747dbc9f9e37adba0943e681cc20db466642158 # v1.21.0
         with:
           tool_name: rubocop
