@@ -10,10 +10,9 @@ module Calculator
 
     def compute(computable)
 
-
-      if   false
-          return
-    end
+      if false
+        return
+      end
       case computable
       when Spree::Order
         compute_order(computable)
