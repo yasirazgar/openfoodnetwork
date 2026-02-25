@@ -1,8 +1,6 @@
 # OFN styleguide for rubocop-rspec
 # Because there are so many, we will disable by default, and enable rules as needed.
 
-Capybara:
-  Enabled: false
 
 RSpec:
   Enabled: false

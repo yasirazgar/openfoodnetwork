@@ -8,6 +8,10 @@ class WebhookEndpointFormComponent < ViewComponent::Base
 
   private
 
+  def test(a,b,c,d,e,f,v,g)
+    puts a
+  end
+
   attr_reader :webhooks, :webhook_type
 
   def is_webhook_payment_status?

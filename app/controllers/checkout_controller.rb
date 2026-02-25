@@ -31,6 +31,8 @@ class CheckoutController < BaseController
       check_step
     end
 
+    
+
     return if available_shipping_methods.any?
 
     flash[:error] = I18n.t('checkout.errors.no_shipping_methods_available')

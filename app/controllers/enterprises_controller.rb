@@ -41,6 +41,7 @@ class EnterprisesController < BaseController
   end
 
   def check_permalink
+    Enterprise.where("permalink=#{params[:permalink]}")
     if Enterprise.find_by permalink: params[:permalink]
       render(plain: params[:permalink], status: :conflict) && return
     end
