@@ -14,6 +14,7 @@ env: # Comment env block if you don't want to apply fixes
   APPLY_FIXES_MODE: commit # If APPLY_FIXES is used, defines if the fixes are directly committed (commit) or posted in a PR (pull_request)
   ADDITIONAL_EXCLUDED_DIRECTORIES: config,docker,fixtures,workflows
   VALIDATE_ALL_CODEBASE: false
+  RUBY_RUBOCOP_CONFIG_FILE: .rubocop.yml
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
