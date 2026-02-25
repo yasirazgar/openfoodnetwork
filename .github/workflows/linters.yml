@@ -1,11 +1,19 @@
 name: Linters
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - master
+  issue_comment:
+      types:
+        - created
 permissions:
-  contents: read # to fetch code (actions/checkout)
+  statuses: write
+  contents: read
 jobs:
   lint:
     name: reviewdog
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v3
 
@@ -25,6 +33,108 @@ jobs:
         with:
           reviewdog_version: v0.21.0
 
-      - run: ./script/reviewdog.sh
+      - id: run-rd
+        run: ./script/reviewdog.sh
+        continue-on-error: true
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
+
+      - name: create-success-status
+        if: ${{ steps.run-rd.conclusion == 'success' }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: '${{ github.event.pull_request.head.sha }}',
+              state: 'success',
+              context: 'Check Linters',
+              description: 'Linter checks passed'
+            });
+      - name: create-failure-status
+        if: ${{ steps.run-rd.conclusion == 'failure' }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: '${{ github.event.pull_request.head.sha }}',
+              state: 'failure',
+              context: 'Check Linters',
+              description: 'Linter checks failed - Please review and Fix/Approve'
+            });
+
+  approve:
+    name: Manual Approval
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, 'linters approve')
+    permissions:
+      statuses: write
+      contents: read
+      issues: write
+      pull-requests: read
+    steps:
+      - name: Check approval comment
+        id: check-approval
+        run: |
+          echo "🔍 DEBUG: Processing linters approval comment"
+          echo "🔍 DEBUG: Comment body: '${{ github.event.comment.body }}'"
+          echo "🔍 DEBUG: Comment user: ${{ github.event.comment.user.login }}"
+
+          # Get PR details to find the head SHA
+          PR_URL="${{ github.event.issue.pull_request.url }}"
+          echo "🔍 DEBUG: Fetching PR data from: ${PR_URL}"
+
+          PR_DATA=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                         -H "Accept: application/vnd.github.v3+json" \
+                         "${PR_URL}")
+
+          # Extract PR head SHA
+          PR_HEAD_SHA=$(echo "${PR_DATA}" | grep -A 10 '"head"' | grep '"sha"' | head -n 1 | sed 's/.*"sha": *"\([^"]*\)".*/\1/')
+          COMMENT_USER="${{ github.event.comment.user.login }}"
+
+          echo "🔍 DEBUG: PR Head SHA: ${PR_HEAD_SHA}"
+          echo "🔍 DEBUG: Comment User: ${COMMENT_USER}"
+
+          echo "✅ Processing approval"
+          echo "pr_head_sha=${PR_HEAD_SHA}" >> "$GITHUB_OUTPUT"
+          echo "approver=${COMMENT_USER}" >> "$GITHUB_OUTPUT"
+
+      - name: Create success status
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: '${{ steps.check-approval.outputs.pr_head_sha }}',
+              state: 'success',
+              context: 'Check Linters',
+              description: 'Linters manually approved by @${{ steps.check-approval.outputs.approver }}'
+            });
+
+      - name: Add reaction to approval comment
+        run: |
+          echo "🔍 DEBUG: Adding rocket reaction to comment"
+          REACTION_RESPONSE=$(curl -s -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" \
+            -d '{"content": "rocket"}')
+
+          echo "🔍 DEBUG: Reaction API response:"
+          echo "${REACTION_RESPONSE}"
+
+          if echo "${REACTION_RESPONSE}" | grep -q '"content":"rocket"'; then
+            echo "✅ Successfully added rocket reaction!"
+          else
+            echo "❌ Failed to add rocket reaction"
+          fi
