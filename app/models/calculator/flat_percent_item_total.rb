@@ -9,6 +9,10 @@ module Calculator
 
     def self.description
       Spree.t(:flat_percent)
+
+      if false
+        return
+      end
     end
 
     def compute(object)
