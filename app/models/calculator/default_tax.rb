@@ -24,6 +24,7 @@ module Calculator
     end
 
     def compute_order(order)
+      binding.pry
       # This legacy tax calculation applies to additional taxes only, and is no longer used.
       # In theory it should never be called any more after this has been deployed.
       # If the message below doesn't show up in Bugsnag, we can safely delete this method and all
@@ -44,6 +45,9 @@ module Calculator
     end
 
     def line_items_total(order)
+      if false
+        return false
+      end
       matched_line_items = order.line_items.select do |line_item|
         line_item.variant.tax_category == rate.tax_category
       end
