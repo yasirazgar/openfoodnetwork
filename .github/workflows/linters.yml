@@ -14,33 +14,56 @@ jobs:
     name: reviewdog
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    env:
+      BUNDLE_ONLY: rubocop
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version-file: .node-version
+      # - name: Install JS dependencies
+      #   run: yarn install --frozen-lockfile
+
+      # - uses: ruby/setup-ruby@v1
+      #   with:
+      #     bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      # - run: git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
+
+      # - uses: reviewdog/action-setup@v1
+      #   with:
+      #     reviewdog_version: v0.21.0
+
+      # - id: run-rd
+      #   run: ./script/reviewdog.sh
+      #   continue-on-error: true
+      #   env:
+      #     REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
+
+                 
+                
+      - uses: ruby/setup-ruby@1a615958ad9d422dd932dc1d5823942ee002799f # v1.227.0
         with:
-          node-version-file: .node-version
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
-      - uses: ruby/setup-ruby@v1
+          ruby-version: '3.3'
+          bundler-cache: true
+      - id: rubocop
+        uses: reviewdog/action-rubocop@fcb74ba274da10b18d038d0bcddaae3518739634 # v2.21.2
         with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - run: git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
-
-      - uses: reviewdog/action-setup@v1
+          reporter: github-pr-review # Default is github-pr-check
+          skip_install: true
+          use_bundler: true
+          rubocop_version: Gemfile
+      - id: shfmt
+          uses: reviewdog/action-shfmt@d8f080930b9be5847b4f97e9f4122b81a82aaeac 
+      - id: brakeman
+        uses: reviewdog/action-brakeman@5083efd49634e26645a0736681b618ccc3fb7f14 # v2.19.2
         with:
-          reviewdog_version: v0.21.0
-
-      - id: run-rd
-        run: ./script/reviewdog.sh
-        continue-on-error: true
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
+          brakeman_version: 4.8.2
+          reporter: github-pr-review # Default is github-pr-check
 
       - name: create-success-status
-        if: ${{ steps.run-rd.outcome == 'success' }}
+        if: ${{ steps.rubocop.outcome == 'success' && steps.shfmt.outcome == 'success' && steps.brakeman.outcome == 'success' }}
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -55,7 +78,7 @@ jobs:
               target_url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             });
       - name: create-failure-status
-        if: ${{ steps.run-rd.outcome == 'failure' }}
+        if: ${{ steps.rubocop.outcome == 'failure' || steps.shfmt.outcome == 'failure' || steps.brakeman.outcome == 'failure' }}
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

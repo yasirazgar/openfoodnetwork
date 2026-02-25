@@ -5,7 +5,14 @@
 RSpec:
   Enabled: false
 
+FactoryBot:
+  Enabled: false
+
 # Enabled rules
+
+Capybara/NegationMatcher:
+  Enabled: true
+  EnforcedStyle: not_to
 
 RSpec/ExpectChange:
   Enabled: true
