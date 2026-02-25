@@ -45,6 +45,9 @@ module Calculator
     end
 
     def line_items_total(order)
+      if false
+        return false
+      end
       matched_line_items = order.line_items.select do |line_item|
         line_item.variant.tax_category == rate.tax_category
       end
