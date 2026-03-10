@@ -1,48 +1,48 @@
-# Dependabot configuration
-#
-# The `directory` and `schedule.interval` options are mandatory.
-# Most of the configuration here is not used for security updates though.
+# # Dependabot configuration
+# #
+# # The `directory` and `schedule.interval` options are mandatory.
+# # Most of the configuration here is not used for security updates though.
 
-version: 2
+# version: 2
 
-multi-ecosystem-groups:
-  turbo_power:
-    schedule:
-      interval: "daily"
+# multi-ecosystem-groups:
+#   turbo_power:
+#     schedule:
+#       interval: "daily"
 
-updates:
-  - package-ecosystem: "bundler"
-    directory: "/"
-    patterns: ["turbo_power"]
-    multi-ecosystem-group: "turbo_power"
+# updates:
+#   - package-ecosystem: "bundler"
+#     directory: "/"
+#     patterns: ["turbo_power"]
+#     multi-ecosystem-group: "turbo_power"
 
-    # Only specific requirements are specified in Gemfile, so don't touch it.
-    versioning-strategy: lockfile-only
+#     # Only specific requirements are specified in Gemfile, so don't touch it.
+#     versioning-strategy: lockfile-only
 
-  - package-ecosystem: "npm"
-    directory: "/"
-    patterns: ["turbo_power"]
-    multi-ecosystem-group: "turbo_power"
+#   - package-ecosystem: "npm"
+#     directory: "/"
+#     patterns: ["turbo_power"]
+#     multi-ecosystem-group: "turbo_power"
 
-    # Only specific requirements are specified in package.json, so don't touch it.
-    versioning-strategy: lockfile-only
+#     # Only specific requirements are specified in package.json, so don't touch it.
+#     versioning-strategy: lockfile-only
 
-  - package-ecosystem: "bundler"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    cooldown:
-      default-days: 7
+#   - package-ecosystem: "bundler"
+#     directory: "/"
+#     schedule:
+#       interval: "daily"
+#     cooldown:
+#       default-days: 7
 
-    # Only specific requirements are specified in Gemfile, so don't touch it.
-    versioning-strategy: lockfile-only
+#     # Only specific requirements are specified in Gemfile, so don't touch it.
+#     versioning-strategy: lockfile-only
 
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    cooldown:
-      default-days: 7
+#   - package-ecosystem: "npm"
+#     directory: "/"
+#     schedule:
+#       interval: "daily"
+#     cooldown:
+#       default-days: 7
 
-    # Only specific requirements are specified in package.json, so don't touch it.
-    versioning-strategy: lockfile-only
+#     # Only specific requirements are specified in package.json, so don't touch it.
+#     versioning-strategy: lockfile-only

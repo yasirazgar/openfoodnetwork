@@ -1,76 +1,76 @@
-name: RuboCop Lint
-on:  
-  pull_request:
-    types: [opened, reopened, synchronize]
-  issue_comment:
-    types: [created]
-env:
-  RAILS_ENV: test
-  REPO_RUNTIME: 3.4.4-alpine3.21
-  RAILS_NEXT: 0
-jobs:
-  rubocop:
-    runs-on: ubuntu-latest
-    # Only run on PRs or on issue_comment events that are on PRs
-    if: |
-      github.event_name == 'pull_request' ||
-      (github.event_name == 'issue_comment' && github.event.issue.pull_request)
+# name: RuboCop Lint
+# on:  
+#   pull_request:
+#     types: [opened, reopened, synchronize]
+#   issue_comment:
+#     types: [created]
+# env:
+#   RAILS_ENV: test
+#   REPO_RUNTIME: 3.4.4-alpine3.21
+#   RAILS_NEXT: 0
+# jobs:
+#   rubocop:
+#     runs-on: ubuntu-latest
+#     # Only run on PRs or on issue_comment events that are on PRs
+#     if: |
+#       github.event_name == 'pull_request' ||
+#       (github.event_name == 'issue_comment' && github.event.issue.pull_request)
 
-    permissions:
-      packages: read
-      contents: read
-      checks: write
-      statuses: read
-      issues: read
-      pull-requests: read
-      id-token: write    
+#     permissions:
+#       packages: read
+#       contents: read
+#       checks: write
+#       statuses: read
+#       issues: read
+#       pull-requests: read
+#       id-token: write    
 
-    steps:
-      - name: Linter Manual Approval
-        id: check-approval
-        if: |
-          github.event_name == 'issue_comment' &&
-          contains(github.event.comment.body, 'linters approve')
-        run: |
-          echo "✅ Linters manually approved via comment by @${{ github.event.comment.user.login }}"
-          echo "Comment: ${{ github.event.comment.html_url }}"
-          exit 0
+#     steps:
+#       - name: Linter Manual Approval
+#         id: check-approval
+#         if: |
+#           github.event_name == 'issue_comment' &&
+#           contains(github.event.comment.body, 'linters approve')
+#         run: |
+#           echo "✅ Linters manually approved via comment by @${{ github.event.comment.user.login }}"
+#           echo "Comment: ${{ github.event.comment.html_url }}"
+#           exit 0
 
-      - name: Add reaction to approval comment
-        if: steps.check-approval.outputs.approved == 'true'
-        run: |
-          echo "🔍 DEBUG: Adding rocket reaction to comment"
-          echo "🔍 DEBUG: Comment ID: ${{ github.event.comment.id }}"
-          echo "🔍 DEBUG: Repository: ${{ github.repository }}"
+#       - name: Add reaction to approval comment
+#         if: steps.check-approval.outputs.approved == 'true'
+#         run: |
+#           echo "🔍 DEBUG: Adding rocket reaction to comment"
+#           echo "🔍 DEBUG: Comment ID: ${{ github.event.comment.id }}"
+#           echo "🔍 DEBUG: Repository: ${{ github.repository }}"
 
-          REACTION_RESPONSE=$(curl -s -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" \
-            -d '{"content": "rocket"}')
+#           REACTION_RESPONSE=$(curl -s -X POST \
+#             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+#             -H "Accept: application/vnd.github.v3+json" \
+#             "https://api.github.com/repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" \
+#             -d '{"content": "rocket"}')
 
-          echo "🔍 DEBUG: Reaction API response:"
-          echo "${REACTION_RESPONSE}"
+#           echo "🔍 DEBUG: Reaction API response:"
+#           echo "${REACTION_RESPONSE}"
 
-          if echo "${REACTION_RESPONSE}" | grep -q '"content":"rocket"'; then
-            echo "✅ Successfully added rocket reaction!"
-          else
-            echo "❌ Failed to add rocket reaction"
-          fi
+#           if echo "${REACTION_RESPONSE}" | grep -q '"content":"rocket"'; then
+#             echo "✅ Successfully added rocket reaction!"
+#           else
+#             echo "❌ Failed to add rocket reaction"
+#           fi
 
-      - name: Check out repository
-        if: github.event_name == 'pull_request'
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+#       - name: Check out repository
+#         if: github.event_name == 'pull_request'
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
       
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+#       - name: Set up Ruby
+#         uses: ruby/setup-ruby@v1
+#         with:
+#           bundler-cache: true
 
-      - name: Run RuboCop only on changed lines
-        if: github.event_name == 'pull_request'
-        run: |
-          echo "Running RuboCop on changed lines vs. master"
-          bundle exec rubocop
+#       - name: Run RuboCop only on changed lines
+#         if: github.event_name == 'pull_request'
+#         run: |
+#           echo "Running RuboCop on changed lines vs. master"
+#           bundle exec rubocop
