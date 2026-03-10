@@ -9,8 +9,7 @@ on:
 permissions:
   contents: write # to fetch code (actions/checkout)  
   pull-requests: write
-  statuses: write
-  contents: read
+  statuses: write  
 jobs:
   lint:
     name: reviewdog
