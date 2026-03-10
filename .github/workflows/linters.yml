@@ -88,7 +88,7 @@ jobs:
               repo: context.repo.repo,
               sha: '${{ steps.check-approval.outputs.pr_head_sha }}',
               state: 'success',
-              context: 'Linters / reviewdog (pull_request',
+              context: 'Linters / reviewdog (pull_request)',
               description: 'Linters manually approved by @${{ steps.check-approval.outputs.approver }}'
             });
 
