@@ -9,10 +9,7 @@ if ENV["COVERAGE"]
   require "simplecov"
   require 'simplecov-cobertura'
   SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
-  SimpleCov.formatters = [
-    SimpleCov::Formatter::CoberturaFormatter,
-    Coveralls::SimpleCov::Formatter
-  ]
+  
   SimpleCov.start 'rails' do
   
     source_in_json false
