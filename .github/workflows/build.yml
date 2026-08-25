@@ -137,328 +137,327 @@ jobs:
     - name: Coveralls Finished
       uses: coverallsapp/github-action@v2
       with:
-        parallel-finished: true
-        carryforward: "run-1,run-2"
+        parallel-finished: true        
 
-  system:
-    runs-on: ubuntu-22.04
-    services:
-      postgres: *postgres
-      redis: *redis
-    strategy:
-      fail-fast: false
-      matrix:
-        # [n] - where the n is a number of parallel jobs you want to run your tests on.
-        # Use a higher number if you have slow tests to split them between more parallel jobs.
-        # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [19]
-        # Indexes for parallel jobs (starting from zero).
-        # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-    steps:
-      - uses: actions/checkout@v6
+  # system:
+  #   runs-on: ubuntu-22.04
+  #   services:
+  #     postgres: *postgres
+  #     redis: *redis
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       # [n] - where the n is a number of parallel jobs you want to run your tests on.
+  #       # Use a higher number if you have slow tests to split them between more parallel jobs.
+  #       # Remember to update the value of the `ci_node_index` below to (0..n-1).
+  #       ci_node_total: [19]
+  #       # Indexes for parallel jobs (starting from zero).
+  #       # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
+  #       ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+  #   steps:
+  #     - uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: .node-version
-          cache: yarn
+  #     - uses: actions/setup-node@v6
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: yarn
 
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JS dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Set up database
-        run: |
-          bin/rails db:create db:schema:load
+  #     - name: Set up database
+  #       run: |
+  #         bin/rails db:create db:schema:load
 
-      - name: Compile assets
-        run: |
-          bin/rails assets:precompile
+  #     - name: Compile assets
+  #       run: |
+  #         bin/rails assets:precompile
 
-      - name: Run tests
-        env:
-          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ff2456e64c9f2aa5157eb0daf711d3c3
-          KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
-          KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
-          KNAPSACK_PRO_LOG_LEVEL: info
-          # if you use Knapsack Pro Queue Mode you must set below env variable
-          # to be able to retry CI build and run previously recorded tests
-          # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
-          KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
-          # RSpec split test files by test examples feature - it's optional
-          # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
-          #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-          KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/admin/**/*_spec.rb,spec/system/consumer/**/*_spec.rb}"
-          # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
-          RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
-          SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-        run: |
-          bin/rails knapsack_pro:rspec
+  #     - name: Run tests
+  #       env:
+  #         KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ff2456e64c9f2aa5157eb0daf711d3c3
+  #         KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+  #         KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+  #         KNAPSACK_PRO_LOG_LEVEL: info
+  #         # if you use Knapsack Pro Queue Mode you must set below env variable
+  #         # to be able to retry CI build and run previously recorded tests
+  #         # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
+  #         KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
+  #         # RSpec split test files by test examples feature - it's optional
+  #         # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
+  #         #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
+  #         KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/admin/**/*_spec.rb,spec/system/consumer/**/*_spec.rb}"
+  #         # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
+  #         RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
+  #         SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
+  #       run: |
+  #         bin/rails knapsack_pro:rspec
 
-      - name: Save SimpleCov file
-        uses: actions/upload-artifact@v7
-        with:
-          name: simplecov-chunk-system-${{ matrix.ci_node_index }}
-          path: coverage/*.*
-          retention-days: 14 # long enough to re-run one job later and still collate all results
-          if-no-files-found: ignore
-          include-hidden-files: true
+  #     - name: Save SimpleCov file
+  #       uses: actions/upload-artifact@v7
+  #       with:
+  #         name: simplecov-chunk-system-${{ matrix.ci_node_index }}
+  #         path: coverage/*.*
+  #         retention-days: 14 # long enough to re-run one job later and still collate all results
+  #         if-no-files-found: ignore
+  #         include-hidden-files: true
 
-      - name: Archive failed tests screenshots
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          name: failed-system_${{ matrix.ci_node_index }}-tests-screenshots
-          path: tmp/capybara/screenshots/*.png
-          retention-days: 7
-          if-no-files-found: ignore
+  #     - name: Archive failed tests screenshots
+  #       if: failure()
+  #       uses: actions/upload-artifact@v7
+  #       with:
+  #         name: failed-system_${{ matrix.ci_node_index }}-tests-screenshots
+  #         path: tmp/capybara/screenshots/*.png
+  #         retention-days: 7
+  #         if-no-files-found: ignore
 
-      - name: Archive debug log files
-        if: runner.debug
-        uses: actions/upload-artifact@v7
-        with:
-          name: failed-system_${{ matrix.ci_node_index }}-tests-logs
-          path: log/*
-          retention-days: 7
-          if-no-files-found: ignore
+  #     - name: Archive debug log files
+  #       if: runner.debug
+  #       uses: actions/upload-artifact@v7
+  #       with:
+  #         name: failed-system_${{ matrix.ci_node_index }}-tests-logs
+  #         path: log/*
+  #         retention-days: 7
+  #         if-no-files-found: ignore
 
-  engines:
-    runs-on: ubuntu-22.04
-    services:
-      postgres: *postgres
-      redis: *redis
-    strategy:
-      fail-fast: false
-      matrix:
-        # [n] - where the n is a number of parallel jobs you want to run your tests on.
-        # Use a higher number if you have slow tests to split them between more parallel jobs.
-        # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [2]
-        # Indexes for parallel jobs (starting from zero).
-        # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1]
-    steps:
-      - uses: actions/checkout@v6
+  # engines:
+  #   runs-on: ubuntu-22.04
+  #   services:
+  #     postgres: *postgres
+  #     redis: *redis
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       # [n] - where the n is a number of parallel jobs you want to run your tests on.
+  #       # Use a higher number if you have slow tests to split them between more parallel jobs.
+  #       # Remember to update the value of the `ci_node_index` below to (0..n-1).
+  #       ci_node_total: [2]
+  #       # Indexes for parallel jobs (starting from zero).
+  #       # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
+  #       ci_node_index: [0, 1]
+  #   steps:
+  #     - uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: .node-version
-          cache: yarn
+  #     # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
+  #     - uses: actions/setup-node@v6
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: yarn
 
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JS dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Set up database
-        run: |
-          bin/rails db:create db:schema:load
+  #     - name: Set up database
+  #       run: |
+  #         bin/rails db:create db:schema:load
 
-      - name: Compile assets
-        run: |
-          bin/rails assets:precompile
+  #     - name: Compile assets
+  #       run: |
+  #         bin/rails assets:precompile
 
-      - name: Run tests
-        env:
-          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: d6ea7ceb766404ccd016c19aa2c81b1c
-          KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
-          KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
-          KNAPSACK_PRO_LOG_LEVEL: info
-          # if you use Knapsack Pro Queue Mode you must set below env variable
-          # to be able to retry CI build and run previously recorded tests
-          # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
-          # KNAPSACK_PRO_FIXED_QUEUE_SPLIT: false
-          # RSpec split test files by test examples feature - it's optional
-          # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
-          #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-          KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/serializers/**/*_spec.rb,engines/**/*_spec.rb}"
-          # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
-          RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
-          SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-        run: |
-          bin/rails knapsack_pro:rspec
+  #     - name: Run tests
+  #       env:
+  #         KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: d6ea7ceb766404ccd016c19aa2c81b1c
+  #         KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+  #         KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+  #         KNAPSACK_PRO_LOG_LEVEL: info
+  #         # if you use Knapsack Pro Queue Mode you must set below env variable
+  #         # to be able to retry CI build and run previously recorded tests
+  #         # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
+  #         # KNAPSACK_PRO_FIXED_QUEUE_SPLIT: false
+  #         # RSpec split test files by test examples feature - it's optional
+  #         # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
+  #         #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
+  #         KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/serializers/**/*_spec.rb,engines/**/*_spec.rb}"
+  #         # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
+  #         RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
+  #         SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
+  #       run: |
+  #         bin/rails knapsack_pro:rspec
 
-      - name: Save SimpleCov file
-        uses: actions/upload-artifact@v7
-        with:
-          name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
-          path: coverage/*.*
-          retention-days: 14 # long enough to re-run one job later and still collate all results
-          if-no-files-found: ignore
-          include-hidden-files: true
+  #     - name: Save SimpleCov file
+  #       uses: actions/upload-artifact@v7
+  #       with:
+  #         name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
+  #         path: coverage/*.*
+  #         retention-days: 14 # long enough to re-run one job later and still collate all results
+  #         if-no-files-found: ignore
+  #         include-hidden-files: true
 
-      - name: Archive debug log files
-        if: runner.debug
-        uses: actions/upload-artifact@v7
-        with:
-          name: failed-system_${{ matrix.ci_node_index }}-tests-logs
-          path: log/*
-          retention-days: 7
-          if-no-files-found: ignore
+  #     - name: Archive debug log files
+  #       if: runner.debug
+  #       uses: actions/upload-artifact@v7
+  #       with:
+  #         name: failed-system_${{ matrix.ci_node_index }}-tests-logs
+  #         path: log/*
+  #         retention-days: 7
+  #         if-no-files-found: ignore
 
-  test_the_rest:
-    runs-on: ubuntu-22.04
-    services:
-      postgres: *postgres
-      redis: *redis
-    strategy:
-      fail-fast: false
-      matrix:
-        # [n] - where the n is a number of parallel jobs you want to run your tests on.
-        # Use a higher number if you have slow tests to split them between more parallel jobs.
-        # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [3]
-        # Indexes for parallel jobs (starting from zero).
-        # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1, 2]
-    steps:
-      - uses: actions/checkout@v6
+  # test_the_rest:
+  #   runs-on: ubuntu-22.04
+  #   services:
+  #     postgres: *postgres
+  #     redis: *redis
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       # [n] - where the n is a number of parallel jobs you want to run your tests on.
+  #       # Use a higher number if you have slow tests to split them between more parallel jobs.
+  #       # Remember to update the value of the `ci_node_index` below to (0..n-1).
+  #       ci_node_total: [3]
+  #       # Indexes for parallel jobs (starting from zero).
+  #       # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
+  #       ci_node_index: [0, 1, 2]
+  #   steps:
+  #     - uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: .node-version
-          cache: yarn
+  #     # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
+  #     - uses: actions/setup-node@v6
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: yarn
 
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JS dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Set up database
-        run: |
-          bin/rails db:create db:schema:load
+  #     - name: Set up database
+  #       run: |
+  #         bin/rails db:create db:schema:load
 
-      - name: Compile assets
-        run: |
-          bin/rails assets:precompile
+  #     - name: Compile assets
+  #       run: |
+  #         bin/rails assets:precompile
 
-      - name: Run tests
-        env:
-          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: e3b8800198d2d89b70c7edbdd85f8fd8
-          KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
-          KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
-          KNAPSACK_PRO_LOG_LEVEL: info
-          # if you use Knapsack Pro Queue Mode you must set below env variable
-          # to be able to retry CI build and run previously recorded tests
-          # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
-          # KNAPSACK_PRO_FIXED_QUEUE_SPLIT: false
-          # RSpec split test files by test examples feature - it's optional
-          # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
-          #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-          KNAPSACK_PRO_TEST_FILE_EXCLUDE_PATTERN: "{engines/**/*_spec.rb,spec/models/**/*_spec.rb,spec/controllers/**/*_spec.rb,spec/serializers/**/*_spec.rb,spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/system/**/*_spec.rb}"
-          # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
-          RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
-          SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
-        run: |
-          bin/rails knapsack_pro:rspec
+  #     - name: Run tests
+  #       env:
+  #         KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: e3b8800198d2d89b70c7edbdd85f8fd8
+  #         KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+  #         KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+  #         KNAPSACK_PRO_LOG_LEVEL: info
+  #         # if you use Knapsack Pro Queue Mode you must set below env variable
+  #         # to be able to retry CI build and run previously recorded tests
+  #         # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
+  #         # KNAPSACK_PRO_FIXED_QUEUE_SPLIT: false
+  #         # RSpec split test files by test examples feature - it's optional
+  #         # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
+  #         #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
+  #         KNAPSACK_PRO_TEST_FILE_EXCLUDE_PATTERN: "{engines/**/*_spec.rb,spec/models/**/*_spec.rb,spec/controllers/**/*_spec.rb,spec/serializers/**/*_spec.rb,spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/system/**/*_spec.rb}"
+  #         # Enable debug logging if user checked "Enable debug logging" when re-running a workflow
+  #         RAILS_LOG_LEVEL: ${{ case(runner.debug == '1', 'debug', 'fatal') }}
+  #         SPEC_OPTS: ${{ case(runner.debug == '1', '--format documentation', '') }}
+  #       run: |
+  #         bin/rails knapsack_pro:rspec
 
-      - name: Save SimpleCov file
-        uses: actions/upload-artifact@v7
-        with:
-          name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
-          path: coverage/*.*
-          retention-days: 14 # long enough to re-run one job later and still collate all results
-          if-no-files-found: ignore
-          include-hidden-files: true
+  #     - name: Save SimpleCov file
+  #       uses: actions/upload-artifact@v7
+  #       with:
+  #         name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
+  #         path: coverage/*.*
+  #         retention-days: 14 # long enough to re-run one job later and still collate all results
+  #         if-no-files-found: ignore
+  #         include-hidden-files: true
 
-      - name: Archive debug log files
-        if: runner.debug
-        uses: actions/upload-artifact@v7
-        with:
-          name: failed-system_${{ matrix.ci_node_index }}-tests-logs
-          path: log/*
-          retention-days: 7
-          if-no-files-found: ignore
+  #     - name: Archive debug log files
+  #       if: runner.debug
+  #       uses: actions/upload-artifact@v7
+  #       with:
+  #         name: failed-system_${{ matrix.ci_node_index }}-tests-logs
+  #         path: log/*
+  #         retention-days: 7
+  #         if-no-files-found: ignore
 
-  non_knapsack_jest_karma:
-    runs-on: ubuntu-22.04
-    services:
-      postgres: *postgres
-    steps:
-      - uses: actions/checkout@v6
+  # non_knapsack_jest_karma:
+  #   runs-on: ubuntu-22.04
+  #   services:
+  #     postgres: *postgres
+  #   steps:
+  #     - uses: actions/checkout@v6
 
-      # Rails is required for the Karma rake script
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+  #     # Rails is required for the Karma rake script
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: .node-version
-          cache: yarn
+  #     - uses: actions/setup-node@v6
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: yarn
 
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JS dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Run JS tests
-        run: bin/rake karma:run
+  #     - name: Run JS tests
+  #       run: bin/rake karma:run
 
-      - name: Run jest tests
-        run: yarn jest
+  #     - name: Run jest tests
+  #       run: yarn jest
 
-  collate_simplecov_results:
-    runs-on: ubuntu-22.04
-    needs:
-      - controllers_and_models
-      - engines
-      - system
-      - test_the_rest
-    steps:
-      - uses: actions/checkout@v6
+  # collate_simplecov_results:
+  #   runs-on: ubuntu-22.04
+  #   needs:
+  #     - controllers_and_models
+  #     - engines
+  #     - system
+  #     - test_the_rest
+  #   steps:
+  #     - uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - name: Download individual results from individual runners
-        uses: actions/download-artifact@v8
-        with:
-          pattern: simplecov-chunk-*
-          path: tmp/simplecov
+  #     - name: Download individual results from individual runners
+  #       uses: actions/download-artifact@v8
+  #       with:
+  #         pattern: simplecov-chunk-*
+  #         path: tmp/simplecov
 
-      - name: collate results from each of the workers
-        run: bundle exec rake 'simplecov:collate_results[tmp/simplecov]'
+  #     - name: collate results from each of the workers
+  #       run: bundle exec rake 'simplecov:collate_results[tmp/simplecov]'
 
-      - name: Upload collated results
-        uses: actions/upload-artifact@v7
-        with:
-          name: combined-simplecov-report
-          path: coverage/**/*.*
-          retention-days: 7
-          if-no-files-found: ignore
-          include-hidden-files: true
-      - name: Compare SimpleCov results with Undercover
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: |
-          base_sha="$PR_BASE_SHA"
-          if [ -z "$base_sha" ]; then
-            # Pushed without a pull request: ask GitHub for the merge base with
-            # upstream master, the same way it does when a PR is opened. Without
-            # this, a fork's own master is used and it may be months behind.
-            upstream=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.parent.full_name // .full_name')
-            base_sha=$(gh api "repos/$upstream/compare/master...${GITHUB_REPOSITORY%%/*}:$GITHUB_SHA" \
-                       --jq '.merge_base_commit.sha')
-          fi
-          # A fork shares its object store with its upstream, so `origin` can serve
-          # a commit that only exists upstream. Depth 1 is enough: undercover falls
-          # back to a direct diff when it can't compute a merge base, and this is
-          # already the merge base.
-          git fetch --no-tags --depth=1 origin "$base_sha"
-          bundle exec undercover --compare "$base_sha"
-        if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't compare master to itself
+  #     - name: Upload collated results
+  #       uses: actions/upload-artifact@v7
+  #       with:
+  #         name: combined-simplecov-report
+  #         path: coverage/**/*.*
+  #         retention-days: 7
+  #         if-no-files-found: ignore
+  #         include-hidden-files: true
+  #     - name: Compare SimpleCov results with Undercover
+  #       env:
+  #         GH_TOKEN: ${{ github.token }}
+  #         PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+  #       run: |
+  #         base_sha="$PR_BASE_SHA"
+  #         if [ -z "$base_sha" ]; then
+  #           # Pushed without a pull request: ask GitHub for the merge base with
+  #           # upstream master, the same way it does when a PR is opened. Without
+  #           # this, a fork's own master is used and it may be months behind.
+  #           upstream=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.parent.full_name // .full_name')
+  #           base_sha=$(gh api "repos/$upstream/compare/master...${GITHUB_REPOSITORY%%/*}:$GITHUB_SHA" \
+  #                      --jq '.merge_base_commit.sha')
+  #         fi
+  #         # A fork shares its object store with its upstream, so `origin` can serve
+  #         # a commit that only exists upstream. Depth 1 is enough: undercover falls
+  #         # back to a direct diff when it can't compute a merge base, and this is
+  #         # already the merge base.
+  #         git fetch --no-tags --depth=1 origin "$base_sha"
+  #         bundle exec undercover --compare "$base_sha"
+  #       if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't compare master to itself
