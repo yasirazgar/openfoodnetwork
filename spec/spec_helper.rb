@@ -9,7 +9,14 @@ if ENV["COVERAGE"]
   require "simplecov"
   require 'simplecov-cobertura'
   SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
-  SimpleCov.start
+  
+  SimpleCov.start 'rails' do
+  
+    source_in_json false
+
+    formatter SimpleCov::Formatter::JSONFormatter
+  
+  end
 end
 
 require 'pry' unless ENV['CI']
