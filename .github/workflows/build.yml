@@ -445,3 +445,12 @@ jobs:
           git fetch --no-tags --depth=1 origin "$base_sha"
           bundle exec undercover --compare "$base_sha"
         if: ${{ github.ref != 'refs/heads/master' }} # Does not run on master, as we can't compare master to itself
+      - name: Build and test with Rake
+        env:
+          RAILS_ENV: test
+        run: |
+          # other pre-requisite setup steps...          
+          ruby -e "$(curl -s https://undercover-ci.com/uploader.rb)" -- \
+            --repo ${{ github.repository }} \
+            --commit ${{ github.event.pull_request.head.sha || github.sha }} \
+            --simplecov coverage/coverage.json
